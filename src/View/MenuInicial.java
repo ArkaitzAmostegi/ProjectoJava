@@ -62,8 +62,7 @@ public class MenuInicial {
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.nextLine());
 		System.out.println("Introduce tu contraseña: ");
-		usuario.setContrasena(sc.nextLine());
-		//comprobarContrasena();
+		comprobarContrasena(sc, usuario);
 		System.out.println("Introduce tu sexo");
 		usuario.setSexo(sc.next());
 		//comprobarSexo();
@@ -119,5 +118,22 @@ public class MenuInicial {
 	//Método para comprobar si existe el usuario en la BDD
 	private static void comprobarUsuario(Scanner sc, Usuario usuario) {
 		
+	}
+	
+	//Método para comprobar que la contraseña coincide con los requisitos mínimos
+	private static void comprobarContrasena(Scanner sc, Usuario usuario) {
+		boolean contraseñaValida = false;
+		
+		while (contraseñaValida == false) {
+			String contraseña = sc.next();
+			
+			if (contraseña.length() < 8) {
+				System.out.println("La contraseña debe tener una longitud de 8 caracteres");
+			}
+			else {
+				usuario.setContrasena(contraseña);
+				contraseñaValida = true;
+			}
+		}
 	}
 }
