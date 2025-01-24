@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import Modelo.Usuario;
 
 public class UsuarioRepositorio {
+	//Hola
 
 	 public static void crearUsuario(Usuario usuario){
 			
