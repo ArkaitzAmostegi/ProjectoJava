@@ -32,20 +32,20 @@ public class UsuarioRepositorio {
 	 //Comprobar si es admin o usuario
 	 public static void comprobarUsuario() {
 		 String consulta = "SELECT count FROM usuario where dni=?, nombre=?, contraseña=?";
-		 Connection con = ConectorBD.getconexion();
-		 try {
-			 PreparedStatement s=conexion.prepareStatement(consulta);
-				s.setString(1, dni);
-				s.setString(2, nombre);
-				s.setString(6, contraseña);
-				ResultSet rs=s.executeQuery();
-				while(rs.next()) {
-					System.out.println(rs.getString("nombre")+" "+rs.getString("apellido1")+" "+ rs.getString("apellido2")+", "+rs.getString("fecha_nacimiento")+", curso:"+rs.getInt("curso")+", clase:"+rs.getInt("clase"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Error al hacer la consulta"+ consulta);
-			}
+		//( Connection con = ConectorBD.getconexion();
+	//	 try {
+			 //PreparedStatement s=conexion.prepareStatement(consulta);
+				//s.setString(1, dni);
+				//s.setString(2, nombre);
+				//s.setString(6, contraseña);
+				//ResultSet rs=s.executeQuery();
+				//while(rs.next()) {
+				//	System.out.println(rs.getString("nombre")+" "+rs.getString("apellido1")+" "+ rs.getString("apellido2")+", "+rs.getString("fecha_nacimiento")+", curso:"+rs.getInt("curso")+", clase:"+rs.getInt("clase"));
+				//}
+			//} catch (SQLException e) {
+				//e.printStackTrace();
+				//System.out.println("Error al hacer la consulta"+ consulta);
+			//}
 		 
 	 }
 }
