@@ -86,12 +86,15 @@ public class MenuInicial {
 	private static Usuario login(Scanner sc, Usuario usuario) {
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
-		usuario.setDni(sc.nextLine());
+		String dni=sc.nextLine();
 		System.out.println("Introduce tu nombre: ");
-		usuario.setNombre(sc.nextLine());
+		String nombre=sc.nextLine();
 		System.out.println("Introduce tu contraseña: ");
-		usuario.setContrasena(sc.nextLine());
+		String contraseña= sc.nextLine();
+		
 		//Comprobar si usuario EXISTE en la BDD
+		UsuarioRepositorio.comprobarUsuario(dni, nombre, contraseña);
+		
 		//si es admin, le llevará al menú admin, si no le llevará al menú usuario
 		//De momento está puesto para que se acceda si o no, como usuario o administrador, más correcto sería poner una clave
 		return usuario;
