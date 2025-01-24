@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import Modelo.Usuario;
 
 public class UsuarioRepositorio {
-	//Hola
-
+	
 	 public static void crearUsuario(Usuario usuario){
 			
 			String consulta = "INSERT INTO usuario (dni, nombre, sexo, telefono, email, contraseña, administrador) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -27,26 +26,30 @@ public class UsuarioRepositorio {
 		        
 		        preparedStatement.executeUpdate();
 		    }catch(Exception e) {
-		    	System.out.println("Error"+e.getMessage());
+		    	System.out.println("Error "+e.getMessage());
 		    }
 		}
 	 //Comprobar si es admin o usuario
-	 public static void comprobarUsuario() {
-		 String consulta = "SELECT count FROM usuario where dni=?, nombre=?, contraseña=?";
-		//( Connection con = ConectorBD.getconexion();
-	//	 try {
-			 //PreparedStatement s=conexion.prepareStatement(consulta);
-				//s.setString(1, dni);
-				//s.setString(2, nombre);
-				//s.setString(6, contraseña);
-				//ResultSet rs=s.executeQuery();
-				//while(rs.next()) {
-				//	System.out.println(rs.getString("nombre")+" "+rs.getString("apellido1")+" "+ rs.getString("apellido2")+", "+rs.getString("fecha_nacimiento")+", curso:"+rs.getInt("curso")+", clase:"+rs.getInt("clase"));
-				//}
-			//} catch (SQLException e) {
-				//e.printStackTrace();
-				//System.out.println("Error al hacer la consulta"+ consulta);
-			//}
-		 
+	 public static boolean comprobarUsuario(String dni, String nombre, String contraseña) {
+		 boolean existe = false;
+		 String consulta = "SELECT count(*) FROM usuario where dni=?, nombre=?, contraseña=?";
+		 Connection con = ConectorBD.getconexion();
+		 try {
+			 PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, dni);
+				s.setString(2, nombre);
+				s.setString(6, contraseña);
+				ResultSet rs=s.executeQuery();
+				
+				if(rs.next()) {
+					int count = rs.getInt(1);
+					existe = count > 0;
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error al hacer la consulta"+ consulta);
+			}
+		 return existe;
 	 }
 }
