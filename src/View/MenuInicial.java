@@ -7,7 +7,7 @@ import Modelo.Monovolumen;
 import Modelo.Turismo;
 import Modelo.Usuario;
 import Modelo.Vehiculo;
-import Repositorios.UsuarioRepositorio;
+import Repositorios.LoginRepositorio;
 import Repositorios.VehiculoRepositorio;
 
 public class MenuInicial {
@@ -63,6 +63,9 @@ public class MenuInicial {
 		System.out.println("Introduce tu contraseña: ");
 		usuario.setContrasena(sc.nextLine());
 		//comprobarContrasena();
+		System.out.println("Repite tu contraseña: ");
+		usuario.setContrasena(sc.nextLine());
+		//Comprobar que sea igual a la anterior
 		System.out.println("Introduce tu sexo");
 		usuario.setSexo(sc.next());
 		//comprobarSexo();
@@ -78,7 +81,7 @@ public class MenuInicial {
 		usuario.setAdministrador(false);
 		
 		//Añadir usuario con insert en el repositorio
-		UsuarioRepositorio.crearUsuario(usuario);
+		LoginRepositorio.crearUsuario(usuario);
 	}
 
 	//Método  login Usuario
@@ -92,33 +95,10 @@ public class MenuInicial {
 		
 		//Comprobar si usuario EXISTE en la BDD
 		//si es admin, le llevará al menú admin, si no le llevará al menú usuario
-		if(UsuarioRepositorio.comprobarUsuario(nombre, contraseña)) 
+		if(LoginRepositorio.comprobarUsuario(nombre, contraseña)) 
 			MenuAdministrador.menuAdministrador(sc);
 			
 		else MenuUsuario.menuUsuario(sc);
 		
 	}
-	
-	//Método para comprobar si existe el usuario en la BDD
-		private static void comprobarUsuario(Scanner sc, Usuario usuario) {
-			
-		}
-	//Método rol, administrador o usuario
-		private static void rol(Scanner sc, Usuario usuario) {
-			do {
-				System.out.println("¿Eres administrador?(SI/NO)");
-				String respuesta=sc.next().toUpperCase();
-				if (respuesta.equals("SI")) {
-					System.out.println("Eres administrador. Continuando con el menú de administrador");
-			        usuario.setAdministrador(true);
-			        MenuAdministrador.menuAdministrador(sc);
-			    } else if (respuesta.equals("NO")) {
-			        usuario.setAdministrador(false);
-			        System.out.println("No eres administrador. Continuando al menú usuario");
-			        MenuUsuario.menuUsuario(sc);
-			    } else {
-			    	System.out.println("Respuesta no válida. Por favor, responde con SI o NO.");
-			    }
-			}while(true);
-		}
 }

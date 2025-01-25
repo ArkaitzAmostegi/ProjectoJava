@@ -2,6 +2,8 @@ package View;
 
 import java.util.Scanner;
 
+import Modelo.Vehiculo;
+
 public class MenuUsuario {
 
 	//Menú usuario 
@@ -12,24 +14,26 @@ public class MenuUsuario {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 			System.out.println("-----------MENÚ USUARIO----------");
 			System.out.println("0.-Salir de la web");
-			System.out.println("1.-Seleccionar vehiculo");
-			System.out.println("2.-Realizar la reserva");
-			System.out.println("3.-Realizar el pago");
-			System.out.println("4.-Modificar los datos del usuario");
+			System.out.println("1.-Mirar nuestra flota de vehiculos");
+			System.out.println("2.-Mirar nuestras oficinas");
+			System.out.println("3.-Realizar la reserva");
+			System.out.println("4.-Modificar sus datos de usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
 			
+			Modelo.Vehiculo vehiculo = new Modelo.Vehiculo();
+			
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				//seleccionarVehiculo(sc, vehiculos);
+				mirarVehiculo(sc, vehiculo);
 				break;
 			case 2: 
-				//hacerReserva(sc, Usuario_Vehiculos);
+				//mirarOficinas();
 				break;
 			case 3: 
-				//realizarPago(sc, Usuario_vehiculos);;
+				//hacerReserva(sc, Usuario_Vehiculo);
 				break;				
 			case 4: 
 				//modificarDatos(sc, usuario);
@@ -41,5 +45,10 @@ public class MenuUsuario {
 		}
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
+	}
+
+	private static void mirarVehiculo(Scanner sc, Vehiculo vehiculo) {
+		
+		
 	}
 }

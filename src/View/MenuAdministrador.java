@@ -75,8 +75,8 @@ public class MenuAdministrador {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				System.out.println("Introduce el tamano");
-				String maticula=sc.nextLine();
+				//System.out.println("Introduce el tamano");
+				//String tamano=sc.nextLine();
 				Vehiculo v1= new Vehiculo();
 				VehiculoRepositorio.insertarVehiculo(v1);
 				break;
