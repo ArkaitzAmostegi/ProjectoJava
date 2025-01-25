@@ -13,7 +13,7 @@ import Repositorios.VehiculoRepositorio;
 public class MenuInicial {
 	
 
-	//Scanner menú inicial
+	//Menú inicial
 	public static Modelo.Usuario menuInicial(Scanner sc) {
 	
 	Modelo.Usuario usuario= new Modelo.Usuario();
@@ -97,13 +97,12 @@ public class MenuInicial {
 		if(LoginRepositorio.comprobarUsuario(nombre, contraseña)) {
 			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
 			if(LoginRepositorio.comprobarAdmin(nombre, contraseña))
-			MenuAdministrador.menuAdministrador(sc);
+				MenuAdministrador.menuAdministrador(sc);
 			else MenuUsuario.menuUsuario(sc);
 		
 		}else {
 			System.out.println("Usuario no encontrado en nuestra base de datos");
 			System.out.println("Si quiere entrar en nuestra web, por favor registrese");
 		}
-		
 	}
 }

@@ -23,18 +23,16 @@ public class MenuUsuario {
 			opcion=sc.nextInt();
 			sc.nextLine();
 			
-			Modelo.Vehiculo vehiculo = new Modelo.Vehiculo();
-			
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				mirarVehiculo(sc, vehiculo);
+				mirarVehiculo();
 				break;
 			case 2: 
-				//mirarOficinas();
+				mirarOficina();
 				break;
 			case 3: 
-				//hacerReserva(sc, Usuario_Vehiculo);
+				hacerReserva(sc);
 				break;				
 			case 4: 
 				//modificarDatos(sc, usuario);
@@ -47,8 +45,31 @@ public class MenuUsuario {
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
+	
+	private static void hacerReserva(Scanner sc) {
+		
+		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere hacer una reserva");
+		UsuarioRepositorio.mostrarOficina();
+		System.out.println("Introduzca el nombre desde la oficina que desee realizar la reserva");
+		System.out.println("Y le mostraremos los coches disponibles en esa oficina");
+		String nombreOficina= sc.nextLine();
+		//Mostrará los vehiculos dependiendo de que oficina haya eligido el usuario
+		System.out.println("Esta oficina dispone de estos vehiculos: ");
+		System.out.println("-----------------------");
+		System.out.println("Marca--Modelo--Km---Tipo---Nº puertas--potencia--tamaño");
+		UsuarioRepositorio.mosrtarVehiculoOficina(nombreOficina);
+	}
 
-	private static void mirarVehiculo(Scanner sc, Vehiculo vehiculo) {
+	//Muestra todas las oficinas
+	private static void mirarOficina() {
+		System.out.println("------------------------------------------------------");
+		System.out.println("Nombre----------Calle----------Teléfono----------Email");
+		System.out.println("------------------------------------------------------");
+		UsuarioRepositorio.mostrarOficina();
+	}
+	
+	//Muestra todos los vehículos
+	private static void mirarVehiculo() {
 		System.out.println("-----------------------");
 		System.out.println("Marca--Modelo--Tipo--Km");
 		System.out.println("-----------------------");
