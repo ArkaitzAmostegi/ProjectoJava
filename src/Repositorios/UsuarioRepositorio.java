@@ -32,12 +32,11 @@ public class UsuarioRepositorio {
 	 //Comprobar si es admin o usuario
 	 public static boolean comprobarUsuario(String nombre, String contraseña) {
 		 boolean existe = false;
-		 String consulta = "SELECT count(*) FROM usuario where dni=?, nombre=?, contraseña=?";
+		 String consulta = "SELECT count(*) FROM usuario WHERE nombre=? AND contraseña=? AND administrador=1";
 		 Connection con = ConectorBD.getconexion();
-		 try {
-			 PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
-				s.setString(2, nombre);
-				s.setString(6, contraseña);
+		 try {PreparedStatement s=con.prepareStatement(consulta);
+				s.setString(1, nombre);
+				s.setString(2, contraseña);
 				ResultSet rs=s.executeQuery();
 				
 				if(rs.next()) {

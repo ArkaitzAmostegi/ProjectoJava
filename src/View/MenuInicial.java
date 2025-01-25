@@ -36,12 +36,10 @@ public class MenuInicial {
 		case 0: break;
 		case 1: 
 			login(sc, usuario);
-		    
-		    //sI COUNT>1 TRUE SI COUNT <1 FALSE comprobacion para el usuario
 			break;
 		case 2:
 			crearUsuario(sc, usuario);
-
+			break;
 		default:
 			System.out.println("Número erroneo");
 			System.out.println("Introduzca un número del 0 al 2 ambos inclusive");
@@ -59,6 +57,7 @@ public class MenuInicial {
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
 		usuario.setDni(sc.nextLine());
+		//comprobarDni();
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.nextLine());
 		System.out.println("Introduce tu contraseña: ");
@@ -98,10 +97,6 @@ public class MenuInicial {
 			
 		else MenuUsuario.menuUsuario(sc);
 		
-		
-		//De momento está puesto para que se acceda si o no, como usuario o administrador, más correcto sería poner una clave
-		
-
 	}
 	
 	//Método para comprobar si existe el usuario en la BDD

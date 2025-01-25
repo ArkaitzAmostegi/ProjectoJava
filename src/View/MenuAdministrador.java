@@ -21,6 +21,7 @@ public class MenuAdministrador {
 			System.out.println("4.-Eliminar Oficina de la BDD");
 			System.out.println("5.-Eliminar reserva de la BDD");
 			System.out.println("6.-Crear administrador de la BDD");
+			System.out.println("7.-Menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -45,9 +46,12 @@ public class MenuAdministrador {
 			case 6:
 				//crearAdministrador();
 				break;
+			case 7:
+				MenuUsuario.menuUsuario(sc);
+				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 6 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 7 ambos inclusive");
 			}
 		}
 		while (opcion != 0);

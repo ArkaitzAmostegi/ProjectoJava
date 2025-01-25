@@ -6,8 +6,6 @@ import java.sql.DriverManager;
 
 public class ConectorBD {
 
-	//Hola ARkaitz
-	
 	//Método para conectar a la base de datos
 	private static Connection conexion;
 	
@@ -38,5 +36,4 @@ public class ConectorBD {
     	return conexion;
     }
     //Método desconectar();
-    //obtenerConexion();
 }
