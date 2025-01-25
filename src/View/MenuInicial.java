@@ -83,23 +83,31 @@ public class MenuInicial {
 	}
 
 	//Método  login Usuario
-	private static Usuario login(Scanner sc, Usuario usuario) {
+	private static void login(Scanner sc, Usuario usuario) {
+		
 		System.out.println("Introduce tus datos");
-		System.out.println("Introduce tu DNI: ");
-		String dni=sc.nextLine();
 		System.out.println("Introduce tu nombre: ");
 		String nombre=sc.nextLine();
 		System.out.println("Introduce tu contraseña: ");
 		String contraseña= sc.nextLine();
 		
 		//Comprobar si usuario EXISTE en la BDD
-		UsuarioRepositorio.comprobarUsuario(dni, nombre, contraseña);
-		
 		//si es admin, le llevará al menú admin, si no le llevará al menú usuario
+		if(UsuarioRepositorio.comprobarUsuario(nombre, contraseña)) 
+			MenuAdministrador.menuAdministrador(sc);
+			
+		else MenuUsuario.menuUsuario(sc);
+		
+		
 		//De momento está puesto para que se acceda si o no, como usuario o administrador, más correcto sería poner una clave
-		return usuario;
+		
 
 	}
+	
+	//Método para comprobar si existe el usuario en la BDD
+		private static void comprobarUsuario(Scanner sc, Usuario usuario) {
+			
+		}
 	//Método rol, administrador o usuario
 		private static void rol(Scanner sc, Usuario usuario) {
 			do {
@@ -118,9 +126,4 @@ public class MenuInicial {
 			    }
 			}while(true);
 		}
-	
-	//Método para comprobar si existe el usuario en la BDD
-	private static void comprobarUsuario(Scanner sc, Usuario usuario) {
-		
-	}
 }
