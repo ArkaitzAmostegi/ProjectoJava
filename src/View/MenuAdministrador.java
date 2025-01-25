@@ -3,7 +3,7 @@ package View;
 import java.util.Scanner;
 
 import Modelo.Vehiculo;
-import Repositorios.VehiculoRepositorio;
+import Repositorios.RepositorioVehiculo;
 
 public class MenuAdministrador {
 
@@ -32,19 +32,19 @@ public class MenuAdministrador {
 				anadirVehiculo(sc);
 				break;
 			case 2: 
-				//eliminarVehiculo(sc, turismo, monovolumen, furgoneta);
+				//eliminarVehiculo(sc);
 				break;
 			case 3: 
-				//anadirOficina(sc, oficina);
+				//anadirOficina(sc);
 				break;
 			case 4: 
-				//eliminarVehiculo(sc, oficina);
+				//eliminarOficina(sc);
 				break;
 			case 5: 
-				//eliminarReserva(sc, Usuario_Vehiculos);
+				//eliminarReserva(sc);
 				break;
 			case 6:
-				//crearAdministrador();
+				//crearAdministrador(sc);
 				break;
 			case 7:
 				MenuUsuario.menuUsuario(sc);
@@ -78,12 +78,12 @@ public class MenuAdministrador {
 				//System.out.println("Introduce el tamano");
 				//String tamano=sc.nextLine();
 				Vehiculo v1= new Vehiculo();
-				VehiculoRepositorio.insertarVehiculo(v1);
+				RepositorioVehiculo.insertarVehiculo(v1);
 				break;
 			case 2: 
 				
 				Vehiculo v2= new Vehiculo();
-				VehiculoRepositorio.insertarVehiculo(v2);
+				RepositorioVehiculo.insertarVehiculo(v2);
 				break;
 			case 3: 
 				//VehiculoRepositorio.insertarVehiculo(turismo);

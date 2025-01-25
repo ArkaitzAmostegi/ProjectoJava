@@ -3,7 +3,7 @@ package View;
 import java.util.Scanner;
 
 import Modelo.Vehiculo;
-import Repositorios.UsuarioRepositorio;
+import Repositorios.RepositorioUsuario;
 
 public class MenuUsuario {
 
@@ -15,9 +15,9 @@ public class MenuUsuario {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 			System.out.println("-----------MENÚ USUARIO----------");
 			System.out.println("0.-Salir de la web");
-			System.out.println("1.-Mirar nuestra flota de vehiculos");
-			System.out.println("2.-Mirar nuestras oficinas");
-			System.out.println("3.-Realizar la reserva");
+			System.out.println("1.-Nuestra flota de vehículos");
+			System.out.println("2.-Donde disponemos de oficinas");
+			System.out.println("3.-Realizar una reserva");
 			System.out.println("4.-Modificar sus datos de usuario");
 			
 			opcion=sc.nextInt();
@@ -48,31 +48,32 @@ public class MenuUsuario {
 	
 	private static void hacerReserva(Scanner sc) {
 		
-		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere hacer una reserva");
-		UsuarioRepositorio.mostrarOficina();
-		System.out.println("Introduzca el nombre desde la oficina que desee realizar la reserva");
-		System.out.println("Y le mostraremos los coches disponibles en esa oficina");
-		String nombreOficina= sc.nextLine();
-		//Mostrará los vehiculos dependiendo de que oficina haya eligido el usuario
-		System.out.println("Esta oficina dispone de estos vehiculos: ");
-		System.out.println("-----------------------");
-		System.out.println("Marca--Modelo--Km---Tipo---Nº puertas--potencia--tamaño");
-		UsuarioRepositorio.mosrtarVehiculoOficina(nombreOficina);
+		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere realizar la reserva");
+		RepositorioUsuario.mostrarOficina(); //mostrar listado de oficinas
+		System.out.println();
+		MenuReserva.elegirOficina(sc); //elegir oficina
+		System.out.println();
+		MenuReserva.elegirVehiculo(sc); //elegir vehiculo
 	}
 
 	//Muestra todas las oficinas
 	private static void mirarOficina() {
-		System.out.println("------------------------------------------------------");
-		System.out.println("Nombre----------Calle----------Teléfono----------Email");
-		System.out.println("------------------------------------------------------");
-		UsuarioRepositorio.mostrarOficina();
+		System.out.println("ESTAS SON NUESTRAS OFICINAS");
+		System.out.println("--------------------------------------------------------------------------------------");
+		System.out.println("-------Nombre-------------------Calle----------------------Teléfono--------------Email");
+		System.out.println("--------------------------------------------------------------------------------------");
+		RepositorioUsuario.mostrarOficina();
+		System.out.println();
 	}
 	
 	//Muestra todos los vehículos
 	private static void mirarVehiculo() {
+		System.out.println();
+		System.out.println("ESTOS SON NUESTROS VEHÍCULOS");
 		System.out.println("-----------------------");
 		System.out.println("Marca--Modelo--Tipo--Km");
 		System.out.println("-----------------------");
-		UsuarioRepositorio.mostrarVehiculo();
+		RepositorioUsuario.mostrarVehiculo();
+		System.out.println();
 	}
 }

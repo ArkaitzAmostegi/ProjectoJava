@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import Modelo.Usuario;
 
-public class LoginRepositorio {
+public class RepositorioLogin {
 	
 	//Método para añadir usuario a la BDD
 	 public static void crearUsuario(Usuario usuario){

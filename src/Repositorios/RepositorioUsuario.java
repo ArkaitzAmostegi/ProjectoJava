@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UsuarioRepositorio {
+public class RepositorioUsuario {
 
 	//Método para mostrar listado de vehiculos
 	public static void mostrarVehiculo() {
@@ -40,25 +40,5 @@ public class UsuarioRepositorio {
 				System.out.println("Error al hacer la consulta"+ consulta);
 			}
 		}
-	//Método para mostrar vehiculos en según la oficina
-		public static void mosrtarVehiculoOficina(String nombreOficina) {
-			
-			String consulta = "SELECT marca, modelo, km, tipo, num_puertas, potencia, tamaño " +
-	                  "FROM vehiculo NATURAL JOIN oficina " +
-	                  "WHERE nombre = ?";
-
-					
-			 try {PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
-			 	s.setString(1, nombreOficina);
-				ResultSet rs=s.executeQuery();
-				
-				while(rs.next()) {
-					System.out.println(rs.getString("marca")+" "+ rs.getString("modelo")+" "+" "+ rs.getInt("km")+" "+ rs.getString("tipo")+" "+ rs.getInt("num_puertas")+" "+ rs.getInt("potencia")+" "+ rs.getString("tamaño"));
-				}
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Error al hacer la consulta"+ consulta);
-			}
-		}
+	
 }

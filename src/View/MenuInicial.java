@@ -7,8 +7,8 @@ import Modelo.Monovolumen;
 import Modelo.Turismo;
 import Modelo.Usuario;
 import Modelo.Vehiculo;
-import Repositorios.LoginRepositorio;
-import Repositorios.VehiculoRepositorio;
+import Repositorios.RepositorioLogin;
+import Repositorios.RepositorioVehiculo;
 
 public class MenuInicial {
 	
@@ -81,7 +81,7 @@ public class MenuInicial {
 		usuario.setAdministrador(false);
 		
 		//Añadir usuario con insert en el repositorio
-		LoginRepositorio.crearUsuario(usuario);
+		RepositorioLogin.crearUsuario(usuario);
 	}
 
 	//Método  login Usuario
@@ -94,9 +94,9 @@ public class MenuInicial {
 		String contraseña= sc.nextLine();
 		
 		//Comprobar si usuario EXISTE en la BDD
-		if(LoginRepositorio.comprobarUsuario(nombre, contraseña)) {
+		if(RepositorioLogin.comprobarUsuario(nombre, contraseña)) {
 			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
-			if(LoginRepositorio.comprobarAdmin(nombre, contraseña))
+			if(RepositorioLogin.comprobarAdmin(nombre, contraseña))
 				MenuAdministrador.menuAdministrador(sc);
 			else MenuUsuario.menuUsuario(sc);
 		
