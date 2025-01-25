@@ -3,6 +3,7 @@ package View;
 import java.util.Scanner;
 
 import Modelo.Vehiculo;
+import Repositorios.UsuarioRepositorio;
 
 public class MenuUsuario {
 
@@ -48,7 +49,9 @@ public class MenuUsuario {
 	}
 
 	private static void mirarVehiculo(Scanner sc, Vehiculo vehiculo) {
-		
-		
+		System.out.println("-----------------------");
+		System.out.println("Marca--Modelo--Tipo--Km");
+		System.out.println("-----------------------");
+		UsuarioRepositorio.mostrarVehiculo();
 	}
 }

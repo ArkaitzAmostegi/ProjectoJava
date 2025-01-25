@@ -94,11 +94,16 @@ public class MenuInicial {
 		String contraseña= sc.nextLine();
 		
 		//Comprobar si usuario EXISTE en la BDD
-		//si es admin, le llevará al menú admin, si no le llevará al menú usuario
-		if(LoginRepositorio.comprobarUsuario(nombre, contraseña)) 
+		if(LoginRepositorio.comprobarUsuario(nombre, contraseña)) {
+			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
+			if(LoginRepositorio.comprobarAdmin(nombre, contraseña))
 			MenuAdministrador.menuAdministrador(sc);
-			
-		else MenuUsuario.menuUsuario(sc);
+			else MenuUsuario.menuUsuario(sc);
+		
+		}else {
+			System.out.println("Usuario no encontrado en nuestra base de datos");
+			System.out.println("Si quiere entrar en nuestra web, por favor registrese");
+		}
 		
 	}
 }
