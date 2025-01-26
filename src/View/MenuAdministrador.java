@@ -8,12 +8,13 @@ import Repositorios.RepositorioVehiculo;
 public class MenuAdministrador {
 
 	//Menú administrador
-	public static void menuAdministrador(Scanner sc) {
+	public static void menuAdministrador(Scanner sc, String nombre) {
 		
 		int opcion=0;
 		
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
+			System.out.println("---------------"+ nombre +"---------------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Añadir vehiculo a la BDD");
 			System.out.println("2.-Eliminar vehiculo de la BDD");
@@ -47,7 +48,7 @@ public class MenuAdministrador {
 				//crearAdministrador(sc);
 				break;
 			case 7:
-				MenuUsuario.menuUsuario(sc);
+				MenuUsuario.menuUsuario(sc, nombre);
 				break;
 			default:
 				System.out.println("Número erroneo");

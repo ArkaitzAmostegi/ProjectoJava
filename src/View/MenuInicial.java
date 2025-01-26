@@ -57,7 +57,7 @@ public class MenuInicial {
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
 		usuario.setDni(sc.nextLine());
-		//comprobarDni();
+		//comprobarDni();tiene que tener 8 dígitos + letra
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.nextLine());
 		System.out.println("Introduce tu contraseña: ");
@@ -66,7 +66,7 @@ public class MenuInicial {
 		System.out.println("Repite tu contraseña: ");
 		usuario.setContrasena(sc.nextLine());
 		//Comprobar que sea igual a la anterior
-		System.out.println("Introduce tu sexo");
+		System.out.println("Introduce tu sexo (H=Hombre, M=Mujer)");
 		usuario.setSexo(sc.next());
 		//comprobarSexo();
 		System.out.println("Introduce tu teléfono");
@@ -75,7 +75,7 @@ public class MenuInicial {
 		//comprobarTelefono();
 		System.out.println("Introduce tu email");
 		usuario.setEmail(sc.nextLine());
-		//comprobarEmail();
+		//comprobarEmail(); tiene que contener @ y . y después del punto 2 o 3 letras máximo
 		
 		//Administrador va como falso, ya que un usuario normal no puede crearse como administrador
 		usuario.setAdministrador(false);
@@ -97,8 +97,8 @@ public class MenuInicial {
 		if(RepositorioLogin.comprobarUsuario(nombre, contraseña)) {
 			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
 			if(RepositorioLogin.comprobarAdmin(nombre, contraseña))
-				MenuAdministrador.menuAdministrador(sc);
-			else MenuUsuario.menuUsuario(sc);
+				MenuAdministrador.menuAdministrador(sc, nombre);
+			else MenuUsuario.menuUsuario(sc, nombre);
 		
 		}else {
 			System.out.println("Usuario no encontrado en nuestra base de datos");

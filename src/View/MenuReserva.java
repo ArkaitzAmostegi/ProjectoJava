@@ -7,48 +7,71 @@ import Repositorios.RepositorioUsuario;
 
 public class MenuReserva {
 
-	//Método para elegir la oficina usado en el menuUsuario
-	public static void elegirOficina(Scanner sc){
-		
-		System.out.println("Introduzca el nombre desde la oficina que desee realizar la reserva");
-		System.out.println("Y le mostraremos los coches disponibles en esa oficina");
-		String nombreOficina= sc.nextLine().trim();//trim()elimina los espacios al inicio y al final
-		//Mostrará los vehiculos dependiendo de que oficina haya eligido el usuario
-		System.out.println("Esta oficina dispone de estos vehiculos: ");
-		System.out.println("-----------------------");
-		System.out.println("Matricula--Marca--Modelo--Km---Tipo---Nº puertas--potencia--tamaño");
-		RepositorioReserva.mostrarVehiculoOficina(nombreOficina); 
-		
+	// Método para elegir la oficina en el menú de usuario
+	public static void elegirOficina(Scanner sc) {
+	    String nombreOficina;
+
+	  
+	    while (true) {
+	        System.out.println("Introduzca el nombre de la oficina donde desea realizar la reserva:");
+	        System.out.println("Le mostraremos los coches disponibles en esa oficina.");
+	        nombreOficina = sc.nextLine().trim(); // Trin() Elimina espacios en blanco
+
+	        // Validar si la oficina existe
+	        if (comprobarOficina(nombreOficina)) {
+	            break; // Sale del bucle si la oficina es válida
+	        } else {
+	            System.out.println("ERROR. Nombre de la oficina mal introducido. Inténtelo nuevamente.\n");
+	        }
+	    }
+
+	    // Mostrar los vehículos disponibles en la oficina seleccionada
+	    System.out.println("Esta oficina dispone de estos vehículos:");
+	    System.out.println("-----------------------------------------");
+	    System.out.println("Matrícula--Marca--Modelo--Km---Tipo---Nº puertas--Potencia--Tamaño");
+
+	    // Consultar y mostrar los vehículos
+	    RepositorioReserva.mostrarVehiculoOficina(nombreOficina);
 	}
-	
+
+	// Método para comprobar si la oficina existe
+	public static boolean comprobarOficina(String nombreOficina) {
+	    boolean existe = RepositorioReserva.comprobarOficina(nombreOficina);
+	    if (existe) {
+	        System.out.println("\nUsted ha elegido la oficina: " + nombreOficina + "\n");
+	    }
+	    return existe;
+	}
+
 	//Método para elegir el vehiculo para la reserva
 	public static void elegirVehiculo (Scanner sc) {
-		
 		
 		while (true) {
 			System.out.println("Introduzca la matricula del vehiculo elegido");
 			String matricula = sc.nextLine().trim();
-			//comprobarMatricula(); para saber si está bien escrita y en esa oficina
-			
-			//Hace la consulta del vehículo para que escriba el modelo con todas sus caráteristicas
-			System.out.println("Usted a elegido el vehiculo: \n");
-			RepositorioReserva.vehiculoSeleccionado(matricula);
-			System.out.println("Si es así escriba 'SI', sino escriba 'NO'");
-			String opcion = sc.nextLine().toUpperCase();
-			
-			if (opcion.equals("SI")) {
-				//Seguir con el proceso
-				System.out.println("Elegido si");
+			//Validar si existe esa matricula
+			if(comprobarMatricula(matricula)) { // Para saber si está bien escrita y en esa oficina	
+				
 				break;
-			}else if (opcion.equals("NO")) {
-				System.out.println("Elegido no");
-			} else {
-				// comenzar el proceso de nuevo
-				
+			}else {
+				System.out.println("ERROR. Matricula mal introducida");
+				System.out.println("Por favor, pruebe de nuevo. Gracias");
 			}
-				
 		}
 		
 	}
+	
+	//Método para comprobar si el vehículo está bien escrito
+	public static boolean comprobarMatricula(String matricula) {
+		boolean existe = RepositorioReserva.comprobarMatricula(matricula);
+		if (existe) {
+			System.out.println("\nUds. ha elegido de nuestra oficina, el vahículo: " );
+			//Hace la consulta del vehículo para que escriba el modelo con todas sus caráteristicas
+			RepositorioReserva.vehiculoSeleccionado(matricula);	
+		}
+		return existe;
+	}
+	
+
 }
 

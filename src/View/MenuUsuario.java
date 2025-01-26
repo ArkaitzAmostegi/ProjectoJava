@@ -8,11 +8,12 @@ import Repositorios.RepositorioUsuario;
 public class MenuUsuario {
 
 	//Menú usuario 
-	public static void menuUsuario(Scanner sc) {
+	public static void menuUsuario(Scanner sc, String nombre) {
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
+			System.out.println("--------------"+ nombre +"---------------");
 			System.out.println("-----------MENÚ USUARIO----------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Nuestra flota de vehículos");
@@ -62,7 +63,7 @@ public class MenuUsuario {
 		System.out.println("--------------------------------------------------------------------------------------");
 		System.out.println("-------Nombre-------------------Calle----------------------Teléfono--------------Email");
 		System.out.println("--------------------------------------------------------------------------------------");
-		RepositorioUsuario.mostrarOficina();
+		RepositorioUsuario.mostrarOficina(); //Muestra las oficinas
 		System.out.println();
 	}
 	
@@ -73,7 +74,7 @@ public class MenuUsuario {
 		System.out.println("-----------------------");
 		System.out.println("Marca--Modelo--Tipo--Km");
 		System.out.println("-----------------------");
-		RepositorioUsuario.mostrarVehiculo();
+		RepositorioUsuario.mostrarVehiculo(); //Muestra los vehículos
 		System.out.println();
 	}
 }

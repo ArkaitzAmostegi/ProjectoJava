@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class RepositorioReserva {
 
 	
-	//Método para mostrar vehiculos en según la oficina
+	//Método para mostrar vehiculos según la oficina
 	public static void mostrarVehiculoOficina(String nombreOficina) {
 		
 		String consulta = "SELECT * FROM vehiculo NATURAL JOIN oficina WHERE nombre = ?";
@@ -28,10 +28,30 @@ public class RepositorioReserva {
 		}
 	}
 	
+	//Método para comprobar la oficina
+	public static boolean comprobarOficina(String nombre) {
+		boolean existe = false;
+		String consulta = "SELECT * FROM vehiculo v NATURAL JOIN oficina o WHERE o.nombre=?";
+		try {
+			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, nombre);
+			ResultSet rs=s.executeQuery();
+			
+			if(rs.next()) {
+				existe = true;
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error al hacer la consulta "+ consulta);
+		}
+		return existe;
+	}
+	
 	//Método para mostrar el vehiculo y la oficina elegidos
 	public static void vehiculoSeleccionado(String matricula) {
 		
-		String consulta = "SELECT * FROM vehiculo v NATURAL JOIN oficina o WHERE matricula=?";
+		String consulta = "SELECT * FROM vehiculo v NATURAL JOIN oficina o WHERE matricula = ?";
 		
 		try {
 			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
@@ -39,12 +59,34 @@ public class RepositorioReserva {
 			ResultSet rs=s.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println(rs.getString("v.matricula")+" "+rs.getString("v.marca")+" "+ rs.getString("v.modelo")+" "+" "+ rs.getInt("v.km")+" "+ rs.getString("v.tipo")+" "+ rs.getString("o.nombre"));
+				System.out.println("Oficina: "+rs.getString("o.nombre")+"\nVehiculo: "+rs.getString("v.matricula")+" "+rs.getString("v.marca")+" "+ rs.getString("v.modelo")+" "+" "+ rs.getInt("v.km")+" "+ rs.getString("v.tipo"));
 			}
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error al hacer la consulta "+ consulta);
 		}
+	}
+	
+	//Método para comprobar la matrícula
+	public static boolean comprobarMatricula(String matricula) {
+		
+		boolean existe=false;
+		
+		String consulta = "SELECT * FROM vehiculo NATURAL JOIN oficina WHERE matricula=?";
+		try {
+			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, matricula);
+			ResultSet rs=s.executeQuery();
+			
+			if(rs.next()) {
+				existe = true;
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error al hacer la consulta "+ consulta);
+		}
+		return existe;
 	}
 }

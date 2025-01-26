@@ -64,6 +64,7 @@ public class RepositorioLogin {
 			s.setString(1, nombre);
 			s.setString(2, contraseña);
 			ResultSet rs= s.executeQuery();
+			
 			if(rs.next()) {
 				int count = rs.getInt(1);
 				admin = count > 0;
