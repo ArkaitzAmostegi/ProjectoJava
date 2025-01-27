@@ -2,10 +2,6 @@ package View;
 
 import java.util.Scanner;
 
-import Modelo.Furgoneta;
-import Modelo.Monovolumen;
-import Modelo.Tamano;
-import Modelo.Turismo;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioUsuario;
 import Repositorios.RepositorioVehiculo;
@@ -39,7 +35,9 @@ public class MenuAdministrador {
 			
 			switch (opcion) {
 			case 0: break;
-			case 1: 
+			case 1:
+				listaVehiculos();
+			case 3: 
 				MenuAnadirVehiculo.anadirVehiculo(sc);
 			case 2:
 				RepositorioUsuario.mostrarUsuario();
@@ -94,5 +92,10 @@ public class MenuAdministrador {
 			RepositorioVehiculo.eliminarVehiculo(matricula);
 			System.out.println("Vehículo eliminado de nuestra base de datos");
 		}
+	}
+	
+	//Método de la lista de vehículos
+	private static void listaVehiculos() {
+		RepositorioVehiculo.mostrarVehiculo(null);
 	}
 }

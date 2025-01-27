@@ -21,7 +21,7 @@ public class ConectorBD {
             //El usuario es root y la contraseña es 1DAW3_BBDD
             //La conexion se hace a traves del puerto 3306
             //La BDD se llama escuela
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/AJA","root","1DAW3_BBDD");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/aja","root","1DAW3_BBDD");
           
             System.out.println("Conexion establecida");
           

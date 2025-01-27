@@ -40,5 +40,21 @@ public class RepositorioUsuario {
 				System.out.println("Error al hacer la consulta"+ consulta);
 			}
 		}
-
+		
+	//Método para listar los usuarios
+		public static void mostrarUsuario() {
+			String consulta = "SELECT * FROM usuario";
+			
+			 try {PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
+				ResultSet rs=s.executeQuery();
+				
+				while(rs.next()) {
+					System.out.println(rs.getString("dni")+" - "+ rs.getString("nombre")+" - "+ rs.getString("telefono")+" - "+ rs.getString("email"));
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error al hacer la consulta"+ consulta);
+			}
+		}
 }
