@@ -56,12 +56,9 @@ public class MenuInicial {
 		
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
-<<<<<<< HEAD
 		usuario.setDni(sc.nextLine());
 		//comprobarDni(); //tiene que tener 8 dígitos + letra
-=======
 		comprobarDni(sc, usuario);
->>>>>>> branch 'main' of https://github.com/ArkaitzAmostegi/ProjectoJava.git
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.next());
 		System.out.println("Introduce tu contraseña: ");
