@@ -16,47 +16,53 @@ public class MenuAdministrador {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("--------------- "+ nombre +" ---------------");
 			System.out.println("0.-Salir de la web");
-			System.out.println("1.-Añadir vehiculo a la BDD");
-			System.out.println("2.-Eliminar vehiculo de la BDD");
-			System.out.println("3.-Añadir oficina a la BDD");
-			System.out.println("4.-Eliminar Oficina de la BDD");
-			System.out.println("5.-Eliminar reserva de la BDD");
-			System.out.println("6.-Cambiar km a los vehiculos");
-			System.out.println("7.-Crear administrador de la BDD");
-			System.out.println("8.-Menú usuario");
+			System.out.println("1.-Ver la lista de vehículos registrados");
+			System.out.println("2.-Ver la lista de usuarios registrados");
+			System.out.println("3.-Añadir vehiculo a la BDD");
+			System.out.println("4.-Eliminar vehiculo de la BDD");
+			System.out.println("5.-Añadir oficina a la BDD");
+			System.out.println("6.-Eliminar Oficina de la BDD");
+			System.out.println("7.-Eliminar reserva de la BDD");
+			System.out.println("8.-Cambiar km a los vehiculos");
+			System.out.println("9.-Crear administrador de la BDD");
+			System.out.println("10.-Añadir un usuario a la BDD");
+			System.out.println("11. Eliminar un usuario de la BDD");
+			System.out.println("12.-Menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
 			
 			switch (opcion) {
 			case 0: break;
-			case 1: 
+			case 1:
+				listaVehiculos();
+			case 3: 
 				anadirVehiculo(sc);
 				break;
-			case 2: 
+			case 4: 
 				//eliminarVehiculo(sc);
 				break;
-			case 3: 
+			case 5: 
 				//anadirOficina(sc);
 				break;
-			case 4: 
+			case 6: 
 				//eliminarOficina(sc);
 				break;
-			case 5: 
+			case 7: 
 				//eliminarReserva(sc);
 				break;
-			case 6:
+			case 8:
 				//cambiarKm(sc);
 				break;
-			case 7:
+			case 9:
 				//crearAdministrador(sc);
 				break;
-			case 8:
+			case 10:
 				MenuUsuario.menuUsuario(sc, nombre);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 8 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 12, ambos inclusive");
 			}
 		}
 		while (opcion != 0);
@@ -100,5 +106,10 @@ public class MenuAdministrador {
 		}
 		while (opcion != 0);
 		
+	}
+	
+	//Método de la lista de vehículos
+	private static void listaVehiculos() {
+		RepositorioVehiculo.mostrarVehiculo(null);
 	}
 }
