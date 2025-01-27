@@ -40,5 +40,5 @@ public class RepositorioUsuario {
 				System.out.println("Error al hacer la consulta"+ consulta);
 			}
 		}
-	
+
 }

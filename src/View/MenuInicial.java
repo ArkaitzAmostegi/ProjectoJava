@@ -101,6 +101,7 @@ public class MenuInicial {
 		else {
 			System.out.println("Usuario no encontrado en nuestra base de datos");
 			System.out.println("Si quiere entrar en nuestra web, por favor registrese");
+			System.out.println();
 		}
 	}
 	

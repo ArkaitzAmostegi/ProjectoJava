@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import Modelo.Furgoneta;
 import Modelo.Monovolumen;
 import Modelo.Turismo;
+import java.sql.Statement;
+
 import Modelo.Vehiculo;
 
 public class RepositorioVehiculo {
@@ -32,6 +34,7 @@ public class RepositorioVehiculo {
 	    	System.out.println("Error"+e.getMessage());
 	    }
 	}
+	 
 	 //Añadir furgoneta
 	 public static void insertarFurgoneta(Furgoneta furgo) {
 		 
@@ -115,7 +118,6 @@ public class RepositorioVehiculo {
 	
 	//Eliminar vehiculo
 	public static void eliminarVehiculo(String matricula) {
-		
 		
 	    String consulta = "DELETE FROM vehiculo WHERE matricula = ?";
 
