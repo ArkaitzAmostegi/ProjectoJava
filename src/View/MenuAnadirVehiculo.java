@@ -75,7 +75,6 @@ public class MenuAnadirVehiculo {
 		sc.nextLine();
 		
 		RepositorioVehiculo.insertarTurismo(turis);
-		System.out.println("Turismo añadido a la flota de vehículos");
 	}
 
 	//Método para añadir Monovolumen
@@ -110,7 +109,6 @@ public class MenuAnadirVehiculo {
 		
 		
 		RepositorioVehiculo.insertarMonovolumen(mono);
-		System.out.println("Monovolumen añadida a la flota de vehículos");
 	}
 
 	//Método para añadir furgonetas
@@ -144,7 +142,6 @@ public class MenuAnadirVehiculo {
 		
 		
 		RepositorioVehiculo.insertarFurgoneta(furgo);
-		System.out.println("Furgoneta añadido a la flota de vehículos");
 	}
 
 	//Método tamaño furgo

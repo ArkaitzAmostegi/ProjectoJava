@@ -4,8 +4,10 @@ public class Oficina {
 
 	 ///Atributos
     private String id_oficina;
-    private String nombre;
     private String calle;
+    private String ciudad;
+    private String pais;
+    private String nombre;
     private int telefono;
     private String email;
 
@@ -40,15 +42,33 @@ public class Oficina {
     public void setEmail(String email) {
         this.email = email;
     }
-    //Constructor
-    public Oficina(String id_oficina, String nombre, String calle, int telefono, String email) {
-        this.id_oficina = id_oficina;
-        this.nombre = nombre;
-        this.calle = calle;
-        this.telefono = telefono;
-        this.email = email;
+    
+    public String getCiudad() {
+		return ciudad;
+	}
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+	public String getPais() {
+		return pais;
+	}
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	//Constructor
+   
+	public Oficina() {
     }
-    public Oficina() {
-    }
+	public Oficina(String id_oficina, String calle, String ciudad, String pais, String nombre, int telefono,
+			String email) {
+		super();
+		this.id_oficina = id_oficina;
+		this.calle = calle;
+		this.ciudad = ciudad;
+		this.pais = pais;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.email = email;
+	}
 }
 

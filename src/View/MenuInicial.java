@@ -59,14 +59,19 @@ public class MenuInicial {
 		usuario.setDni(sc.nextLine());
 		//comprobarDni(); //tiene que tener 8 dígitos + letra
 		comprobarDni(sc, usuario);
+		
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.next());
+		
 		System.out.println("Introduce tu contraseña: ");
 		comprobarContrasena(sc, usuario);
+		
 		System.out.println("Introduce tu sexo (H = Hombre, M = Mujer)");
 		comprobarSexo(sc, usuario);
+		
 		System.out.println("Introduce tu teléfono");
 		comprobarTelefono(sc, usuario);
+		
 		System.out.println("Introduce tu email");
 		usuario.setEmail(sc.nextLine());
 		comprobarEmail(sc, usuario); //tiene que contener @ y . y después del punto 2 o 3 letras máximo
@@ -106,7 +111,7 @@ public class MenuInicial {
 	}
 	
 	//Método para comprobar que el DNI sea válido
-	private static void comprobarDni(Scanner sc, Usuario usuario) {
+	public static void comprobarDni(Scanner sc, Usuario usuario) {
 		boolean dniValido = false;
 		
 		while (dniValido == false) {
@@ -123,7 +128,7 @@ public class MenuInicial {
 	}
 	
 	//Método para comprobar que la contraseña coincide con los requisitos mínimos	
-	private static void comprobarContrasena(Scanner sc, Usuario usuario) {
+	public static void comprobarContrasena(Scanner sc, Usuario usuario) {
 		boolean contraseñaValida = false;
 		
 		while (contraseñaValida == false) {
@@ -139,7 +144,7 @@ public class MenuInicial {
 			}
 		}
 	}
-	private static void verificarContraseña(Scanner sc, Usuario usuario) {
+	public static void verificarContraseña(Scanner sc, Usuario usuario) {
 		System.out.println("Repita la contraseña");
 		
 		String contraseñaComparar = sc.next();
@@ -153,7 +158,7 @@ public class MenuInicial {
 	}
 	
 	//Método para comprobar sexo del usuario válido
-	private static void comprobarSexo(Scanner sc, Usuario usuario) {
+	public static void comprobarSexo(Scanner sc, Usuario usuario) {
 		boolean sexoValido = false;
 		
 		while (sexoValido == false) {
@@ -169,7 +174,7 @@ public class MenuInicial {
 	}
 	
 	//Método para comprobar que el número de teléfono tiene 9 números
-	private static void comprobarTelefono(Scanner sc, Usuario usuario) {
+	public static void comprobarTelefono(Scanner sc, Usuario usuario) {
 		boolean telefonoValido = false;
 		
 		while (telefonoValido == false) {
@@ -186,7 +191,7 @@ public class MenuInicial {
 	}
 	
 	//Método para comprobar que el email contenga @
-	private static void comprobarEmail(Scanner sc, Usuario usuario) {
+	public static void comprobarEmail(Scanner sc, Usuario usuario) {
 		boolean emailValido = false;
 		
 		while (emailValido == false) {

@@ -16,7 +16,7 @@ public class RepositorioVehiculo {
 
 	 private static Statement statement;
 
-	//Método para insertar un alumno
+	//Método para insertar un vehiculo
 	 public static void insertarVehiculo(Vehiculo vehiculo){
 			
 		String consulta = "INSERT INTO vehiculo (id_coche, id_oficina, matricula, marca, modelo, km, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -53,11 +53,12 @@ public class RepositorioVehiculo {
 			 s.setString(7, furgo.getTamano().toString());
 			 s.setInt(8,  furgo.getId_oficina());
 			 
-			 s.executeUpdate();
+			 s.executeUpdate();	 
 			 
 		 }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }
+		 System.out.println("Furgoneta añadido a la flota de vehículos");
 	 }
 	 //Añadir Monovolumen
 	public static void insertarMonovolumen(Monovolumen mono) {
@@ -79,6 +80,7 @@ public class RepositorioVehiculo {
 		 }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }
+		 System.out.println("Monovolumen añadida a la flota de vehículos");
 	}
 	//Añadir turismo
 	public static void insertarTurismo(Turismo turis) {
@@ -99,6 +101,7 @@ public class RepositorioVehiculo {
 		 }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }
+		 System.out.println("Turismo añadido a la flota de vehículos");
 	}
 	
 	//Consultar vehículo
