@@ -56,32 +56,32 @@ public class MenuInicial {
 		
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
+<<<<<<< HEAD
 		usuario.setDni(sc.nextLine());
 		//comprobarDni(); //tiene que tener 8 dígitos + letra
+=======
+		comprobarDni(sc, usuario);
+>>>>>>> branch 'main' of https://github.com/ArkaitzAmostegi/ProjectoJava.git
 		System.out.println("Introduce tu nombre: ");
-		usuario.setNombre(sc.nextLine());
+		usuario.setNombre(sc.next());
 		System.out.println("Introduce tu contraseña: ");
-		usuario.setContrasena(sc.nextLine());
-		//comprobarContrasena();
-		System.out.println("Repite tu contraseña: ");
-		usuario.setContrasena(sc.nextLine());
-		//Comprobar que sea igual a la anterior
-		System.out.println("Introduce tu sexo (H=Hombre, M=Mujer)");
-		usuario.setSexo(sc.next());
-		//comprobarSexo();
+		comprobarContrasena(sc, usuario);
+		System.out.println("Introduce tu sexo (H = Hombre, M = Mujer)");
+		comprobarSexo(sc, usuario);
 		System.out.println("Introduce tu teléfono");
-		usuario.setTelefono(sc.nextInt());
-		sc.nextLine();
-		//comprobarTelefono();
+		comprobarTelefono(sc, usuario);
 		System.out.println("Introduce tu email");
 		usuario.setEmail(sc.nextLine());
-		//comprobarEmail(); tiene que contener @ y . y después del punto 2 o 3 letras máximo
+		comprobarEmail(sc, usuario); //tiene que contener @ y . y después del punto 2 o 3 letras máximo
 		
 		//Administrador va como falso, ya que un usuario normal no puede crearse como administrador
 		usuario.setAdministrador(false);
 		
 		//Añadir usuario con insert en el repositorio
 		RepositorioLogin.crearUsuario(usuario);
+		
+		System.out.println("¡Usuario registrado correctamente!");
+		System.out.println();
 	}
 
 	//Método  login Usuario
@@ -100,9 +100,107 @@ public class MenuInicial {
 				MenuAdministrador.menuAdministrador(sc, nombre);
 			else MenuUsuario.menuUsuario(sc, nombre);
 		
-		}else {
+		}
+		else {
 			System.out.println("Usuario no encontrado en nuestra base de datos");
 			System.out.println("Si quiere entrar en nuestra web, por favor registrese");
+		}
+	}
+	
+	//Método para comprobar que el DNI sea válido
+	private static void comprobarDni(Scanner sc, Usuario usuario) {
+		boolean dniValido = false;
+		
+		while (dniValido == false) {
+			String dni = sc.next();
+			
+			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) {
+				usuario.setDni(dni.toUpperCase());
+				dniValido = true;
+			}
+			else {
+				System.out.println("El DNI que has introducido no es válido, vuelve a intentarlo");
+			}
+		}
+	}
+	
+	//Método para comprobar que la contraseña coincide con los requisitos mínimos	
+	private static void comprobarContrasena(Scanner sc, Usuario usuario) {
+		boolean contraseñaValida = false;
+		
+		while (contraseñaValida == false) {
+			String contraseña = sc.next();
+			
+			if (contraseña.length() != 8) {
+				System.out.println("La contraseña debe tener una longitud de 8 caracteres");
+			}
+			else {
+				usuario.setContrasena(contraseña);
+				verificarContraseña(sc, usuario);
+				contraseñaValida = true;
+			}
+		}
+	}
+	private static void verificarContraseña(Scanner sc, Usuario usuario) {
+		System.out.println("Repita la contraseña");
+		
+		String contraseñaComparar = sc.next();
+		
+		if (contraseñaComparar.equals(usuario.getContrasena())) {
+			usuario.setContrasena(contraseñaComparar);
+		}
+		else {
+			System.out.println("La contraseña que has introducido no coincide con la anterior, vuelve a intentarlo");
+		}
+	}
+	
+	//Método para comprobar sexo del usuario válido
+	private static void comprobarSexo(Scanner sc, Usuario usuario) {
+		boolean sexoValido = false;
+		
+		while (sexoValido == false) {
+			String sexo = sc.next();
+			if (sexo.equalsIgnoreCase("H") || sexo.equalsIgnoreCase("M")) {
+				usuario.setSexo(sexo.toUpperCase());
+				sexoValido = true;
+			}
+			else {
+				System.out.println("El sexo que has introducido no es válido. Vuelve a intentarlo");
+			}
+		}
+	}
+	
+	//Método para comprobar que el número de teléfono tiene 9 números
+	private static void comprobarTelefono(Scanner sc, Usuario usuario) {
+		boolean telefonoValido = false;
+		
+		while (telefonoValido == false) {
+			int telefono = sc.nextInt();
+			
+			if (String.valueOf(telefono).length() == 9) {
+				usuario.setTelefono(telefono);
+				telefonoValido = true;
+			}
+			else {
+				System.out.println("El teléfono que has introducido no es válido");
+			}
+		}
+	}
+	
+	//Método para comprobar que el email contenga @
+	private static void comprobarEmail(Scanner sc, Usuario usuario) {
+		boolean emailValido = false;
+		
+		while (emailValido == false) {
+			String email = sc.next();
+			
+			if (email.contains("@")) {
+				usuario.setEmail(email);
+				emailValido = true;
+			}
+			else {
+				System.out.println("El email que has introducido no es válido");
+			}
 		}
 	}
 }
