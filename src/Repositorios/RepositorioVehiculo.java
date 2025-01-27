@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 
 import Modelo.Vehiculo;
 
-public class VehiculoRepositorio {
+public class RepositorioVehiculo {
 
 	 //Método para insertar un alumno
 	 public static void insertarVehiculo(Vehiculo vehiculo){

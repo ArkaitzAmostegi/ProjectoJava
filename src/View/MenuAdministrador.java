@@ -3,24 +3,27 @@ package View;
 import java.util.Scanner;
 
 import Modelo.Vehiculo;
-import Repositorios.VehiculoRepositorio;
+import Repositorios.RepositorioVehiculo;
 
 public class MenuAdministrador {
 
 	//Menú administrador
-	public static void menuAdministrador(Scanner sc) {
+	public static void menuAdministrador(Scanner sc, String nombre) {
 		
 		int opcion=0;
 		
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
+			System.out.println("--------------- "+ nombre +" ---------------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Añadir vehiculo a la BDD");
 			System.out.println("2.-Eliminar vehiculo de la BDD");
 			System.out.println("3.-Añadir oficina a la BDD");
 			System.out.println("4.-Eliminar Oficina de la BDD");
 			System.out.println("5.-Eliminar reserva de la BDD");
-			System.out.println("6.-Crear administrador de la BDD");
+			System.out.println("6.-Cambiar km a los vehiculos");
+			System.out.println("7.-Crear administrador de la BDD");
+			System.out.println("8.-Menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -31,23 +34,29 @@ public class MenuAdministrador {
 				anadirVehiculo(sc);
 				break;
 			case 2: 
-				//eliminarVehiculo(sc, turismo, monovolumen, furgoneta);
+				//eliminarVehiculo(sc);
 				break;
 			case 3: 
-				//anadirOficina(sc, oficina);
+				//anadirOficina(sc);
 				break;
 			case 4: 
-				//eliminarVehiculo(sc, oficina);
+				//eliminarOficina(sc);
 				break;
 			case 5: 
-				//eliminarReserva(sc, Usuario_Vehiculos);
+				//eliminarReserva(sc);
 				break;
 			case 6:
-				//crearAdministrador();
+				//cambiarKm(sc);
+				break;
+			case 7:
+				//crearAdministrador(sc);
+				break;
+			case 8:
+				MenuUsuario.menuUsuario(sc, nombre);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 6 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 8 ambos inclusive");
 			}
 		}
 		while (opcion != 0);
@@ -71,15 +80,15 @@ public class MenuAdministrador {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				System.out.println("Introduce el tamano");
-				String maticula=sc.nextLine();
+				//System.out.println("Introduce el tamano");
+				//String tamano=sc.nextLine();
 				Vehiculo v1= new Vehiculo();
-				VehiculoRepositorio.insertarVehiculo(v1);
+				RepositorioVehiculo.insertarVehiculo(v1);
 				break;
 			case 2: 
 				
 				Vehiculo v2= new Vehiculo();
-				VehiculoRepositorio.insertarVehiculo(v2);
+				RepositorioVehiculo.insertarVehiculo(v2);
 				break;
 			case 3: 
 				//VehiculoRepositorio.insertarVehiculo(turismo);
