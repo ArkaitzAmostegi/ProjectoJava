@@ -15,7 +15,7 @@ public class RepositorioUsuario {
 			ResultSet rs=s.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println(rs.getString("marca")+" "+ rs.getString("modelo")+" "+ rs.getString("tipo")+" "+ rs.getInt("km"));
+				System.out.println(rs.getString("Id") + rs.getString("marca")+" "+ rs.getString("modelo")+" "+ rs.getString("tipo")+" "+ rs.getInt("km"));
 			}
 		
 		} catch (SQLException e) {

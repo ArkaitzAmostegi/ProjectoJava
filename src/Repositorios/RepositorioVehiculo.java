@@ -7,13 +7,16 @@ import java.sql.ResultSet;
 import Modelo.Furgoneta;
 import Modelo.Monovolumen;
 import Modelo.Turismo;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import Modelo.Vehiculo;
 
 public class RepositorioVehiculo {
 
-	 //Método para insertar un alumno
+	 private static Statement statement;
+
+	//Método para insertar un alumno
 	 public static void insertarVehiculo(Vehiculo vehiculo){
 			
 		String consulta = "INSERT INTO vehiculo (id_coche, id_oficina, matricula, marca, modelo, km, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
