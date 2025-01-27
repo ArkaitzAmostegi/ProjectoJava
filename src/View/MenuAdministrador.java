@@ -14,15 +14,16 @@ public class MenuAdministrador {
 		
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("---------------"+ nombre +"---------------");
+			System.out.println("--------------- "+ nombre +" ---------------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Añadir vehiculo a la BDD");
 			System.out.println("2.-Eliminar vehiculo de la BDD");
 			System.out.println("3.-Añadir oficina a la BDD");
 			System.out.println("4.-Eliminar Oficina de la BDD");
 			System.out.println("5.-Eliminar reserva de la BDD");
-			System.out.println("6.-Crear administrador de la BDD");
-			System.out.println("7.-Menú usuario");
+			System.out.println("6.-Cambiar km a los vehiculos");
+			System.out.println("7.-Crear administrador de la BDD");
+			System.out.println("8.-Menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -45,14 +46,17 @@ public class MenuAdministrador {
 				//eliminarReserva(sc);
 				break;
 			case 6:
-				//crearAdministrador(sc);
+				//cambiarKm(sc);
 				break;
 			case 7:
+				//crearAdministrador(sc);
+				break;
+			case 8:
 				MenuUsuario.menuUsuario(sc, nombre);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 7 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 8 ambos inclusive");
 			}
 		}
 		while (opcion != 0);

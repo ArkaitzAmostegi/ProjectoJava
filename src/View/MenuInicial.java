@@ -87,7 +87,7 @@ public class MenuInicial {
 	//Método  login Usuario
 	private static void login(Scanner sc, Usuario usuario) {
 		
-		System.out.println("Introduce tus datos");
+		System.out.println("Introduce tus datos de usuario");
 		System.out.println("Introduce tu nombre: ");
 		String nombre=sc.nextLine();
 		System.out.println("Introduce tu contraseña: ");

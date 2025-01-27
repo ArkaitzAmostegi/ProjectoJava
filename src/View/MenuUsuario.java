@@ -55,6 +55,7 @@ public class MenuUsuario {
 		MenuReserva.elegirOficina(sc); //elegir oficina
 		System.out.println();
 		MenuReserva.elegirVehiculo(sc); //elegir vehiculo
+		MenuReserva.validarReserva(sc); //validamos el vehículo y la oficina seleccionados
 	}
 
 	//Muestra todas las oficinas

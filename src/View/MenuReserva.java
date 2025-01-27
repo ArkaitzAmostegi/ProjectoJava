@@ -11,13 +11,13 @@ public class MenuReserva {
 	public static void elegirOficina(Scanner sc) {
 	    String nombreOficina;
 
-	  
+	    //Bucle mientras el nombre de la oficina no sea correcto
 	    while (true) {
 	        System.out.println("Introduzca el nombre de la oficina donde desea realizar la reserva:");
 	        System.out.println("Le mostraremos los coches disponibles en esa oficina.");
 	        nombreOficina = sc.nextLine().trim(); // Trin() Elimina espacios en blanco
 
-	        // Validar si la oficina existe
+	        //Comprobar si la oficina existe
 	        if (comprobarOficina(nombreOficina)) {
 	            break; // Sale del bucle si la oficina es válida
 	        } else {
@@ -49,8 +49,8 @@ public class MenuReserva {
 		while (true) {
 			System.out.println("Introduzca la matricula del vehiculo elegido");
 			String matricula = sc.nextLine().trim();
-			//Validar si existe esa matricula
-			if(comprobarMatricula(matricula)) { // Para saber si está bien escrita y en esa oficina	
+			//Comprobar si existe esa matricula
+			if(comprobarMatricula(matricula)) { 
 				
 				break;
 			}else {
@@ -65,13 +65,22 @@ public class MenuReserva {
 	public static boolean comprobarMatricula(String matricula) {
 		boolean existe = RepositorioReserva.comprobarMatricula(matricula);
 		if (existe) {
-			System.out.println("\nUds. ha elegido de nuestra oficina, el vahículo: " );
+			System.out.println("\nUds. ha elegido de nuestra oficina, el vehículo: " );
 			//Hace la consulta del vehículo para que escriba el modelo con todas sus caráteristicas
 			RepositorioReserva.vehiculoSeleccionado(matricula);	
 		}
 		return existe;
 	}
 	
+	//Método para validar reserva
+	public static void validarReserva(Scanner sc) {
+		
+		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está conforme escriba 'NO'");
+		String opcion = sc.nextLine();
+		if (opcion.equalsIgnoreCase("si")) {
+			System.out.println("Operación aprobada\n");//Hay que seguir este proceso
+		}else System.out.println("Operación cancelada\n");
+	}
 
 }
 
