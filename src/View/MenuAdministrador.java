@@ -3,6 +3,7 @@ package View;
 import java.util.Scanner;
 
 import Modelo.Vehiculo;
+import Repositorios.RepositorioUsuario;
 import Repositorios.RepositorioVehiculo;
 
 public class MenuAdministrador {
@@ -25,9 +26,8 @@ public class MenuAdministrador {
 			System.out.println("7.-Eliminar reserva de la BDD");
 			System.out.println("8.-Cambiar km a los vehiculos");
 			System.out.println("9.-Crear administrador de la BDD");
-			System.out.println("10.-Añadir un usuario a la BDD");
-			System.out.println("11. Eliminar un usuario de la BDD");
-			System.out.println("12.-Menú usuario");
+			System.out.println("10. Eliminar un usuario de la BDD");
+			System.out.println("11.-Menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -36,6 +36,8 @@ public class MenuAdministrador {
 			case 0: break;
 			case 1:
 				listaVehiculos();
+			case 2:
+				listaUsuarios();
 			case 3: 
 				anadirVehiculo(sc);
 				break;
@@ -110,6 +112,6 @@ public class MenuAdministrador {
 	
 	//Método de la lista de vehículos
 	private static void listaVehiculos() {
-		RepositorioVehiculo.mostrarVehiculo(null);
+		RepositorioUsuario.mostrarVehiculo();
 	}
 }

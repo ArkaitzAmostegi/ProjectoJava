@@ -3,13 +3,16 @@ package Repositorios;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import Modelo.Vehiculo;
 
 public class RepositorioVehiculo {
 
-	 //Método para insertar un alumno
+	 private static Statement statement;
+
+	//Método para insertar un alumno
 	 public static void insertarVehiculo(Vehiculo vehiculo){
 			
 		String consulta = "INSERT INTO vehiculo (id_coche, id_oficina, matricula, marca, modelo, km, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -30,16 +33,5 @@ public class RepositorioVehiculo {
 	    	System.out.println("Error"+e.getMessage());
 	    }
 	}
-	 
-	 //Método para mostrar vehículos
-	 public static void mostrarVehiculo(Vehiculo vehiculo) {
-		 String consulta = "SELECT * FROM vehiculo";
-		 
-		Statement statement;
-		ResultSet rs = statement.executeQuery(consulta){
-			while (rs.next()) {
-				System.out.println("Id: " + rs.getString("ID_COCHE") + ", Matricula: " + rs.getString("MATRICULA") + ", Marca: " + rs.getString("MARCA") + ", Modelo: " + rs.getString("MODELO") + ", KM: " + rs.getNString("KM") + ", Tipo: " + rs.getString("TIPO") + ", Número de puertas: " + rs.getString("NUM_PUERTAS") + ", Potencia: " + rs.getString("POTENCIA") + ", Tamaño: " + rs.getString("TAMAÑO") + ", Id_Oficina: " + rs.getString("ID_OFICINA"));
-			}
-		}
-	 }
+
 }
