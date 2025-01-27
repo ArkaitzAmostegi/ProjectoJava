@@ -57,7 +57,7 @@ public class MenuInicial {
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
 		usuario.setDni(sc.nextLine());
-		//comprobarDni();tiene que tener 8 dígitos + letra
+		//comprobarDni(); //tiene que tener 8 dígitos + letra
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.nextLine());
 		System.out.println("Introduce tu contraseña: ");

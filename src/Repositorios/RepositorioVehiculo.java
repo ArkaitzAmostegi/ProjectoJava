@@ -2,8 +2,11 @@ package Repositorios;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-
+import Modelo.Furgoneta;
+import Modelo.Monovolumen;
+import Modelo.Turismo;
 import Modelo.Vehiculo;
 
 public class RepositorioVehiculo {
@@ -29,4 +32,106 @@ public class RepositorioVehiculo {
 	    	System.out.println("Error"+e.getMessage());
 	    }
 	}
+	 //Añadir furgoneta
+	 public static void insertarFurgoneta(Furgoneta furgo) {
+		 
+		 String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, tamaño, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		 
+		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+			 s.setInt(1, furgo.getId_coche());
+			 s.setString(2, furgo.getMatricula());
+			 s.setString(3, furgo.getMarca());
+			 s.setString(4, furgo.getModelo());
+			 s.setInt(5, furgo.getKm());
+			 s.setString(6, furgo.gettipo());
+			 s.setString(7, furgo.getTamano().toString());
+			 s.setInt(8,  furgo.getId_oficina());
+			 
+			 s.executeUpdate();
+			 
+		 }catch(Exception e) {
+		    	System.out.println("Error "+e.getMessage());
+		    }
+	 }
+	 //Añadir Monovolumen
+	public static void insertarMonovolumen(Monovolumen mono) {
+		
+		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, num_puertas, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		 
+		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+			 s.setInt(1, mono.getId_coche());
+			 s.setString(2, mono.getMatricula());
+			 s.setString(3, mono.getMarca());
+			 s.setString(4, mono.getModelo());
+			 s.setInt(5, mono.getKm());
+			 s.setString(6, mono.gettipo());
+			 s.setInt(7, mono.getNumPuertas());
+			 s.setInt(8,  mono.getId_oficina());
+			 
+			 s.executeUpdate();
+			 
+		 }catch(Exception e) {
+		    	System.out.println("Error "+e.getMessage());
+		    }
+	}
+	//Añadir turismo
+	public static void insertarTurismo(Turismo turis) {
+		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, potencia, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		 
+		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+			 s.setInt(1, turis.getId_coche());
+			 s.setString(2, turis.getMatricula());
+			 s.setString(3, turis.getMarca());
+			 s.setString(4, turis.getModelo());
+			 s.setInt(5, turis.getKm());
+			 s.setString(6, turis.gettipo());
+			 s.setInt(7, turis.getPotencia());
+			 s.setInt(8, turis.getId_oficina());
+			 
+			 s.executeUpdate();
+			 
+		 }catch(Exception e) {
+		    	System.out.println("Error "+e.getMessage());
+		    }
+	}
+	
+	//Consultar vehículo
+	public static void consultarMatricula(String matricula) {
+		
+		String consulta = "SELECT * FROM vehiculo WHERE matricula = ?";
+		
+		try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+			s.setString(1, matricula);
+			ResultSet rs= s.executeQuery();
+			
+			while (rs.next()) {
+				System.out.println(rs.getString("matricula")+" "+rs.getString("marca")+" "+ rs.getString("modelo")+" "+ rs.getInt("km")+" "+ rs.getString("tipo"));
+			}
+			
+		}catch(Exception e) {
+	    	System.out.println("Error "+e.getMessage());
+	    }
+	}
+	
+	//Eliminar vehiculo
+	public static void eliminarVehiculo(String matricula) {
+		
+		
+	    String consulta = "DELETE FROM vehiculo WHERE matricula = ?";
+
+	    try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)) {
+	        s.setString(1, matricula); // Asigna el valor de la matrícula al parámetro de la consulta
+
+	        int filasAfectadas = s.executeUpdate(); // Ejecuta la consulta y obtiene el número de filas afectadas
+
+	        if (filasAfectadas > 0) {
+	            System.out.println("El vehículo con matrícula " + matricula + " ha sido eliminado.");
+	        } else {
+	            System.out.println("No se encontró ningún vehículo con la matrícula " + matricula + ".");
+	        }
+	    } catch (Exception e) {
+	        System.out.println("Error: " + e.getMessage());
+	    }
+	}
+
 }
