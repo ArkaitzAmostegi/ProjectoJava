@@ -7,6 +7,7 @@ import Modelo.Usuario;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioAdministrador;
 import Repositorios.RepositorioLogin;
+import Repositorios.RepositorioReserva;
 import Repositorios.RepositorioUsuario;
 import Repositorios.RepositorioVehiculo;
 
@@ -59,7 +60,7 @@ public class MenuAdministrador {
 				//eliminarReserva(sc);
 				break;
 			case 8:
-				//cambiarKm(sc);
+				cambiarKm(sc);
 				break;
 			case 9:
 				crearAdministrador(sc, usuario);
@@ -79,6 +80,27 @@ public class MenuAdministrador {
 		System.out.println("Ha salido de nuestra web");
 	}
 	
+	//Método para cambiar los Km al vehiculo
+	private static void cambiarKm(Scanner sc) {
+		
+		Vehiculo vehiculo = new Vehiculo();
+		
+		System.out.println("Introduzce la matrícula del vehículo al que deseas cambiar los km: ");
+		String matricula= sc.nextLine();
+		//Comprobamos vehículo
+		System.out.println("Es es el vehiculo que desea modificar?");
+		
+		RepositorioReserva.vehiculoSeleccionado(matricula);//Método para consultar matrícula
+		System.out.println("Intoduce (SI/NO): ");
+		String opcion = sc.nextLine().trim();
+		
+		if(opcion.equalsIgnoreCase("si")){
+			System.out.println("Introduce los Km nuevos al vehículo:");
+			vehiculo.setKm(sc.nextInt());
+			RepositorioAdministrador.introducirKm(vehiculo);//Método para introducir km
+			}
+	}
+
 	//Método eliminar usuario
 	private static void eliminarUsuario(Scanner sc, Usuario usuario) {
 		System.out.println("Introduce el nombre del usuario que desee eliminar: ");
