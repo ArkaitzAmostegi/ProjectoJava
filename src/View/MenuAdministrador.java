@@ -41,6 +41,7 @@ public class MenuAdministrador {
 			case 0: break;
 			case 1:
 				RepositorioUsuario.mostrarVehiculo();
+				break;
 			case 2:
 				RepositorioUsuario.mostrarUsuario();
 				break;
