@@ -107,13 +107,17 @@ public class RepositorioAdministrador {
 	//Método para introducir Km a un vehículo
 	public static void introducirKm(Vehiculo vehiculo) {
 		
-		String consulta = "INSERT INTO vehiculo (km) VALUES (?)";
+		String consulta = "UPDATE vehiculo SET km = ? WHERE matricula = ? ";
+			
 		
 		try(PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta) ){
 			
 			s.setInt(1, vehiculo.getKm());
+			s.setString(2, vehiculo.getMatricula());
 			
 			s.executeUpdate();
+			
+			System.out.println("Kms del vehículo cambiados exitosamente");
 			
 		}catch (Exception e) {
 			System.out.println("Error "+e.getMessage());

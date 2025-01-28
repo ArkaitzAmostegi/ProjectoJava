@@ -87,12 +87,12 @@ public class MenuAdministrador {
 		
 		Vehiculo vehiculo = new Vehiculo();
 		
-		System.out.println("Introduzce la matrícula del vehículo al que deseas cambiar los km: ");
-		String matricula= sc.nextLine();
+		System.out.println("Introduce la matrícula del vehículo al que deseas cambiar los km: ");
+		vehiculo.setMatricula(sc.nextLine());
 		//Comprobamos vehículo
-		System.out.println("Es es el vehiculo que desea modificar?");
+		System.out.println("Es este el vehículo que desea modificar?");
 		
-		RepositorioReserva.vehiculoSeleccionado(matricula);//Método para consultar matrícula
+		RepositorioReserva.vehiculoSeleccionado(vehiculo.getMatricula());//Método para consultar matrícula
 		System.out.println("Intoduce (SI/NO): ");
 		String opcion = sc.nextLine().trim();
 		
