@@ -28,7 +28,7 @@ public class MenuAnadirVehiculo {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				anadirFrugoneta(sc);
+				anadirFrugoneta(sc); //No está bien acabado, no se introduce por el enum
 				break;
 			case 2: 
 				anadirMonovolumen(sc);
@@ -146,7 +146,7 @@ public class MenuAnadirVehiculo {
 	}
 
 	//Método tamaño furgo
-	private static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
+	public static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
 		Tamano[] lista=Tamano.values();
 		
 		System.out.println("Te mostramos la lista de tamaños");
