@@ -1,7 +1,6 @@
 package View;
 
 import java.util.Scanner;
-
 import Modelo.Furgoneta;
 import Modelo.Monovolumen;
 import Modelo.Turismo;
@@ -56,10 +55,8 @@ public class MenuInicial {
 		
 		System.out.println("Introduce tus datos");
 		System.out.println("Introduce tu DNI: ");
-		usuario.setDni(sc.nextLine());
-		//comprobarDni(); //tiene que tener 8 dígitos + letra
 		comprobarDni(sc, usuario);
-		
+
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.next());
 		
@@ -74,7 +71,7 @@ public class MenuInicial {
 		
 		System.out.println("Introduce tu email");
 		usuario.setEmail(sc.nextLine());
-		comprobarEmail(sc, usuario); //tiene que contener @ y . y después del punto 2 o 3 letras máximo
+		comprobarEmail(sc, usuario);
 		
 		//Administrador va como falso, ya que un usuario normal no puede crearse como administrador
 		usuario.setAdministrador(false);
@@ -117,7 +114,7 @@ public class MenuInicial {
 		while (dniValido == false) {
 			String dni = sc.next();
 			
-			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) {
+			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) { //El String DNI tiene que tener obligatoriamente 8 números entre el rango del 0 al 9 y una letra de la A a la Z
 				usuario.setDni(dni.toUpperCase());
 				dniValido = true;
 			}
@@ -146,14 +143,18 @@ public class MenuInicial {
 	}
 	public static void verificarContraseña(Scanner sc, Usuario usuario) {
 		System.out.println("Repita la contraseña");
+		boolean contraseñaIgual = false;
 		
-		String contraseñaComparar = sc.next();
+		while (contraseñaIgual == false) {
+			String contraseñaComparar = sc.next();
 		
-		if (contraseñaComparar.equals(usuario.getContrasena())) {
-			usuario.setContrasena(contraseñaComparar);
-		}
-		else {
-			System.out.println("La contraseña que has introducido no coincide con la anterior, vuelve a intentarlo");
+			if (contraseñaComparar.equals(usuario.getContrasena())) {
+				usuario.setContrasena(contraseñaComparar);
+				contraseñaIgual = true;
+			}
+			else {
+				System.out.println("La contraseña que has introducido no coincide con la anterior, vuelve a intentarlo");
+			}
 		}
 	}
 	
@@ -186,6 +187,7 @@ public class MenuInicial {
 			}
 			else {
 				System.out.println("El teléfono que has introducido no es válido");
+				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres");
 			}
 		}
 	}

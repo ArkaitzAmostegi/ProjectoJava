@@ -55,6 +55,33 @@ public class RepositorioLogin {
 			}
 		 return existe;
 	 }
+	 
+	 //Método para comprobar que el DNI se encuentra en la BBDD
+	 public static boolean comprobarDni(String dni, String nombre) {
+		 boolean existe = false;
+		 
+		 String consulta = "SELECT COUNT(*) FROM usuario WHERE dni=? AND nombre=?";
+		 
+		 PreparedStatement s;
+		try {
+			s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, dni);
+			s.setString(2, nombre);
+			
+			ResultSet rs = s.executeQuery();
+			
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				existe = count > 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error al hacer la consulta " + consulta);
+		}
+		
+		return existe;
+	 }
+	 
 	 //Método para comprobar si el usuario es admin o no
 	 public static boolean comprobarAdmin(String nombre, String contraseña) {
 		 boolean admin=false;
@@ -72,8 +99,9 @@ public class RepositorioLogin {
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error al hacer la consulta"+ consulta);
+			System.out.println("Error al hacer la consulta " + consulta);
 		}
 		 return admin;
 	 }
+
 }

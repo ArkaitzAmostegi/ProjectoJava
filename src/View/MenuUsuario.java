@@ -1,14 +1,17 @@
 package View;
 
 import java.util.Scanner;
-
+import Repositorios.RepositorioLogin;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioUsuario;
+import Modelo.Usuario;
 
 public class MenuUsuario {
 
 	//Menú usuario 
 	public static void menuUsuario(Scanner sc, String nombre) {
+		
+		Modelo.Usuario usuario = new Usuario();
 		
 		int opcion=0;
 		do {
@@ -36,7 +39,7 @@ public class MenuUsuario {
 				hacerReserva(sc);
 				break;				
 			case 4: 
-				//modificarDatos(sc, usuario);
+				modificarDatos(sc, usuario);
 				break;
 			default:
 				System.out.println("Número erroneo");
@@ -77,5 +80,47 @@ public class MenuUsuario {
 		System.out.println("-----------------------");
 		RepositorioUsuario.mostrarVehiculo(); //Muestra los vehículos
 		System.out.println();
+	}
+	
+	//Modificar datos del usuario
+	private static void modificarDatos(Scanner sc, Usuario usuario) {
+		System.out.println("-----BIENVENIDO A NUESTRA WEB------");
+		System.out.println("---------EDITAR DATOS---------");
+		System.out.println("----------------------------");
+		
+		System.out.println("0. Volver atrás");
+		System.out.println("1. Modificar DNI");
+		System.out.println("2. Modificar nombre");
+		System.out.println("3. Modificar sexo");
+		System.out.println("4. Modificar número de teléfono");
+		System.out.println("5. Modificar correo electrónico");
+		System.out.println("6. Modificar contraseña");
+		
+		int opcion = sc.nextInt();
+		
+		switch (opcion) {
+		case 0: 
+			modificarDatos(sc, usuario);
+			break;
+		case 1:
+			System.out.println("Introduce tu DNI actual");
+			String dniActual = sc.next();
+			System.out.println("Introduce tu nombre");
+			String nombreActual = sc.next();
+			
+			if (RepositorioLogin.comprobarDni(dniActual, nombreActual)) { //Verificar que se encuentra el DNI y el nombre en la base de datos
+				System.out.println("Introduce tu nuevo DNI");
+				MenuInicial.comprobarDni(sc, usuario);
+				RepositorioUsuario.modificarDni(sc, usuario);
+			}
+			else {
+				System.out.println("No se ha encontrado el DNI o usuario en la base de datos de la empresa");
+				System.out.println();
+			}
+			break;
+		case 2:
+			System.out.println();
+			break;
+		}
 	}
 }
