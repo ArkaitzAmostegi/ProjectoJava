@@ -17,15 +17,19 @@ public class RepositorioUsuario {
 		 try {PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
 			ResultSet rs=s.executeQuery();
 			
+			System.out.println();
+			System.out.println("-----LISTADO DE VEHÍCULOS------");
+			System.out.println("MARCA----MODELO----TIPO-----KM");
+			System.out.println("-------------------------------");
 			while(rs.next()) {
-				System.out.println(rs.getString("Id_coche")+" " + rs.getString("marca")+" "+ rs.getString("modelo")+" "+ rs.getString("tipo")+" "+ rs.getInt("km"));
-				System.out.println(rs.getString("id_coche") + ". " + rs.getString("marca")+" "+ rs.getString("modelo")+" "+ rs.getString("tipo")+" "+ rs.getInt("km"));
+				System.out.println(rs.getString("marca")+" "+ rs.getString("modelo")+" "+ rs.getString("tipo")+" "+ rs.getInt("km"));
 			}
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error al hacer la consulta"+ consulta);
 		}
+		 System.out.println();
 	}
 	//Método para mostrar listado de oficinas
 		public static void mostrarOficina() {
@@ -35,6 +39,11 @@ public class RepositorioUsuario {
 			 try {PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
 				ResultSet rs=s.executeQuery();
 				
+				System.out.println("ESTAS SON NUESTRAS OFICINAS");
+				System.out.println("--------------------------------------------------------------------------------------");
+				System.out.println("-------NOMBRE-------------------CALLE----------------------TELÉFONO--------------EMAIL");
+				System.out.println("--------------------------------------------------------------------------------------");
+	
 				while(rs.next()) {
 					System.out.println(rs.getString("nombre")+" - "+ rs.getString("calle")+" - "+ rs.getString("telefono")+" - "+ rs.getString("email"));
 				}
@@ -43,6 +52,7 @@ public class RepositorioUsuario {
 				e.printStackTrace();
 				System.out.println("Error al hacer la consulta"+ consulta);
 			}
+			System.out.println();
 		}
 		
 	//Método para listar los usuarios
@@ -52,6 +62,11 @@ public class RepositorioUsuario {
 			 try {PreparedStatement s=ConectorBD.getconexion().prepareStatement(consulta);
 				ResultSet rs=s.executeQuery();
 				
+				System.out.println();
+				System.out.println("---------LISTADO DE USUARIOS----------");
+				System.out.println("---DNI----NOMBRE----TELÉFONO-----EMAIL");
+				System.out.println("--------------------------------------");
+				
 				while(rs.next()) {
 					System.out.println(rs.getString("dni")+" - "+ rs.getString("nombre")+" - "+ rs.getString("telefono")+" - "+ rs.getString("email"));
 				}
@@ -60,6 +75,7 @@ public class RepositorioUsuario {
 				e.printStackTrace();
 				System.out.println("Error al hacer la consulta"+ consulta);
 			}
+			 System.out.println();
 		}
 		
 	//Métodos para actualizar datos del usuario

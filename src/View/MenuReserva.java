@@ -13,7 +13,7 @@ public class MenuReserva {
 
 	    //Bucle mientras el nombre de la oficina no sea correcto
 	    while (true) {
-	        System.out.println("Introduzca el nombre de la oficina donde desea realizar la reserva:");
+	        System.out.println("Introduzca el nombre de la oficina desde donde desea realizar la reserva:");
 	        System.out.println("Le mostraremos los coches disponibles en esa oficina.");
 	        nombreOficina = sc.nextLine().trim(); // Trin() Elimina espacios en blanco
 
@@ -21,7 +21,7 @@ public class MenuReserva {
 	        if (comprobarOficina(nombreOficina)) {
 	            break; // Sale del bucle si la oficina es válida
 	        } else {
-	            System.out.println("ERROR. Nombre de la oficina mal introducido. Inténtelo nuevamente.\n");
+	            System.out.println("ERROR. Nombre de la oficina mal introducido. Inténtelo nuevamente. Gracias.\n");
 	        }
 	    }
 
@@ -47,15 +47,15 @@ public class MenuReserva {
 	public static void elegirVehiculo (Scanner sc) {
 		
 		while (true) {
-			System.out.println("Introduzca la matricula del vehiculo elegido");
+			System.out.println("Introduzca la matrícula del vehículo elegido");
 			String matricula = sc.nextLine().trim();
 			//Comprobar si existe esa matricula
 			if(comprobarMatricula(matricula)) { 
 				
 				break;
 			}else {
-				System.out.println("ERROR. Matricula mal introducida");
-				System.out.println("Por favor, pruebe de nuevo. Gracias");
+				System.out.println("ERROR. Matrícula mal introducida");
+				System.out.println("Por favor, pruebe de nuevo. Gracias.");
 			}
 		}
 		
@@ -65,7 +65,7 @@ public class MenuReserva {
 	public static boolean comprobarMatricula(String matricula) {
 		boolean existe = RepositorioReserva.comprobarMatricula(matricula);
 		if (existe) {
-			System.out.println("\nUds. ha elegido de nuestra oficina, el vehículo: " );
+			System.out.println("\nUds. ha elegido de nuestra oficina, y el vehículo siguientes: " );
 			//Hace la consulta del vehículo para que escriba el modelo con todas sus caráteristicas
 			RepositorioReserva.vehiculoSeleccionado(matricula);	
 		}

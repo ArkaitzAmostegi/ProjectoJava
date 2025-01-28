@@ -11,12 +11,13 @@ import Repositorios.RepositorioVehiculo;
 public class MenuAnadirVehiculo {
 
 	//Menú para añadir vehiculos
-	public static void anadirVehiculo(Scanner sc) {
+	public static void anadirVehiculo(Scanner sc, String nombre) {
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("--------AÑADIR VEHICULO-------");
+			System.out.println("-------------" + nombre + "--------------");
+			System.out.println("-------------AÑADIR VEHICULO---------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Añadir furgoneta a la BDD");
 			System.out.println("2.-Añadir monovolumen a la BDD");
@@ -70,7 +71,7 @@ public class MenuAnadirVehiculo {
 		turis.setPotencia(sc.nextInt());
 		sc.nextLine();
 		
-		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
+		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo(de la 1 a la 23): ");
 		turis.setId_oficina(sc.nextInt());
 		sc.nextLine();
 		

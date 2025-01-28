@@ -19,6 +19,7 @@ public class MenuAdministrador {
 		int opcion=0;
 		
 		do {
+			System.out.println();
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("--------------- "+ nombre +" ---------------");
 			System.out.println("0.-Salir de la web");
@@ -32,7 +33,7 @@ public class MenuAdministrador {
 			System.out.println("8.-Cambiar km a los vehículos");
 			System.out.println("9.-Crear administrador de la BDD");
 			System.out.println("10.-Eliminar un usuario de la BDD");
-			System.out.println("11.-Menú usuario");
+			System.out.println("11.-Ir al menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -46,7 +47,7 @@ public class MenuAdministrador {
 				RepositorioUsuario.mostrarUsuario();
 				break;
 			case 3: 
-				MenuAnadirVehiculo.anadirVehiculo(sc);
+				MenuAnadirVehiculo.anadirVehiculo(sc, nombre);
 				break;
 			case 4: 
 				eliminarVehiculo(sc);
