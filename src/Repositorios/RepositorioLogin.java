@@ -25,8 +25,8 @@ public class RepositorioLogin {
 				preparedStatement.setString(6, usuario.getContrasena());
 				preparedStatement.setBoolean(7, usuario.isAdministrador());
 		       
-		        
 		        preparedStatement.executeUpdate();
+		        
 		    }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }

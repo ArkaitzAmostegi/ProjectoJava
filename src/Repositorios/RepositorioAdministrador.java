@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import Modelo.Oficina;
+import Modelo.Vehiculo;
 
 public class RepositorioAdministrador {
 
@@ -99,6 +100,26 @@ public class RepositorioAdministrador {
 		      }
 			
 		}catch(Exception e) {
+			System.out.println("Error "+e.getMessage());
+		}
+	}
+	
+	//Método para introducir Km a un vehículo
+	public static void introducirKm(Vehiculo vehiculo) {
+		
+		String consulta = "UPDATE vehiculo SET km = ? WHERE matricula = ? ";
+			
+		
+		try(PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta) ){
+			
+			s.setInt(1, vehiculo.getKm());
+			s.setString(2, vehiculo.getMatricula());
+			
+			s.executeUpdate();
+			
+			System.out.println("Kms del vehículo cambiados exitosamente");
+			
+		}catch (Exception e) {
 			System.out.println("Error "+e.getMessage());
 		}
 	}

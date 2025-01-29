@@ -21,6 +21,7 @@ public class MenuInicial {
 	int opcion=0;
 	
 	do {
+		System.out.println();
 		System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 		System.out.println("---------MENÚ INICIAL---------");
 		System.out.println("----------------------------");

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Modelo.Vehiculo;
+import View.MenuAnadirVehiculo;
 
 public class RepositorioVehiculo {
 
@@ -41,7 +42,7 @@ public class RepositorioVehiculo {
 	 //Añadir furgoneta
 	 public static void insertarFurgoneta(Furgoneta furgo) {
 		 
-		 String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, tamaño, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		 String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, tamaño, precio_furgoneta, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		 
 		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
 			 s.setInt(1, furgo.getId_coche());
@@ -51,7 +52,8 @@ public class RepositorioVehiculo {
 			 s.setInt(5, furgo.getKm());
 			 s.setString(6, furgo.gettipo());
 			 s.setString(7, furgo.getTamano().toString());
-			 s.setInt(8,  furgo.getId_oficina());
+			 s.setDouble(8, furgo.getPrecio_furgoneta());
+			 s.setInt(9, furgo.getId_oficina());
 			 
 			 s.executeUpdate();	 
 			 
@@ -63,7 +65,7 @@ public class RepositorioVehiculo {
 	 //Añadir Monovolumen
 	public static void insertarMonovolumen(Monovolumen mono) {
 		
-		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, num_puertas, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, num_puertas, precio_monovolumen id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		 
 		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
 			 s.setInt(1, mono.getId_coche());
@@ -73,7 +75,8 @@ public class RepositorioVehiculo {
 			 s.setInt(5, mono.getKm());
 			 s.setString(6, mono.gettipo());
 			 s.setInt(7, mono.getNumPuertas());
-			 s.setInt(8,  mono.getId_oficina());
+			 s.setDouble(8, mono.getPrecio_monovolumen());
+			 s.setInt(9,  mono.getId_oficina());
 			 
 			 s.executeUpdate();
 			 
@@ -84,7 +87,7 @@ public class RepositorioVehiculo {
 	}
 	//Añadir turismo
 	public static void insertarTurismo(Turismo turis) {
-		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, potencia, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, potencia, precio_turismo, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		 
 		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
 			 s.setInt(1, turis.getId_coche());
@@ -94,7 +97,8 @@ public class RepositorioVehiculo {
 			 s.setInt(5, turis.getKm());
 			 s.setString(6, turis.gettipo());
 			 s.setInt(7, turis.getPotencia());
-			 s.setInt(8, turis.getId_oficina());
+			 s.setDouble(8, turis.getPrecio_turismo());
+			 s.setInt(9, turis.getId_oficina());
 			 
 			 s.executeUpdate();
 			 

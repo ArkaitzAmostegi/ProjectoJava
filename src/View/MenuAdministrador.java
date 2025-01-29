@@ -7,6 +7,7 @@ import Modelo.Usuario;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioAdministrador;
 import Repositorios.RepositorioLogin;
+import Repositorios.RepositorioReserva;
 import Repositorios.RepositorioUsuario;
 import Repositorios.RepositorioVehiculo;
 
@@ -18,6 +19,7 @@ public class MenuAdministrador {
 		int opcion=0;
 		
 		do {
+			System.out.println();
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("--------------- "+ nombre +" ---------------");
 			System.out.println("0.-Salir de la web");
@@ -31,7 +33,7 @@ public class MenuAdministrador {
 			System.out.println("8.-Cambiar km a los vehículos");
 			System.out.println("9.-Crear administrador de la BDD");
 			System.out.println("10.-Eliminar un usuario de la BDD");
-			System.out.println("11.-Menú usuario");
+			System.out.println("11.-Ir al menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -45,7 +47,7 @@ public class MenuAdministrador {
 				RepositorioUsuario.mostrarUsuario();
 				break;
 			case 3: 
-				MenuAnadirVehiculo.anadirVehiculo(sc);
+				MenuAnadirVehiculo.anadirVehiculo(sc, nombre); // Falta corregir anadirFurgoneta();
 				break;
 			case 4: 
 				eliminarVehiculo(sc);
@@ -80,6 +82,27 @@ public class MenuAdministrador {
 		System.out.println("Ha salido de nuestra web");
 	}
 	
+	//Método para cambiar los Km al vehiculo
+	private static void cambiarKm(Scanner sc) {
+		
+		Vehiculo vehiculo = new Vehiculo();
+		
+		System.out.println("Introduce la matrícula del vehículo al que deseas cambiar los km: ");
+		vehiculo.setMatricula(sc.nextLine());
+		//Comprobamos vehículo
+		System.out.println("Es este el vehículo que desea modificar?");
+		
+		RepositorioReserva.vehiculoSeleccionado(vehiculo.getMatricula());//Método para consultar matrícula
+		System.out.println("Intoduce (SI/NO): ");
+		String opcion = sc.nextLine().trim();
+		
+		if(opcion.equalsIgnoreCase("si")){
+			System.out.println("Introduce los Km nuevos al vehículo:");
+			vehiculo.setKm(sc.nextInt());
+			RepositorioAdministrador.introducirKm(vehiculo);//Método para introducir km
+			}
+	}
+
 	//Método eliminar usuario
 	private static void eliminarUsuario(Scanner sc, Usuario usuario) {
 		System.out.println("Introduce el nombre del usuario que desee eliminar: ");

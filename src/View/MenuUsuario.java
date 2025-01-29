@@ -30,10 +30,10 @@ public class MenuUsuario {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				mirarVehiculo();
+				RepositorioUsuario.mostrarVehiculo();
 				break;
 			case 2: 
-				mirarOficina();
+				RepositorioUsuario.mostrarOficina(); 
 				break;
 			case 3: 
 				hacerReserva(sc);
@@ -59,27 +59,6 @@ public class MenuUsuario {
 		System.out.println();
 		MenuReserva.elegirVehiculo(sc); //elegir vehiculo
 		MenuReserva.validarReserva(sc); //validamos el vehículo y la oficina seleccionados
-	}
-
-	//Muestra todas las oficinas
-	private static void mirarOficina() {
-		System.out.println("ESTAS SON NUESTRAS OFICINAS");
-		System.out.println("--------------------------------------------------------------------------------------");
-		System.out.println("-------Nombre-------------------Calle----------------------Teléfono--------------Email");
-		System.out.println("--------------------------------------------------------------------------------------");
-		RepositorioUsuario.mostrarOficina(); //Muestra las oficinas
-		System.out.println();
-	}
-	
-	//Muestra todos los vehículos
-	private static void mirarVehiculo() {
-		System.out.println();
-		System.out.println("ESTOS SON NUESTROS VEHÍCULOS");
-		System.out.println("-----------------------");
-		System.out.println("Marca--Modelo--Tipo--Km");
-		System.out.println("-----------------------");
-		RepositorioUsuario.mostrarVehiculo(); //Muestra los vehículos
-		System.out.println();
 	}
 	
 	//Modificar datos del usuario

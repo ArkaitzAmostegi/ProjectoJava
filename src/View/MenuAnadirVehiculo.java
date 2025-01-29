@@ -12,12 +12,13 @@ import Repositorios.RepositorioVehiculo;
 public class MenuAnadirVehiculo {
 
 	//Menú para añadir vehiculos
-	public static void anadirVehiculo(Scanner sc) {
+	public static void anadirVehiculo(Scanner sc, String nombre) {
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("--------AÑADIR VEHICULO-------");
+			System.out.println("-------------" + nombre + "--------------");
+			System.out.println("-------------AÑADIR VEHICULO---------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Añadir furgoneta a la BDD");
 			System.out.println("2.-Añadir monovolumen a la BDD");
@@ -28,7 +29,7 @@ public class MenuAnadirVehiculo {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				anadirFrugoneta(sc);
+				anadirFrugoneta(sc); //No está bien acabado, no se introduce por el enum
 				break;
 			case 2: 
 				anadirMonovolumen(sc);
@@ -71,7 +72,7 @@ public class MenuAnadirVehiculo {
 		turis.setPotencia(sc.nextInt());
 		sc.nextLine();
 		
-		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
+		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo(de la 1 a la 23): ");
 		RepositorioUsuario.mostrarOficina();
 		turis.setId_oficina(sc.nextInt());
 		sc.nextLine();
@@ -149,7 +150,7 @@ public class MenuAnadirVehiculo {
 	}
 
 	//Método tamaño furgo
-	private static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
+	public static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
 		Tamano[] lista=Tamano.values();
 		
 		System.out.println("Te mostramos la lista de tamaños");

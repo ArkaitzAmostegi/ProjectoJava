@@ -5,6 +5,7 @@ public class Monovolumen extends Vehiculo{
 	
 	//Atributos
 	private int numPuertas;
+	private double precio_monovolumen;
 	
 	
 	//Getters & Setters
@@ -13,14 +14,23 @@ public class Monovolumen extends Vehiculo{
 	}
 	public void setNumPuertas(int numPuertas) {
 	    this.numPuertas = numPuertas;
+	}	
+	public double getPrecio_monovolumen() {
+		return precio_monovolumen;
+	}
+	public void setPrecio_monovolumen(double precio_monovolumen) {
+		this.precio_monovolumen = precio_monovolumen;
 	}
 	
 	//Constructores
-	public Monovolumen(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, int numPuertas) {
-	    super(id_coche, id_oficina, matricula, marca, modelo, km);
-	    this.numPuertas = numPuertas;
-	}
+	
 	public Monovolumen() {
+	}
+	public Monovolumen(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km,
+			int numPuertas, double precio_monovolumen) {
+		super(id_coche, id_oficina, matricula, marca, modelo, km);
+		this.numPuertas = numPuertas;
+		this.precio_monovolumen = precio_monovolumen;
 	}
 }
 
