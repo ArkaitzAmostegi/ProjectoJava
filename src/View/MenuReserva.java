@@ -1,5 +1,8 @@
 package View;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 import Repositorios.RepositorioReserva;
@@ -44,21 +47,19 @@ public class MenuReserva {
 	}
 
 	//Método para elegir el vehiculo para la reserva
-	public static void elegirVehiculo (Scanner sc) {
+	public static String elegirVehiculo (Scanner sc) {
 		
 		while (true) {
 			System.out.println("Introduzca la matrícula del vehículo elegido");
 			String matricula = sc.nextLine().trim();
 			//Comprobar si existe esa matricula
 			if(comprobarMatricula(matricula)) { 
-				
-				break;
+				return matricula;
 			}else {
 				System.out.println("ERROR. Matrícula mal introducida");
 				System.out.println("Por favor, pruebe de nuevo. Gracias.");
 			}
 		}
-		
 	}
 	
 	//Método para comprobar si el vehículo está bien escrito
@@ -78,9 +79,73 @@ public class MenuReserva {
 		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está conforme escriba 'NO'");
 		String opcion = sc.nextLine();
 		if (opcion.equalsIgnoreCase("si")) {
-			System.out.println("Operación aprobada\n");//Hay que seguir este proceso
+			conSinConductor(sc);
 		}else System.out.println("Operación cancelada\n");
 	}
+	
+	//Método para elegir conductor si es true (con conductor) se multiplicará el precio del día por 1.25
+	public static boolean conSinConductor(Scanner sc) {
+		boolean opcion= false;
+		System.out.println("Quiere reservar el vehículo con o sin conductor?");
+		System.out.println("Para reservar el vehículo con conductor, escriba (CON). Para reservar el vehículo sin conductor, escriba (SIN)");
+		String consin=sc.nextLine();
+		if (consin.equalsIgnoreCase("CON")) {
+			return opcion= true;
+		}else return opcion = false;
+	}
+	
+	//Método cantidad de días que va ha hacer la reserva
+	public static long cantidadDias(Scanner sc, String matricula) {
+		
+		System.out.println("Indícanos una fecha de recogida (aaaa/mm/dd: ");
+		String fecha_recogida= sc.nextLine();
+		//Comprobar formatoFecha();
+		Date fechaR=convertirFecha(fecha_recogida);
+		
+		System.out.println("Indicanos una fecha de entrega (aaaa/mm/dd): ");
+		String fecha_entrega= sc.nextLine();
+		Date fechaE=convertirFecha(fecha_entrega);
 
+		RepositorioReserva.comprobarFecha(matricula, fecha_entrega, fecha_recogida);
+		
+		//Método para hacer la resta de días
+		long ms= fechaE.getTime() - fechaR.getTime();
+		long dias= ms/(1000*60*60*24);
+		System.out.println(dias);
+	
+		return dias;
+	}
+
+	//Método precio final del alquiler por días
+	public static void precioDia(Scanner sc, String matricula) {
+		
+		//el precio es igual al vehículo alquilado*factor con conductor* km
+		double precioDia = 0;
+		
+		if (conSinConductor(sc)) { //50 son los euros por día que cuesta el alquiler
+			precioDia = (cantidadDias(sc, matricula) * 50) * 1.25;
+		}else precioDia = cantidadDias(sc, matricula) * 50;
+		
+		System.out.println("El precio total de la reserva es: "+precioDia+ " €");
+	}
+	//Método para pasar de string a date datetime
+	private static Date convertirFecha(String fechaString) {
+	    
+	    SimpleDateFormat formatoEntrada = new SimpleDateFormat("yyyy/MM/dd");
+	    java.sql.Date fechaSql = null;
+	    try {
+	        // Convertir el String a java.util.Date
+	        java.util.Date fechaUtil = formatoEntrada.parse(fechaString);
+	        
+	        // Convertir el java.util.Date a java.sql.Date
+	        fechaSql = new java.sql.Date(fechaUtil.getTime());
+	        
+	        
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	    }
+	    return fechaSql;
+	}
+	//Método precio final del alquiler por km
 }
 

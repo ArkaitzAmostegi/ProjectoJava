@@ -89,4 +89,30 @@ public class RepositorioReserva {
 		}
 		return existe;
 	}
+	
+	//Método para comprobar si el vehículo de esa oficina está libre esa fecha
+	public static boolean comprobarFecha(String matricula, String fecha_recogida, String fecha_entrega) {
+		boolean existe= false;
+		
+		String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ? ";
+		
+		try {
+			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, matricula);
+			s.setString(2, fecha_entrega);
+			s.setString(3, fecha_recogida);
+			
+			ResultSet rs= s.executeQuery();
+			
+			if(rs.next()) {
+				existe = true;
+				
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+ consulta);
+		}
+		return existe;
+	}
 }

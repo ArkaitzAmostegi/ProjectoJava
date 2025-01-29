@@ -57,8 +57,16 @@ public class MenuUsuario {
 		System.out.println();
 		MenuReserva.elegirOficina(sc); //elegir oficina
 		System.out.println();
-		MenuReserva.elegirVehiculo(sc); //elegir vehiculo
-		MenuReserva.validarReserva(sc); //validamos el vehículo y la oficina seleccionados
+		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo
+		MenuReserva.validarReserva(sc); //validamos el vehículo y la oficina seleccionados. y elige con o sin conductor
+		MenuReserva.cantidadDias(sc, matricula); //Cantidad de días de reserva
+		
+		
+		//if reserva por dias
+		MenuReserva.precioDia(sc, matricula); // Precio día del alquiler
+		
+		//if reserva por km
+		
 	}
 	
 	//Modificar datos del usuario
