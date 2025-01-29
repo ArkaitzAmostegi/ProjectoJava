@@ -97,15 +97,31 @@ public class MenuReserva {
 	//Método cantidad de días que va ha hacer la reserva
 	public static long cantidadDias(Scanner sc, String matricula) {
 		
-		System.out.println("Indícanos una fecha de recogida (aaaa/mm/dd: ");
-		String fecha_recogida= sc.nextLine();
+		String regex = "\\d{4}/\\d{2}/\\d{2}"; // Para formato aaaa/mm/dd
+		
+        String fecha_recogida = " ";
+		String fecha_entrega = " ";
+        
+		do {
+			System.out.println("Indícanos una fecha de recogida (aaaa/mm/dd): ");
+			fecha_recogida= sc.nextLine();
+			if (!fecha_recogida.matches(regex)) {
+				System.out.println("Ha habido un error");
+			}
+		}while(!fecha_recogida.matches(regex));
 		//Comprobar formatoFecha();
 		Date fechaR=convertirFecha(fecha_recogida);
 		
-		System.out.println("Indicanos una fecha de entrega (aaaa/mm/dd): ");
-		String fecha_entrega= sc.nextLine();
+		do {
+			System.out.println("Indicanos una fecha de entrega (aaaa/mm/dd): ");
+			fecha_entrega= sc.nextLine();
+			if(!fecha_entrega.matches(regex)) {
+				System.out.println("Ha habido un error");
+			}
+		}while(!fecha_entrega.matches(regex));
+		//Comprobar formatoFecha();
 		Date fechaE=convertirFecha(fecha_entrega);
-
+		
 		RepositorioReserva.comprobarFecha(matricula, fecha_entrega, fecha_recogida);
 		
 		//Método para hacer la resta de días
