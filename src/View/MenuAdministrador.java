@@ -60,7 +60,7 @@ public class MenuAdministrador {
 				//eliminarReserva(sc);
 				break;
 			case 8:
-				//cambiarKm(sc);
+				cambiarKm(sc, usuario);
 				break;
 			case 9:
 				crearAdministrador(sc, usuario);
@@ -133,8 +133,8 @@ public class MenuAdministrador {
 		System.out.println("Introduce el nombre de la oficina que desee eliminar: ");
 		String nombre=sc.nextLine();
 		
-		System.out.println("Esta seguro que desea eliminar esta oficina (SI/NO)?");
-		System.out.println("Nombre---------DNI------------telefono");
+		System.out.println("¿Está seguro que desea eliminar esta oficina (SI/NO)?");
+		System.out.println("Nombre---------País------------Teléfono");
 		RepositorioAdministrador.consultaOficina(nombre);//Método para consultar oficina
 		String opcion=sc.nextLine().trim();
 		if (opcion.equalsIgnoreCase("SI")) {
@@ -177,7 +177,8 @@ public class MenuAdministrador {
 		Vehiculo v = new Vehiculo();
 		
 		System.out.println("Introduce la  matricula del vehiculo que desea eliminar: ");
-		String matricula = sc.nextLine();
+		RepositorioUsuario.mostrarMatriculaVehiculo();
+		String matricula = sc.next();
 		
 		System.out.println("El vehículo que desea eliminar, es el: ");
 		RepositorioVehiculo.consultarMatricula(matricula);
@@ -189,5 +190,14 @@ public class MenuAdministrador {
 			RepositorioVehiculo.eliminarVehiculo(matricula);
 			System.out.println("Vehículo eliminado de nuestra base de datos");
 		}
+	}
+	
+	//Método para cambiar los KMs
+	private static void cambiarKm(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce la matricula del vehículo al que desea modificar la cantidad de kilometros");
+		RepositorioUsuario.mostrarMatriculaVehiculo();
+		String matricula = sc.next();
+		
+		System.out.println();
 	}
 }

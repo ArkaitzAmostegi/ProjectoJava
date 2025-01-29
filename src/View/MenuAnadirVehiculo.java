@@ -6,6 +6,7 @@ import Modelo.Furgoneta;
 import Modelo.Monovolumen;
 import Modelo.Tamano;
 import Modelo.Turismo;
+import Repositorios.RepositorioUsuario;
 import Repositorios.RepositorioVehiculo;
 
 public class MenuAnadirVehiculo {
@@ -71,6 +72,7 @@ public class MenuAnadirVehiculo {
 		sc.nextLine();
 		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
+		RepositorioUsuario.mostrarOficina();
 		turis.setId_oficina(sc.nextInt());
 		sc.nextLine();
 		
@@ -104,6 +106,7 @@ public class MenuAnadirVehiculo {
 		mono.setNumPuertas(sc.nextInt());
 		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
+		RepositorioUsuario.mostrarOficina();
 		mono.setId_oficina(sc.nextInt());
 		sc.nextLine();
 		
@@ -137,6 +140,7 @@ public class MenuAnadirVehiculo {
 		tamanoFurgo(sc, furgo);
 		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
+		RepositorioUsuario.mostrarOficina();
 		furgo.setId_oficina(sc.nextInt());
 		sc.nextLine();
 		

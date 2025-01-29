@@ -26,6 +26,51 @@ public class RepositorioUsuario {
 			System.out.println("Error al hacer la consulta"+ consulta);
 		}
 	}
+	
+	//Método para mostrar vehículos con la matricula
+	public static void mostrarMatriculaVehiculo() {
+		String consulta=  "SELECT * FROM vehiculo";
+		
+		PreparedStatement s;
+		try {
+			s = ConectorBD.getconexion().prepareStatement(consulta);
+			ResultSet rs=s.executeQuery();
+			
+			while (rs.next()) {
+				System.out.println(rs.getString("id_coche") + ". " + rs.getString("matricula") + " " + rs.getString("marca") + " " + rs.getString("modelo") + " " + rs.getString("tipo"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	 //Método para comprobar que la matricula de un vehiculo se encuentra en la BBDD
+	 public static boolean comprobarMatricula(String matricula) {
+		 boolean existe = false;
+		 
+		 String consulta = "SELECT COUNT(*) FROM usuario WHERE matricula=?";
+		 
+		 PreparedStatement s;
+		try {
+			s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, matricula);
+			
+			ResultSet rs = s.executeQuery();
+			
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				existe = count > 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error al hacer la consulta " + consulta);
+		}
+		
+		return existe;
+	 }
+	
 	//Método para mostrar listado de oficinas
 		public static void mostrarOficina() {
 			
