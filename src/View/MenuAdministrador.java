@@ -47,7 +47,7 @@ public class MenuAdministrador {
 				RepositorioUsuario.mostrarUsuario();
 				break;
 			case 3: 
-				MenuAnadirVehiculo.anadirVehiculo(sc, nombre); // Falta corregir anadirFurgoneta();
+				MenuAnadirVehiculo.anadirVehiculo(sc, nombre);
 				break;
 			case 4: 
 				eliminarVehiculo(sc);
