@@ -115,4 +115,9 @@ public class RepositorioReserva {
 		}
 		return existe;
 	}
+	
+	//Método insertar el alquiler del vehículo en la tabla usuario_vehiculo
+	public static void anadirReserva(String matricula, String fecha_recogida, String fecha_entrega) {
+		
+	}
 }
