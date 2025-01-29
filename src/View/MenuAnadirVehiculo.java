@@ -72,6 +72,9 @@ public class MenuAnadirVehiculo {
 		turis.setPotencia(sc.nextInt());
 		sc.nextLine();
 		
+		System.out.println("Introduce el precio/km del vehículo");
+		turis.setPrecio_turismo(sc.nextDouble());
+		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo(de la 1 a la 23): ");
 		RepositorioUsuario.mostrarOficina();
 		turis.setId_oficina(sc.nextInt());
@@ -106,6 +109,9 @@ public class MenuAnadirVehiculo {
 		System.out.println("Introduce el nº de puertas");
 		mono.setNumPuertas(sc.nextInt());
 		
+		System.out.println("Introduce el precio/km del vehículo");
+		mono.setPrecio_monovolumen(sc.nextDouble());
+		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
 		RepositorioUsuario.mostrarOficina();
 		mono.setId_oficina(sc.nextInt());
@@ -139,6 +145,9 @@ public class MenuAnadirVehiculo {
 		
 		System.out.println("Introduce el tamaño de la furgoneta");
 		tamanoFurgo(sc, furgo);
+		
+		System.out.println("Introduce el precio/km del vehículo");
+		furgo.setPrecio_furgoneta(sc.nextDouble());
 		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
 		RepositorioUsuario.mostrarOficina();
