@@ -6,18 +6,21 @@ import Modelo.Furgoneta;
 import Modelo.Monovolumen;
 import Modelo.Tamano;
 import Modelo.Turismo;
+import Modelo.Usuario;
 import Repositorios.RepositorioUsuario;
 import Repositorios.RepositorioVehiculo;
 
 public class MenuAnadirVehiculo {
 
 	//Menú para añadir vehiculos
-	public static void anadirVehiculo(Scanner sc) {
+	public static void anadirVehiculo(Scanner sc, Usuario usuario) {
+		
+		String nombre = usuario.getNombre();
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("-------------" +"--------------");
+			System.out.println("--------------- "+nombre+" --------------");
 			System.out.println("-------------AÑADIR VEHICULO---------");
 			System.out.println("0.-Volver atrás");
 			System.out.println("1.-Añadir furgoneta a la BDD");

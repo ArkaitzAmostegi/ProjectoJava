@@ -22,6 +22,7 @@ public class MenuAdministrador {
 			System.out.println();
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("--------------- "+nombre+" ---------------");
+			System.out.println("--------------ELIJA UNA OPCIÓN---------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Ver la lista de vehículos registrados");
 			System.out.println("2.-Ver la lista de usuarios registrados");
@@ -48,7 +49,7 @@ public class MenuAdministrador {
 				RepositorioUsuario.mostrarUsuario();
 				break;
 			case 3: 
-				MenuAnadirVehiculo.anadirVehiculo(sc); 
+				MenuAnadirVehiculo.anadirVehiculo(sc, usuario); 
 				break;
 			case 4: 
 				eliminarVehiculo(sc);
