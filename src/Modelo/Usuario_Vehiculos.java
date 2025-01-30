@@ -5,7 +5,8 @@ public class Usuario_Vehiculos {
 	 //Atributos
     private int dni;
     private int id_coche;
-    private String fecha;
+    private String fecha_entrega;
+    private String fecha_recogida;
     private String lugarEntregaRecogida;
     private boolean conSinConductor;
 
@@ -23,13 +24,20 @@ public class Usuario_Vehiculos {
     public void setId_coche(int id_coche) {
         this.id_coche = id_coche;
     }
-    public String getFecha() {
-        return fecha;
-    }
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-    public String getLugarEntregaRecogida() {
+    
+    public String getFecha_entrega() {
+		return fecha_entrega;
+	}
+	public void setFecha_entrega(String fecha_entrega) {
+		this.fecha_entrega = fecha_entrega;
+	}
+	public String getFecha_recogida() {
+		return fecha_recogida;
+	}
+	public void setFecha_recogida(String fecha_recogida) {
+		this.fecha_recogida = fecha_recogida;
+	}
+	public String getLugarEntregaRecogida() {
         return lugarEntregaRecogida;
     }
     public void setLugarEntregaRecogida(String lugarEntregaRecogida) {
@@ -43,14 +51,18 @@ public class Usuario_Vehiculos {
     }
     
     //Constructores
-    public Usuario_Vehiculos(int dni, int id_coche, String fecha, String lugarEntregaRecogida, boolean conSinConductor) {
-        this.dni = dni;
-        this.id_coche = id_coche;
-        this.fecha = fecha;
-        this.lugarEntregaRecogida = lugarEntregaRecogida;
-        this.conSinConductor = conSinConductor;
-    }
+    
     public Usuario_Vehiculos() {
     }
+	public Usuario_Vehiculos(int dni, int id_coche, String fecha_entrega, String fecha_recogida,
+			String lugarEntregaRecogida, boolean conSinConductor) {
+		super();
+		this.dni = dni;
+		this.id_coche = id_coche;
+		this.fecha_entrega = fecha_entrega;
+		this.fecha_recogida = fecha_recogida;
+		this.lugarEntregaRecogida = lugarEntregaRecogida;
+		this.conSinConductor = conSinConductor;
+	}
 }
 

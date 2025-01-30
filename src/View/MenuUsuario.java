@@ -58,8 +58,10 @@ public class MenuUsuario {
 		System.out.println();
 		MenuReserva.elegirOficina(sc); //elegir oficina
 		System.out.println();
-		MenuReserva.elegirVehiculo(sc); //elegir vehiculo
-		MenuReserva.validarReserva(sc); //validamos el vehículo y la oficina seleccionados
+		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo
+		
+		MenuReserva.validarReserva(sc, matricula); //validamos el vehículo y la oficina seleccionados. y elige con o sin conductor
+		System.out.println();
 	}
 	
 	//Modificar datos del usuario
