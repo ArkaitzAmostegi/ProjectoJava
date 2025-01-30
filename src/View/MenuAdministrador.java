@@ -14,14 +14,13 @@ import Repositorios.RepositorioVehiculo;
 public class MenuAdministrador {
 
 	//Menú administrador
-	public static void menuAdministrador(Scanner sc, String nombre) {
-		Usuario usuario = new Usuario();
+	public static void menuAdministrador(Scanner sc, Usuario usuario) {
 		int opcion=0;
 		
 		do {
 			System.out.println();
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("--------------- "+ nombre +" ---------------");
+			System.out.println("--------------- "+" ---------------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Ver la lista de vehículos registrados");
 			System.out.println("2.-Ver la lista de usuarios registrados");
@@ -47,7 +46,7 @@ public class MenuAdministrador {
 				RepositorioUsuario.mostrarUsuario();
 				break;
 			case 3: 
-				MenuAnadirVehiculo.anadirVehiculo(sc, nombre); // Falta corregir anadirFurgoneta();
+				MenuAnadirVehiculo.anadirVehiculo(sc); 
 				break;
 			case 4: 
 				eliminarVehiculo(sc);
@@ -71,7 +70,7 @@ public class MenuAdministrador {
 				eliminarUsuario(sc, usuario);
 				break;
 			case 11:
-				MenuUsuario.menuUsuario(sc, nombre);
+				MenuUsuario.menuUsuario(sc, usuario);
 				break;
 			default:
 				System.out.println("Número erroneo");

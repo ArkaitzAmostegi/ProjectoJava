@@ -5,6 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Modelo.Usuario;
+import Modelo.Usuario_Vehiculo;
+
+
 public class RepositorioReserva {
 
 	
@@ -46,6 +50,24 @@ public class RepositorioReserva {
 			System.out.println("Error al hacer la consulta "+ consulta);
 		}
 		return existe;
+	}
+	//Mostar listado de oficinas en españa
+	public static void mostrarOficinasEspana() {
+		
+		String consulta = "SELECT * FROM oficina WHERE pais = 'España'";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		
+		ResultSet rs = s.executeQuery();
+		
+		while (rs.next()) {
+			System.out.println("oficina: "+rs.getString("nombre")+" "+rs.getString("ciudad")+" "+rs.getString("telefono"));
+		}
+			
+		}catch (Exception e){
+			e.printStackTrace();
+			System.out.println("Error "+ consulta);
+		}
 	}
 	
 	//Método para mostrar el vehiculo y la oficina elegidos
@@ -94,7 +116,7 @@ public class RepositorioReserva {
 	public static boolean comprobarFecha(String matricula, String fecha_recogida, String fecha_entrega) {
 		boolean existe= false;
 		
-		String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ? ";
+		String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ?";
 		
 		try {
 			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
@@ -105,8 +127,7 @@ public class RepositorioReserva {
 			ResultSet rs= s.executeQuery();
 			
 			if(rs.next()) {
-				existe = true;
-				
+				existe = true;	
 			}
 			
 		}catch (Exception e) {
@@ -115,9 +136,71 @@ public class RepositorioReserva {
 		}
 		return existe;
 	}
-	
-	//Método insertar el alquiler del vehículo en la tabla usuario_vehiculo
-	public static void anadirReserva(String matricula, String fecha_recogida, String fecha_entrega) {
+	//Métod para sacar el id del vehículo
+	public static int obtenerId(String matricula) {
+		int id_coche=0;
+		
+		String consulta = "SELECT * FROM vehiculo WHERE matricula = ?";
+		
+		try {
+			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, matricula);
+			
+			ResultSet rs = s.executeQuery();
+			while(rs.next()) {
+				id_coche= rs.getInt("id_coche");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error " +consulta);
+		}
+		return id_coche;
 		
 	}
+	//Método insertar el alquiler del vehículo en la tabla usuario_vehiculo
+	public static void anadirReserva(Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
+		
+		String consulta = "INSERT INTO usuario_vehiculo (dni, id_coche, precio_total, fecha_recogida, fecha_entrega, conconductor, Lugar_recogida, Lugar_entrega, alquilado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareCall(consulta);
+			s.setString(1, usuariovehiculo.getDni());
+			s.setInt(2, usuariovehiculo.getId_coche());
+			s.setDouble(3, usuariovehiculo.getPrecio_total());
+			s.setString(4, usuariovehiculo.getFecha_recogida());
+			s.setString(5, usuariovehiculo.getFecha_entrega());
+			s.setBoolean(6, usuariovehiculo.isConConductor());
+			s.setString(7, usuariovehiculo.getLugarRecogida());
+			s.setString(8, usuariovehiculo.getLugarEntrega());
+			s.setBoolean(9, usuariovehiculo.isAlquilado());
+			
+			s.executeUpdate();
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+ consulta);
+		}
+	}
+	//Método para obtener los datos del usuario
+	public static String usuario (String nombre, String contraseña) {
+		
+		String dni=" ";
+		String consulta = "SELECT * FROM usuario WHERE nombre = ? and contraseña = ?";
+		
+		try {PreparedStatement s= ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1, nombre);
+		s.setString(2, contraseña);
+		
+		ResultSet rs = s.executeQuery();
+		
+		while(rs.next()) {
+			dni=(rs.getString("dni"));
+		}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+ consulta);
+		}
+		return dni;
+	}
+	
 }

@@ -12,12 +12,12 @@ import Repositorios.RepositorioVehiculo;
 public class MenuAnadirVehiculo {
 
 	//Menú para añadir vehiculos
-	public static void anadirVehiculo(Scanner sc, String nombre) {
+	public static void anadirVehiculo(Scanner sc) {
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("-------------" + nombre + "--------------");
+			System.out.println("-------------" +"--------------");
 			System.out.println("-------------AÑADIR VEHICULO---------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Añadir furgoneta a la BDD");

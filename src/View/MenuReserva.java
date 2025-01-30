@@ -5,13 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
+import Modelo.Usuario_Vehiculo;
 import Repositorios.RepositorioReserva;
 import Repositorios.RepositorioUsuario;
 
 public class MenuReserva {
 
 	// Método para elegir la oficina en el menú de usuario
-	public static void elegirOficina(Scanner sc) {
+	public static void elegirOficina(Scanner sc, Usuario_Vehiculo usuariovehiculo) {
 	    String nombreOficina;
 
 	    //Bucle mientras el nombre de la oficina no sea correcto
@@ -22,6 +23,15 @@ public class MenuReserva {
 
 	        //Comprobar si la oficina existe
 	        if (comprobarOficina(nombreOficina)) {
+	        	usuariovehiculo.setLugarRecogida(nombreOficina);
+		        	if (nombreOficina.contains("Madrid")|| nombreOficina.contains("Barcelona")|| nombreOficina.contains("Bilbao")
+		        			||nombreOficina.contains("Barakaldo")||nombreOficina.contains("Deusto")||nombreOficina.contains("Sevilla") || nombreOficina.contains("Alicante")) {
+		        		System.out.println("A continuación le mostramos en que oficinas puede entregar el vehículo");
+		        		RepositorioReserva.mostrarOficinasEspana();
+		        		System.out.println("Introcuzca el nombre una de nuestras oficinas, para entregar el vehículo: ");
+		        		usuariovehiculo.setLugarEntrega(sc.nextLine());
+		        		
+		        	}else usuariovehiculo.setLugarEntrega(nombreOficina);
 	            break; // Sale del bucle si la oficina es válida
 	        } else {
 	            System.out.println("ERROR. Nombre de la oficina mal introducido. Inténtelo nuevamente. Gracias.\n");
@@ -74,17 +84,17 @@ public class MenuReserva {
 	}
 	
 	//Método para validar reserva
-	public static void validarReserva(Scanner sc, String matricula) {
+	public static void validarReserva(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
 		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está conforme escriba 'NO'");
 		String opcion = sc.nextLine();
 		if (opcion.equalsIgnoreCase("si")) {
-			precioDia(sc, matricula);
+			precioDia(sc, matricula, usuariovehiculo);
 		}else System.out.println("Operación cancelada\n");
 	}
 	
 	//Método para elegir conductor si es true (con conductor) se multiplicará el precio del día por 1.25
-	public static boolean conSinConductor(Scanner sc) {
+	public static boolean conConductor(Scanner sc, Usuario_Vehiculo usuariovehiculo) {
 		boolean opcion= false;
 		do {
 			System.out.println("Quiere reservar el vehículo con o sin conductor?");
@@ -92,14 +102,16 @@ public class MenuReserva {
 			String consin=sc.nextLine();
 			
 			if (consin.equalsIgnoreCase("CON")) return opcion= true;
-			else if (consin.equalsIgnoreCase("SIN"))return opcion = false;
+			
+			else if (consin.equalsIgnoreCase("SIN")) return opcion = false;
+			
 			else System.out.println("Ha ocurrido un error.");
 		}while(true);
 		
 	}
 	
 	//Método cantidad de días que va ha hacer la reserva
-	public static long cantidadDias(Scanner sc, String matricula) {
+	public static long cantidadDias(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
 		String regex = "\\d{4}/\\d{2}/\\d{2}"; // Para formato aaaa/mm/dd
 		
@@ -114,11 +126,14 @@ public class MenuReserva {
 				do {
 					System.out.println("Indícanos una fecha de recogida (aaaa/mm/dd): ");
 					fecha_recogida= sc.nextLine();
+					
 					//comprobarFechaVehiculo();
 					if (!fecha_recogida.matches(regex)) {
 						System.out.println("Ha habido un error");
 						System.out.println("Vuelva a introducir la fecha, por favor.");
-					}
+						
+					}else usuariovehiculo.setFecha_recogida(fecha_recogida);
+					
 				}while(!fecha_recogida.matches(regex));
 				//Comprobar formatoFecha();
 				Date fechaR=convertirFecha(fecha_recogida);
@@ -130,8 +145,11 @@ public class MenuReserva {
 					if(!fecha_entrega.matches(regex)) {
 						System.out.println("Ha habido un error");
 						System.out.println("Vuelva a introducir la fecha, por favor.");
-					}
+						
+					}else usuariovehiculo.setFecha_entrega(fecha_entrega);
+					
 				}while(!fecha_entrega.matches(regex));
+				
 				//Comprobar formatoFecha();
 				Date fechaE=convertirFecha(fecha_entrega);
 				
@@ -156,9 +174,7 @@ public class MenuReserva {
 	       
 	    }while(RepositorioReserva.comprobarFecha(matricula, fecha_entrega, fecha_recogida));
 		
-       //Añadir la reserva la repositorio
-		RepositorioReserva.anadirReserva(matricula, fecha_recogida, fecha_entrega); //Está sin hacer
-		
+       
 		//MUY IMPORTANTE
 		//HAY QUE AÑADIR QUE SI MATRICULA RESERVADA, NO SE PUEDE VOLVER A RESERVAR HASTA DESPUÉS DE SU FECHA_RECOGIDA
 		
@@ -166,15 +182,16 @@ public class MenuReserva {
 	}
 
 	//Método precio final del alquiler por días
-	public static void precioDia(Scanner sc, String matricula) {
+	public static void precioDia(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
 		double precioDia = 0;
 		
 		  // Guarda la respuesta del usuario sobre conductor
-	    boolean conConductor = conSinConductor(sc);
+		boolean conConductor = conConductor(sc, usuariovehiculo);
+	    usuariovehiculo.setConConductor(conConductor(sc, usuariovehiculo));
 	    
 	    // Obtiene la cantidad de días sin llamar a conSinConductor() nuevamente
-	    long dias = cantidadDias(sc, matricula);
+	    long dias = cantidadDias(sc, matricula, usuariovehiculo);
 
 	    if (conConductor) { 
 	        precioDia = 2 * (dias * 50); // El 2 corresponde uno al pago del conductor y otro el pago del vehículo
@@ -190,8 +207,9 @@ public class MenuReserva {
 	        double precioTotal= precioDia +  dietasConductor;
 	        System.out.println();
 		    System.out.println("El precio total de la reserva es: " + precioTotal + " €");
+		    usuariovehiculo.setPrecio_total(precioTotal);
 	    } else {
-	        precioDia = dias * 50;
+	        usuariovehiculo.setPrecio_total( precioDia = dias * 50);
 		    System.out.println("El precio total de la reserva es: " + precioDia + " €");
 	    }
 

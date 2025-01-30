@@ -13,7 +13,7 @@ public class MenuInicial {
 	
 
 	//Menú inicial
-	public static Modelo.Usuario menuInicial(Scanner sc) {
+	public static void menuInicial(Scanner sc) {
 	
 	Modelo.Usuario usuario= new Modelo.Usuario();
 
@@ -48,7 +48,6 @@ public class MenuInicial {
 	while (opcion != 0);
 	System.out.println("Ha salido de nuestra web");
 	
-	return usuario;
 	}
 	
 	//Método crear usuario
@@ -90,15 +89,18 @@ public class MenuInicial {
 		System.out.println("Introduce tus datos de usuario");
 		System.out.println("Introduce tu nombre: ");
 		String nombre=sc.nextLine();
+		usuario.setNombre(nombre);
+		
 		System.out.println("Introduce tu contraseña: ");
 		String contraseña= sc.nextLine();
+		usuario.setContrasena(contraseña);
 		
 		//Comprobar si usuario EXISTE en la BDD
 		if(RepositorioLogin.comprobarUsuario(nombre, contraseña)) {
 			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
 			if(RepositorioLogin.comprobarAdmin(nombre, contraseña))
-				MenuAdministrador.menuAdministrador(sc, nombre);
-			else MenuUsuario.menuUsuario(sc, nombre);
+				MenuAdministrador.menuAdministrador(sc, usuario);
+			else MenuUsuario.menuUsuario(sc, usuario);
 		
 		}
 		else {

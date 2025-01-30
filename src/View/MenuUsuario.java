@@ -2,21 +2,23 @@ package View;
 
 import java.util.Scanner;
 import Repositorios.RepositorioLogin;
+import Repositorios.RepositorioReserva;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioUsuario;
 import Modelo.Usuario;
+import Modelo.Usuario_Vehiculo;
 
 public class MenuUsuario {
 
 	//Menú usuario 
-	public static void menuUsuario(Scanner sc, String nombre) {
+	public static void menuUsuario(Scanner sc, Usuario usuario) {
 		
-		Modelo.Usuario usuario = new Usuario();
+		Usuario_Vehiculo usuariovehiculo = new Usuario_Vehiculo();
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
-			System.out.println("--------------"+ nombre +"---------------");
+			System.out.println("--------------"+ "---------------");
 			System.out.println("-----------MENÚ USUARIO----------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Nuestra flota de vehículos");
@@ -36,7 +38,7 @@ public class MenuUsuario {
 				RepositorioUsuario.mostrarOficina(); 
 				break;
 			case 3: 
-				hacerReserva(sc);
+				hacerReserva(sc, usuario, usuariovehiculo);
 				break;				
 			case 4: 
 				modificarDatos(sc, usuario);
@@ -50,17 +52,33 @@ public class MenuUsuario {
 		System.out.println("Ha salido de nuestra web");
 	}
 	
-	private static void hacerReserva(Scanner sc) {
+	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
+		
+		
+		String contraseña = usuario.getContrasena();
+		String nombre= usuario.getNombre();
+		
+		//Obtener dni de usuario e Introducir el dni del usuariovehiculo
+		usuariovehiculo.setDni(RepositorioReserva.usuario(nombre,contraseña));
 		
 		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere realizar la reserva");
 		RepositorioUsuario.mostrarOficina(); //mostrar listado de oficinas
 		System.out.println();
-		MenuReserva.elegirOficina(sc); //elegir oficina
-		System.out.println();
-		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo
 		
-		MenuReserva.validarReserva(sc, matricula); //validamos el vehículo y la oficina seleccionados. y elige con o sin conductor
+		MenuReserva.elegirOficina(sc, usuariovehiculo); //elegir oficina
 		System.out.println();
+		
+		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo, Obtenemos MATRÍCULA
+		
+		//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
+		usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
+		
+		MenuReserva.validarReserva(sc, matricula, usuariovehiculo); //validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
+		System.out.println();
+		
+		//Añadir la reserva la repositorio
+		RepositorioReserva.anadirReserva(usuario, usuariovehiculo); //Estamos trabajando en ello
+				
 	}
 	
 	//Modificar datos del usuario
