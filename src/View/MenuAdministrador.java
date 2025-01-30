@@ -221,6 +221,9 @@ public class MenuAdministrador {
 		RepositorioUsuario.mostrarMatriculaVehiculo();
 		String matricula = sc.next();
 		
-		System.out.println();
+		System.out.println("Introduce la cantidad nueva de kilometros");
+		int km = sc.nextInt();
+		
+		RepositorioVehiculo.cambiarKilometros(km, matricula);
 	}
 }

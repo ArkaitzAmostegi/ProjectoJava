@@ -19,7 +19,7 @@ public class MenuAnadirVehiculo {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("-------------" + nombre + "--------------");
 			System.out.println("-------------AÑADIR VEHICULO---------");
-			System.out.println("0.-Salir de la web");
+			System.out.println("0.-Volver atrás");
 			System.out.println("1.-Añadir furgoneta a la BDD");
 			System.out.println("2.-Añadir monovolumen a la BDD");
 			System.out.println("3.-Añadir turismo a la BDD");
