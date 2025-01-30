@@ -61,7 +61,7 @@ public class RepositorioReserva {
 		ResultSet rs = s.executeQuery();
 		
 		while (rs.next()) {
-			System.out.println("oficina: "+rs.getString("nombre")+" "+rs.getString("ciudad")+" "+rs.getString("telefono"));
+			System.out.println(rs.getString("nombre")+", "+rs.getString("ciudad")+", "+rs.getString("telefono"));
 		}
 			
 		}catch (Exception e){
@@ -202,5 +202,44 @@ public class RepositorioReserva {
 		}
 		return dni;
 	}
-	
+	//Método para consultar la reserva a eliminar
+	public static void consultarReserva(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
+		
+		String consulta = "SELECT * FROM usuario_vehiculo WHERE dni = ? AND id_coche = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1, usuario.getDni());
+		s.setInt(2, usuariovehiculo.getId_coche());
+		
+		ResultSet rs = s.executeQuery();
+		
+		while(rs.next()) {
+			System.out.println(rs.getString("dni")+" "+ rs.getInt("id_coche")+" "+rs.getDouble("precio_total")+" "+rs.getString("fecha_recogida")+" "+
+					rs.getString("fecha_entrega")+" "+rs.getBoolean("conconductor")+" "+rs.getString("lugar_recogida")+" "+
+					rs.getString("lugar_entrega")+" "+rs.getBoolean("alquilado"));
+		}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		
+	}
+	//Método para eliminar la reserva
+	public static void eliminarRerserva(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
+		
+		String consulta = "DELETE FROM usuario_vehiculo WHERE dni = ? and id_coche = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1,usuario.getDni());
+		s.setInt(2, usuariovehiculo.getId_coche());
+		
+		s.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+ consulta);
+		}
+	}
+
 }

@@ -5,6 +5,7 @@ import Modelo.Furgoneta;
 import Modelo.Monovolumen;
 import Modelo.Turismo;
 import Modelo.Usuario;
+import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioLogin;
 import Repositorios.RepositorioVehiculo;
@@ -16,7 +17,7 @@ public class MenuInicial {
 	public static void menuInicial(Scanner sc) {
 	
 	Modelo.Usuario usuario= new Modelo.Usuario();
-
+	Usuario_Vehiculo usuariovehiculo = new Usuario_Vehiculo();
 	
 	int opcion=0;
 	
@@ -35,7 +36,7 @@ public class MenuInicial {
 		switch (opcion) {
 		case 0: break;
 		case 1: 
-			login(sc, usuario);
+			login(sc, usuario, usuariovehiculo);
 			break;
 		case 2:
 			crearUsuario(sc, usuario);
@@ -84,7 +85,7 @@ public class MenuInicial {
 	}
 
 	//Método  login Usuario
-	private static void login(Scanner sc, Usuario usuario) {
+	private static void login(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
 		System.out.println("Introduce tus datos de usuario");
 		System.out.println("Introduce tu nombre: ");
@@ -99,7 +100,7 @@ public class MenuInicial {
 		if(RepositorioLogin.comprobarUsuario(nombre, contraseña)) {
 			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
 			if(RepositorioLogin.comprobarAdmin(nombre, contraseña))
-				MenuAdministrador.menuAdministrador(sc, usuario);
+				MenuAdministrador.menuAdministrador(sc, usuario, usuariovehiculo);
 			else MenuUsuario.menuUsuario(sc, usuario);
 		
 		}

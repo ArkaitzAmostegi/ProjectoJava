@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import Modelo.Oficina;
+import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
 
 public class RepositorioAdministrador {
@@ -121,6 +122,32 @@ public class RepositorioAdministrador {
 			
 		}catch (Exception e) {
 			System.out.println("Error "+e.getMessage());
+		}
+	}
+	
+	//Método para mostrar todas las reservas realizadas
+	public static void mostrarReservas(Usuario_Vehiculo usuariovehiculo) {
+		
+		String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN usuario";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		
+		System.out.println();
+		System.out.println("--------------------------------------------LISTADO DE RESERVAS--------------------------------------------------");
+		System.out.println("--DNI--ID_COCHE--PRECIO_TOTAL--FECHA_RECOGIDA--FECHA_ENTREGA--CONDUCTOR--LUGAR_RECOGIDA--LUGAR_ENTREGA--ALQUILADO");
+		System.out.println("-----------------------------------------------------------------------------------------------------------------");
+		
+		ResultSet rs = s.executeQuery();
+		while(rs.next()) {
+			System.out.println(rs.getString("dni")+" "+ rs.getInt("id_coche")+" "+rs.getDouble("precio_total")+" "+rs.getString("fecha_recogida")+" "+
+					rs.getString("fecha_entrega")+" "+rs.getBoolean("conconductor")+" "+rs.getString("lugar_recogida")+" "+
+					rs.getString("lugar_entrega")+" "+rs.getBoolean("alquilado"));
+			
+		}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
 		}
 	}
 }

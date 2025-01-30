@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Modelo.Vehiculo;
-import View.MenuAnadirVehiculo;
 
 public class RepositorioVehiculo {
 
@@ -146,4 +145,20 @@ public class RepositorioVehiculo {
 	    }
 	}
 	
+	
+	//Modificar KMs de un vehículo
+	public static void cambiarKilometros(int km, String matricula) {
+		String consulta = "UPDATE vehiculo SET km = ? WHERE matricula = ?";
+		
+		try {
+			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setInt(1, km);
+			s.setString(2, matricula);
+			s.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

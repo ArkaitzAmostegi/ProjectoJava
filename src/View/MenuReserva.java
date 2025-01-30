@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
+import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
 import Repositorios.RepositorioReserva;
 import Repositorios.RepositorioUsuario;
@@ -19,7 +20,7 @@ public class MenuReserva {
 	    while (true) {
 	        System.out.println("Introduzca el nombre de la oficina desde donde desea realizar la reserva:");
 	        System.out.println("Le mostraremos los coches disponibles en esa oficina.");
-	        nombreOficina = sc.nextLine().trim(); // Trin() Elimina espacios en blanco
+	        nombreOficina = sc.nextLine().trim(); // Trim() Elimina espacios en blanco
 
 	        //Comprobar si la oficina existe
 	        if (comprobarOficina(nombreOficina)) {
@@ -28,8 +29,12 @@ public class MenuReserva {
 		        			||nombreOficina.contains("Barakaldo")||nombreOficina.contains("Deusto")||nombreOficina.contains("Sevilla") || nombreOficina.contains("Alicante")) {
 		        		System.out.println("A continuación le mostramos en que oficinas puede entregar el vehículo");
 		        		RepositorioReserva.mostrarOficinasEspana();
-		        		System.out.println("Introcuzca el nombre una de nuestras oficinas, para entregar el vehículo: ");
-		        		usuariovehiculo.setLugarEntrega(sc.nextLine());
+		        		System.out.println("\nIntroduzca el nombre de la oficina, en la que va entregar el vehículo: ");
+		        		String lugarEntrega = sc.nextLine();
+		        		usuariovehiculo.setLugarEntrega(lugarEntrega);
+		        		System.out.println();
+		        		System.out.println("Oficina de recogida del vehículo: "+nombreOficina);
+		        		System.out.println("Oficina de entrega del vehículo: "+lugarEntrega);
 		        		
 		        	}else usuariovehiculo.setLugarEntrega(nombreOficina);
 	            break; // Sale del bucle si la oficina es válida
@@ -39,7 +44,7 @@ public class MenuReserva {
 	    }
 
 	    // Mostrar los vehículos disponibles en la oficina seleccionada
-	    System.out.println("Esta oficina dispone de estos vehículos:");
+	    System.out.println("\nLa oficina "+ nombreOficina+" dispone de estos vehículos:");
 	    System.out.println("-----------------------------------------");
 	    System.out.println("Matrícula--Marca--Modelo--Km---Tipo---Nº puertas--Potencia--Tamaño");
 
@@ -86,7 +91,7 @@ public class MenuReserva {
 	//Método para validar reserva
 	public static void validarReserva(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
-		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está conforme escriba 'NO'");
+		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está de acuerdo escriba 'NO'");
 		String opcion = sc.nextLine();
 		if (opcion.equalsIgnoreCase("si")) {
 			precioDia(sc, matricula, usuariovehiculo);
@@ -101,9 +106,15 @@ public class MenuReserva {
 			System.out.println("Para reservar el vehículo con conductor, escriba (CON). Para reservar el vehículo sin conductor, escriba (SIN)");
 			String consin=sc.nextLine();
 			
-			if (consin.equalsIgnoreCase("CON")) return opcion= true;
+			if (consin.equalsIgnoreCase("CON")) {
+				usuariovehiculo.setConConductor(true);
+				return opcion= true;
+			}
 			
-			else if (consin.equalsIgnoreCase("SIN")) return opcion = false;
+			else if (consin.equalsIgnoreCase("SIN")) {
+				usuariovehiculo.setConConductor(false);
+				return opcion = false;
+			}
 			
 			else System.out.println("Ha ocurrido un error.");
 		}while(true);
@@ -187,14 +198,14 @@ public class MenuReserva {
 		double precioDia = 0;
 		
 		  // Guarda la respuesta del usuario sobre conductor
-		boolean conConductor = conConductor(sc, usuariovehiculo);
-	    usuariovehiculo.setConConductor(conConductor(sc, usuariovehiculo));
+		boolean conConductor =conConductor(sc, usuariovehiculo);
 	    
 	    // Obtiene la cantidad de días sin llamar a conSinConductor() nuevamente
 	    long dias = cantidadDias(sc, matricula, usuariovehiculo);
 
 	    if (conConductor) { 
-	        precioDia = 2 * (dias * 50); // El 2 corresponde uno al pago del conductor y otro el pago del vehículo
+	    	// El 2 corresponde uno al pago del conductor y otro el pago del vehículo
+	        precioDia = 2 * (dias * 50); //Hay que cambiar al precio furgoneta, turismo o monovolumen
 
 		    System.out.println("El precio de la reserva del vehículo es de: " + precioDia + " €");
 		    System.out.println();
@@ -232,6 +243,27 @@ public class MenuReserva {
 	        e.printStackTrace();
 	    }
 	    return fechaSql;
+	}
+	//Método para comprovar los datos de la reserva y activar el alquilado 
+	public static void activarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
+	
+		System.out.println(usuario.getNombre()+" a elegido realizar la siguiente reserva: ");
+		System.out.println("Nombre: "+usuario.getNombre()+ "\nFecha de recogida: "+usuariovehiculo.getFecha_recogida()+ "\nFecha de entrega: "+usuariovehiculo.getFecha_entrega()
+		+"\nLugar de recogida: "+usuariovehiculo.getLugarRecogida()+"\nLugar de entrega: "+usuariovehiculo.getLugarEntrega()+"\nConductor: "+usuariovehiculo.isConConductor()+"\nPrecio total de la reserva: "+usuariovehiculo.getPrecio_total());
+		
+		System.out.println("Confirmar reserva (SI/NO)");
+		String opcion = sc.nextLine();
+		
+		if (opcion.equalsIgnoreCase(opcion)) {
+			usuariovehiculo.setAlquilado(true);
+			RepositorioReserva.anadirReserva(usuario, usuariovehiculo);
+			System.out.println("Su Reserva ha sido realizada");
+			System.out.println("Pase a recoger le vehículo, por nuestra oficina "+usuariovehiculo.getLugarRecogida()+" la fecha "+usuariovehiculo.getFecha_recogida());
+		}else {
+			System.out.println("Reserva cancelada");
+			RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario);
+		}
+		
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Modelo.Oficina;
 import Modelo.Usuario;
+import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioAdministrador;
 import Repositorios.RepositorioLogin;
@@ -14,13 +15,13 @@ import Repositorios.RepositorioVehiculo;
 public class MenuAdministrador {
 
 	//Menú administrador
-	public static void menuAdministrador(Scanner sc, Usuario usuario) {
+	public static void menuAdministrador(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		int opcion=0;
-		
+		String nombre=usuario.getNombre();
 		do {
 			System.out.println();
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
-			System.out.println("--------------- "+" ---------------");
+			System.out.println("--------------- "+nombre+" ---------------");
 			System.out.println("0.-Salir de la web");
 			System.out.println("1.-Ver la lista de vehículos registrados");
 			System.out.println("2.-Ver la lista de usuarios registrados");
@@ -28,11 +29,12 @@ public class MenuAdministrador {
 			System.out.println("4.-Eliminar vehículo de la BDD");
 			System.out.println("5.-Añadir oficina a la BDD");
 			System.out.println("6.-Eliminar oficina de la BDD");
-			System.out.println("7.-Eliminar reserva de la BDD");
-			System.out.println("8.-Cambiar km a los vehículos");
-			System.out.println("9.-Crear administrador de la BDD");
-			System.out.println("10.-Eliminar un usuario de la BDD");
-			System.out.println("11.-Ir al menú usuario");
+			System.out.println("7.-Mostrar las reservas de la BDD");
+			System.out.println("8.-Eliminar reserva de la BDD");
+			System.out.println("9.-Cambiar km a los vehículos");
+			System.out.println("10.-Crear administrador de la BDD");
+			System.out.println("11.-Eliminar un usuario de la BDD");
+			System.out.println("12.-Ir al menú usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -58,18 +60,21 @@ public class MenuAdministrador {
 				eliminarOficina(sc);
 				break;
 			case 7: 
-				//eliminarReserva(sc);
+				RepositorioAdministrador.mostrarReservas(usuariovehiculo);
 				break;
 			case 8:
-				cambiarKm(sc, usuario);
+				eliminarReserva(sc);
 				break;
 			case 9:
-				crearAdministrador(sc, usuario);
+				cambiarKm(sc, usuario);
 				break;
 			case 10:
-				eliminarUsuario(sc, usuario);
+				crearAdministrador(sc, usuario);
 				break;
 			case 11:
+				eliminarUsuario(sc, usuario);
+				break;
+			case 12:
 				MenuUsuario.menuUsuario(sc, usuario);
 				break;
 			default:
@@ -80,7 +85,35 @@ public class MenuAdministrador {
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
-	
+	//Método para eliminar una reserva determinada de la BDD
+	private static void eliminarReserva(Scanner sc) {
+		
+		Usuario_Vehiculo usuariovehiculo= new Usuario_Vehiculo();
+		Usuario usuario = new Usuario();
+		
+		System.out.println("\nA continuación, te mostramos las reservas que están realizadas");
+		RepositorioAdministrador.mostrarReservas(usuariovehiculo);
+		
+		System.out.println("\nIntroduzca el DNI del usuario de la reserva que desee eliminar: ");
+		String dni = sc.nextLine();
+		usuario.setDni(dni);
+		
+		System.out.println("Introduzca el id_coche de la reserva que desea eliminar: ");
+		int id_coche = sc.nextInt();
+		sc.nextLine();
+		usuariovehiculo.setId_coche(id_coche);
+		
+		System.out.println("Es esta la reserva que desea Uds. eliminar?");
+		RepositorioReserva.consultarReserva(usuariovehiculo, usuario);
+		System.out.println("(SI/NO)");
+		String opcion= sc.nextLine().trim();
+		if(opcion.equalsIgnoreCase("SI")) {
+			RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario);
+			System.out.println("La reserva ha sido eliminada");
+		}
+		
+	}
+
 	//Método para cambiar los Km al vehiculo
 	private static void cambiarKm(Scanner sc) {
 		
@@ -220,6 +253,9 @@ public class MenuAdministrador {
 		RepositorioUsuario.mostrarMatriculaVehiculo();
 		String matricula = sc.next();
 		
-		System.out.println();
+		System.out.println("Introduce la cantidad nueva de kilometros");
+		int km = sc.nextInt();
+		
+		RepositorioVehiculo.cambiarKilometros(km, matricula);
 	}
 }

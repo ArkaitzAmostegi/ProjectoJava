@@ -19,7 +19,7 @@ public class MenuAnadirVehiculo {
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("-------------" +"--------------");
 			System.out.println("-------------AÑADIR VEHICULO---------");
-			System.out.println("0.-Salir de la web");
+			System.out.println("0.-Volver atrás");
 			System.out.println("1.-Añadir furgoneta a la BDD");
 			System.out.println("2.-Añadir monovolumen a la BDD");
 			System.out.println("3.-Añadir turismo a la BDD");
@@ -29,7 +29,7 @@ public class MenuAnadirVehiculo {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				anadirFrugoneta(sc); //No está bien acabado, no se introduce por el enum
+				anadirFrugoneta(sc);
 				break;
 			case 2: 
 				anadirMonovolumen(sc);
@@ -159,7 +159,7 @@ public class MenuAnadirVehiculo {
 	}
 
 	//Método tamaño furgo
-	public static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
+	private static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
 		Tamano[] lista=Tamano.values();
 		
 		System.out.println("Te mostramos la lista de tamaños");

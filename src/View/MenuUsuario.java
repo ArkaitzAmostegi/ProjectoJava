@@ -5,6 +5,7 @@ import Repositorios.RepositorioLogin;
 import Repositorios.RepositorioReserva;
 import Modelo.Vehiculo;
 import Repositorios.RepositorioUsuario;
+import Repositorios.RepositorioVehiculo;
 import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
 
@@ -20,7 +21,7 @@ public class MenuUsuario {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 			System.out.println("--------------"+ "---------------");
 			System.out.println("-----------MENÚ USUARIO----------");
-			System.out.println("0.-Salir de la web");
+			System.out.println("0.-Cerrar sesión");
 			System.out.println("1.-Nuestra flota de vehículos");
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
@@ -76,14 +77,22 @@ public class MenuUsuario {
 		MenuReserva.validarReserva(sc, matricula, usuariovehiculo); //validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
 		System.out.println();
 		
-		//Añadir la reserva la repositorio
-		RepositorioReserva.anadirReserva(usuario, usuariovehiculo); //Estamos trabajando en ello
-				
+		//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
+		MenuReserva.activarReserva(sc, usuario, usuariovehiculo);
+		
+		
+			
+		//MUY IMPORTANTE!!!!!
+		//La fecha de recogida también tiene que ser primary key, si sólo tenemos el dni y el id_coche como primary keys, un usuario determinado no podrá volver a coger ese vehículo nuevamente
 	}
 	
 	//Modificar datos del usuario
 	private static void modificarDatos(Scanner sc, Usuario usuario) {
+		
+		String nombre = usuario.getNombre();
+		
 		System.out.println("-----BIENVENIDO A NUESTRA WEB------");
+		System.out.println("--------- "+nombre+" ------------");
 		System.out.println("---------EDITAR DATOS---------");
 		System.out.println("----------------------------");
 		
@@ -99,27 +108,126 @@ public class MenuUsuario {
 		
 		switch (opcion) {
 		case 0: 
-			modificarDatos(sc, usuario);
 			break;
 		case 1:
-			System.out.println("Introduce tu DNI actual");
-			String dniActual = sc.next();
-			System.out.println("Introduce tu nombre");
-			String nombreActual = sc.next();
-			
-			if (RepositorioLogin.comprobarDni(dniActual, nombreActual)) { //Verificar que se encuentra el DNI y el nombre en la base de datos
-				System.out.println("Introduce tu nuevo DNI");
-				MenuInicial.comprobarDni(sc, usuario);
-				RepositorioUsuario.modificarDni(sc, usuario);
-			}
-			else {
-				System.out.println("No se ha encontrado el DNI o usuario en la base de datos de la empresa");
-				System.out.println();
-			}
+			cambiarDni(sc, usuario);
 			break;
 		case 2:
-			System.out.println();
+			cambiarNombre(sc, usuario);
+			break;
+		case 3:
+			cambiarSexo(sc, usuario);
+			break;
+		case 4:
+			cambiarTelefono(sc, usuario);
+			break;
+		case 5:
+			cambiarCorreo(sc, usuario);
+			break;
+		case 6:
+			cambiarContraseña(sc, usuario);
 			break;
 		}
+	}
+	
+	//Métodos para cambiar los datos del usuario
+	private static void cambiarDni(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce tu DNI");
+		boolean dniValido = false;
+		
+		while (dniValido == false) {
+			String dni = sc.next();
+			
+			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) {
+				System.out.println("Introduce tu nombre");		
+				String nombre = sc.next();
+				System.out.println("Introduce tu nuevo DNI");
+				String dniNuevo = sc.next().toUpperCase();
+				
+				RepositorioUsuario.modificarDni(dniNuevo, nombre);
+				dniValido = true;
+			}
+			else {
+				System.out.println("El DNI introducido no es válido");
+			}
+		}
+	}
+	
+	private static void cambiarNombre(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce tu DNI");
+		String dni = sc.next();
+		System.out.println("Introduce tu nombre");
+		String nombre = sc.next();
+		System.out.println("Introduce tu nuevo nombre");
+		String nombreNuevo = sc.next();
+		
+		RepositorioUsuario.modificarNombre(dni, nombreNuevo);
+	}
+	
+	private static void cambiarSexo(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce tu DNI");
+		String dni = sc.next();
+		System.out.println("Introduce tu nuevo sexo");
+		boolean sexoValido = false;
+		
+		while (sexoValido == false) {
+			String sexo = sc.next().toUpperCase();
+			
+			if (sexo.length() != 1) {
+				System.out.println("El sexo debe tener una longitud de 1 caracter solamente");
+			}
+			else {		
+				RepositorioUsuario.modificarSexo(dni, sexo);
+				sexoValido = true;
+			}
+		}
+	}
+	
+	private static void cambiarTelefono(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce tu DNI");
+		String dni = sc.next();
+		System.out.println("Introduce tu nuevo número de teléfono");
+		boolean telefonoValido = false;
+		
+		while (telefonoValido == false) {
+			int numTelefono = sc.nextInt();
+			if (String.valueOf(numTelefono).length() != 9) {
+				System.out.println("El teléfono debe tener una longitud de 9 caracteres");
+			}
+			else {
+				RepositorioUsuario.modificarTelefono(dni, numTelefono);
+				telefonoValido = true;
+			}
+		}
+	}
+	
+	private static void cambiarCorreo(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce tu DNI");
+		String dni = sc.next();
+		System.out.println("Introduce tu nuevo correo electrónico");
+		String correo = sc.next();
+		
+		RepositorioUsuario.modificarCorreo(dni, correo);
+	}
+	
+	private static void cambiarContraseña(Scanner sc, Usuario usuario) {
+		System.out.println("Introduce tu DNI");
+		String dni = sc.next();
+		System.out.println("Introduce tu nueva contraseña");
+		boolean contraseñaValida = false;
+		
+		while (contraseñaValida == false) {
+			String contraseña = sc.next();
+			
+			if (contraseña.length() != 8) {
+				System.out.println("La contraseña que has introducido no es válida. Debe contener una longitud de 8 caracteres");
+			}
+			else {
+				RepositorioUsuario.modificarContraseña(dni, contraseña);
+				contraseñaValida = true;
+			}
+		}
+		
+		
 	}
 }

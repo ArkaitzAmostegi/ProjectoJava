@@ -124,12 +124,84 @@ public class RepositorioUsuario {
 		}
 		
 	//Métodos para actualizar datos del usuario
-		public static void modificarDni(Scanner sc, Usuario usuario) {
-			String actualizacion = "UPDATE usuario SET dni = ? WHERE DNI =" + usuario.getDni();
+		public static void modificarDni(String dni, String nombre) {
+			String consulta = "UPDATE usuario SET dni = ? WHERE nombre = ?";
 			
 			try {
-				PreparedStatement s=ConectorBD.getconexion().prepareStatement(actualizacion);
-				s.setString(1, usuario.getDni());
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, dni);
+				s.setString(2, nombre);
+				s.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public static void modificarNombre(String dni, String nombreNuevo) {
+			String consulta = "UPDATE usuario SET nombre = ? WHERE dni = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, nombreNuevo);
+				s.setString(2, dni);
+				s.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public static void modificarSexo(String dni, String sexo) {
+			String consulta = "UPDATE usuario SET sexo = ? WHERE dni = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, sexo);
+				s.setString(2, dni);
+				s.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public static void modificarTelefono(String dni, int numTelefono) {
+			String consulta = "UPDATE usuario SET telefono = ? WHERE dni = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setInt(1, numTelefono);
+				s.setString(2, dni);
+				s.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public static void modificarCorreo(String dni, String correo) {
+			String consulta = "UPDATE usuario SET email = ? WHERE dni = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, correo);
+				s.setString(2, dni);
+				s.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public static void modificarContraseña(String dni, String contraseña) {
+			String consulta = "UPDATE usuario SET contraseña = ? WHERE dni = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, contraseña);
+				s.setString(2, dni);
+				s.executeUpdate();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
