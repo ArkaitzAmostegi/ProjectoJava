@@ -18,7 +18,7 @@ public class MenuReserva {
 	    while (true) {
 	        System.out.println("Introduzca el nombre de la oficina desde donde desea realizar la reserva:");
 	        System.out.println("Le mostraremos los coches disponibles en esa oficina.");
-	        nombreOficina = sc.nextLine().trim(); // Trin() Elimina espacios en blanco
+	        nombreOficina = sc.nextLine().trim(); // Trim() Elimina espacios en blanco
 
 	        //Comprobar si la oficina existe
 	        if (comprobarOficina(nombreOficina)) {

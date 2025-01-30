@@ -82,7 +82,6 @@ public class MenuUsuario {
 		
 		switch (opcion) {
 		case 0: 
-			modificarDatos(sc, usuario);
 			break;
 		case 1:
 			cambiarDni(sc, usuario);
@@ -108,13 +107,24 @@ public class MenuUsuario {
 	//Métodos para cambiar los datos del usuario
 	private static void cambiarDni(Scanner sc, Usuario usuario) {
 		System.out.println("Introduce tu DNI");
-		String dni = sc.next();
-		System.out.println("Introduce tu nombre");		
-		String nombre = sc.next();
-		System.out.println("Introduce tu nuevo DNI");
-		String dniNuevo = sc.next().toUpperCase();
+		boolean dniValido = false;
 		
-		RepositorioUsuario.modificarDni(dniNuevo, nombre);
+		while (dniValido == false) {
+			String dni = sc.next();
+			
+			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) {
+				System.out.println("Introduce tu nombre");		
+				String nombre = sc.next();
+				System.out.println("Introduce tu nuevo DNI");
+				String dniNuevo = sc.next().toUpperCase();
+				
+				RepositorioUsuario.modificarDni(dniNuevo, nombre);
+				dniValido = true;
+			}
+			else {
+				System.out.println("El DNI introducido no es válido");
+			}
+		}
 	}
 	
 	private static void cambiarNombre(Scanner sc, Usuario usuario) {
@@ -132,18 +142,37 @@ public class MenuUsuario {
 		System.out.println("Introduce tu DNI");
 		String dni = sc.next();
 		System.out.println("Introduce tu nuevo sexo");
-		String sexo = sc.next().toUpperCase();
+		boolean sexoValido = false;
 		
-		RepositorioUsuario.modificarSexo(dni, sexo);
+		while (sexoValido == false) {
+			String sexo = sc.next().toUpperCase();
+			
+			if (sexo.length() != 1) {
+				System.out.println("El sexo debe tener una longitud de 1 caracter solamente");
+			}
+			else {		
+				RepositorioUsuario.modificarSexo(dni, sexo);
+				sexoValido = true;
+			}
+		}
 	}
 	
 	private static void cambiarTelefono(Scanner sc, Usuario usuario) {
 		System.out.println("Introduce tu DNI");
 		String dni = sc.next();
 		System.out.println("Introduce tu nuevo número de teléfono");
-		int numTelefono = sc.nextInt();
+		boolean telefonoValido = false;
 		
-		RepositorioUsuario.modificarTelefono(dni, numTelefono);
+		while (telefonoValido == false) {
+			int numTelefono = sc.nextInt();
+			if (String.valueOf(numTelefono).length() != 9) {
+				System.out.println("El teléfono debe tener una longitud de 9 caracteres");
+			}
+			else {
+				RepositorioUsuario.modificarTelefono(dni, numTelefono);
+				telefonoValido = true;
+			}
+		}
 	}
 	
 	private static void cambiarCorreo(Scanner sc, Usuario usuario) {
@@ -159,8 +188,20 @@ public class MenuUsuario {
 		System.out.println("Introduce tu DNI");
 		String dni = sc.next();
 		System.out.println("Introduce tu nueva contraseña");
-		String contraseña = sc.next();
+		boolean contraseñaValida = false;
 		
-		RepositorioUsuario.modificarContraseña(dni, contraseña);
+		while (contraseñaValida == false) {
+			String contraseña = sc.next();
+			
+			if (contraseña.length() != 8) {
+				System.out.println("La contraseña que has introducido no es válida. Debe contener una longitud de 8 caracteres");
+			}
+			else {
+				RepositorioUsuario.modificarContraseña(dni, contraseña);
+				contraseñaValida = true;
+			}
+		}
+		
+		
 	}
 }
