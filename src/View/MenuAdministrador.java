@@ -200,15 +200,32 @@ public class MenuAdministrador {
 	//Método para eliminar la oficina
 	private static void eliminarOficina(Scanner sc) {
 		
-		System.out.println("Introduce el nombre de la oficina que desee eliminar: ");
-		String nombre=sc.nextLine();
 		
-		System.out.println("¿Está seguro que desea eliminar esta oficina (SI/NO)?");
-		System.out.println("Nombre---------País------------Teléfono");
-		RepositorioAdministrador.consultaOficina(nombre);//Método para consultar oficina
-		String opcion=sc.nextLine().trim();
-		if (opcion.equalsIgnoreCase("SI")) {
-			RepositorioAdministrador.eliminarOficina(nombre);//Método para eliminar la oficina
+		while (true) {
+			System.out.println("Introduce el nombre de la oficina que desee eliminar: ");
+			String nombre=sc.nextLine().trim();
+			
+			if (RepositorioAdministrador.existeOficina(nombre)) {
+				System.out.println("¿Está seguro que desea eliminar esta oficina (SI/NO)?");
+				System.out.println("Nombre---------País------------Teléfono");
+				RepositorioAdministrador.consultaOficina(nombre);//Método para consultar oficina
+				String opcion=sc.nextLine().trim();
+				
+				if (opcion.equalsIgnoreCase("SI")) {
+					RepositorioAdministrador.eliminarOficina(nombre);//Método para eliminar la oficina
+					System.out.println("Oficina eliminada\n");
+					break;
+				} else if (opcion.equalsIgnoreCase("NO")) {
+	                System.out.println("Operación cancelada.");
+	                break; // Sale del bucle si el usuario cancela
+	            } else {
+	                System.out.println("Respuesta no válida. Introduzca 'SI' o 'NO'.");
+	            }
+				
+			}else {
+				System.out.println("Oficina no encontrada en nuestra base de datos");
+				System.out.println("Inténtelo de nuevo, por favor");
+			}
 		}
 	}
 
@@ -272,7 +289,7 @@ public class MenuAdministrador {
 
 			telefono = sc.nextLine().trim();
 		
-			if (telefono.length() == 9 && telefono.charAt(0)=='6') {
+			if (telefono.matches("^6\\d{8}$")) { // Verifica que empiece con 6 y tenga 9 dígitos en total)) {
 				telefonoValido = true;
 			}
 			else {

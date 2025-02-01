@@ -65,7 +65,7 @@ public class RepositorioAdministrador {
 			System.out.println("Error "+e.getMessage());
 		}
 	}
-	//Método eliminar oficina
+	//Método consultar oficina por nombre
 	public static void eliminarOficina(String nombre) {
 		
 		String consulta = "DELETE FROM oficina WHERE nombre = ?";
@@ -85,6 +85,29 @@ public class RepositorioAdministrador {
 			System.out.println("Error "+e.getMessage());
 		}
 	}
+	//Método que devuelva booleano si la oficina existe
+	public static boolean existeOficina(String nombre) {
+		boolean existe = false;
+		
+		String consulta = "SELECT * FROM oficina WHERE nombre = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, nombre);
+			
+			ResultSet rs= s.executeQuery();
+			
+			if(rs.next()) {
+				int cantidad = rs.getInt(1);
+				return cantidad > 1;
+			}
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		return existe;
+	}
+	
 	//Método para eliminar usuario
 	public static void eliminarUsuario(String nombre) {
 		String consulta = "DELETE FROM usuario WHERE nombre = ?";

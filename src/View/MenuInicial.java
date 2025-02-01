@@ -210,7 +210,7 @@ public class MenuInicial {
 			String telefono = sc.next();
 			sc.nextLine();
 		
-			if (telefono.length() == 9 && telefono.charAt(0)=='6') {
+			if (telefono.matches("^6\\d{8}$")) { // Verifica que empiece con 6 y tenga 9 dígitos en total) {
 				usuario.setTelefono(telefono);
 				telefonoValido = true;
 			}
