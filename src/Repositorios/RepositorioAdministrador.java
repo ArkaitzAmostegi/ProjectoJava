@@ -20,7 +20,7 @@ public class RepositorioAdministrador {
 			s.setString(2, oficina.getCiudad());
 			s.setString(3, oficina.getPais());
 			s.setString(4, oficina.getNombre());
-			s.setInt(5, oficina.getTelefono());
+			s.setString(5, oficina.getTelefono());
 			s.setString(6, oficina.getEmail());
 			
 			s.executeUpdate();
@@ -149,5 +149,28 @@ public class RepositorioAdministrador {
 			e.printStackTrace();
 			System.out.println("Error "+consulta);
 		}
+	}
+	
+	//Método para comprobar si ese email está en la base de datos
+	public static boolean comprobarEmail(String email) {
+		
+		boolean existe = false;
+		
+		String consulta = "SELECT * FROM oficina WHERE email = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1, email);
+		
+		ResultSet rs = s.executeQuery();
+		
+		if(rs.next()) {
+			int cantidad = rs.getInt(1);
+			return cantidad > 1;
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		return false;
 	}
 }

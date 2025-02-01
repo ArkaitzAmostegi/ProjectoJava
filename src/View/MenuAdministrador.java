@@ -227,20 +227,62 @@ public class MenuAdministrador {
 		oficina.setPais(sc.nextLine());
 		
 		System.out.println("Intoduce el nombre de la oficina: ");
-		oficina.setNombre(sc.nextLine());
+		oficina.setNombre(sc.nextLine());//Tiene que tener el nombre aja y el guión
 		
 		System.out.println("Intoduce el teléfono: ");
-		oficina.setTelefono(sc.nextInt());
-		//comprobarTelefono();
-		sc.nextLine();
+		String telefono = " ";
+		oficina.setTelefono(comprobarTelefono(sc)); 
 		
 		System.out.println("Intoduce el email: ");
-		oficina.setEmail(sc.nextLine());
-		//comprobarEmail();
+		oficina.setEmail(comprobarEmail(sc)); // que contenga @ y que no lo tenga ninguna otra oficina
 		
 		RepositorioAdministrador.anadirOficina(oficina);
 	}
+	
+	private static String comprobarEmail(Scanner sc) {
+		String email="";
+		
+		boolean emailValido = false;
+		
+		while (emailValido == false) {
+			email = sc.nextLine();
+			
+			if(!RepositorioAdministrador.comprobarEmail(email) ){
+				
+				if (email.contains("@")) {
+					emailValido = true;
+				}
+				else {
+					System.out.println("El email que has introducido no es válido");
+					System.out.println("El email debe contener la '@'");
+				}
+			}else {
+				System.out.println("Este email ya exite en nuestra BDD");
+				System.out.println("Por favor, vuelva a introducirlo el email");
+			}
+		}
+		return email;
+	}
+	
+	//Método para comprobar el teléfono
+	private static String comprobarTelefono(Scanner sc) {
+	boolean telefonoValido = false;
+	String telefono = "";
+		while (telefonoValido == false) {
 
+			telefono = sc.nextLine().trim();
+		
+			if (telefono.length() == 9 && telefono.charAt(0)=='6') {
+				telefonoValido = true;
+			}
+			else {
+				System.out.println("El teléfono que has introducido no es válido");
+				System.out.println("El número de teléfono tiene que tener una longitud de 9 dígitos y empezar por 6");
+			}
+		}
+		return telefono;
+	}
+	
 	//Método para eliminar vehículos
 	private static void eliminarVehiculo(Scanner sc) {
 		

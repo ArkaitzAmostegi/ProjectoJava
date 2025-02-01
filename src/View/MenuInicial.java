@@ -200,7 +200,7 @@ public class MenuInicial {
 		}
 	}
 	
-	//Método para comprobar que el número de teléfono tiene 9 números
+	//Método para comprobar que el número de teléfono tiene 9 números y un 6 al inicio
 	public static void comprobarTelefono(Scanner sc, Usuario usuario) {
 
 		boolean telefonoValido = false;
@@ -221,7 +221,7 @@ public class MenuInicial {
 		}
 	}
 	
-	//Método para comprobar que el email contenga @
+	//Método para comprobar que el email contenga @ y que no lo tenga ningún usuario
 	public static void comprobarEmail(Scanner sc, Usuario usuario) {
 		boolean emailValido = false;
 		

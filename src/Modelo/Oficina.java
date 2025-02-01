@@ -8,7 +8,7 @@ public class Oficina {
     private String ciudad;
     private String pais;
     private String nombre;
-    private int telefono;
+    private String telefono;
     private String email;
 
     //Getters & Setters
@@ -30,10 +30,10 @@ public class Oficina {
     public void setCalle(String calle) {
         this.calle = calle;
     }
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
     public String getEmail() {
@@ -59,7 +59,7 @@ public class Oficina {
    
 	public Oficina() {
     }
-	public Oficina(String id_oficina, String calle, String ciudad, String pais, String nombre, int telefono,
+	public Oficina(String id_oficina, String calle, String ciudad, String pais, String nombre, String telefono,
 			String email) {
 		super();
 		this.id_oficina = id_oficina;
