@@ -26,8 +26,20 @@ public class MenuAnadirVehiculo {
 			System.out.println("1.-Añadir furgoneta a la BDD");
 			System.out.println("2.-Añadir monovolumen a la BDD");
 			System.out.println("3.-Añadir turismo a la BDD");
-			opcion=sc.nextInt();
-			sc.nextLine();
+			//Bucle que nos va a corregir si el usuario mete primero texto 
+			while (true) {		
+			
+				try {
+					opcion=sc.nextInt();
+					sc.nextLine();
+					break;
+					
+				}catch(java.util.InputMismatchException e){
+					System.out.println("Error: Debes ingresar un número válido");
+					System.out.println("Introduzca un número del 0 al 3 ambos inclusive");
+					sc.next();
+				}
+			}
 			
 			switch (opcion) {
 			case 0: break;

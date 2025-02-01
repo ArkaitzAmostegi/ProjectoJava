@@ -31,8 +31,20 @@ public class MenuUsuario {
 			System.out.println("4.-Entregar vehículo");
 			System.out.println("5.-Modificar sus datos de usuario");
 			
-			opcion=sc.nextInt();
-			sc.nextLine();
+			//Bucle que nos va a corregir si el usuario mete texto en vez de un número
+			while (true) {		
+			
+				try {
+					opcion=sc.nextInt();
+					sc.nextLine();
+					break;
+					
+				}catch(java.util.InputMismatchException e){
+					System.out.println("Error: Debes ingresar un número válido");
+					System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
+					sc.next();
+				}
+			}
 			
 			switch (opcion) {
 			case 0: break;

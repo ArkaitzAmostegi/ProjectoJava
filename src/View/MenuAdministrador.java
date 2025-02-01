@@ -42,8 +42,20 @@ public class MenuAdministrador {
 			System.out.println("11.-Eliminar un usuario de la BDD");
 			System.out.println("12.-Ir al menú usuario");
 			
-			opcion=sc.nextInt();
-			sc.nextLine();
+			//Bucle que nos va a corregir si el usuario mete primero texto en lugar de número
+			while (true) {		
+			
+				try {
+					opcion=sc.nextInt();
+					sc.nextLine();
+					break;
+					
+				}catch(java.util.InputMismatchException e){
+					System.out.println("Error: Debes ingresar un número válido");
+					System.out.println("Introduzca un número del 0 al 12 ambos inclusive");
+					sc.next();
+				}
+			}
 			
 			switch (opcion) {
 			case 0: break;
