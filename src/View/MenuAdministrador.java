@@ -24,8 +24,7 @@ public class MenuAdministrador {
 		
 		
 		do {
-			System.out.println();
-			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
+			System.out.println("\n-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("--------------- "+nombre+" ---------------");
 			System.out.println("--------------ELIJA UNA OPCIÓN---------");
 			System.out.println("0.-Volver al menú inicial");
@@ -247,9 +246,10 @@ public class MenuAdministrador {
 		
 		Vehiculo v = new Vehiculo();
 		
-		System.out.println("Introduce la  matricula del vehiculo que desea eliminar: ");
 		RepositorioUsuario.mostrarMatriculaVehiculo();
-		String matricula = sc.next();
+		System.out.println("Introduce la  matrícula del vehiculo que desea eliminar: ");
+		String matricula =" ";
+		matricula = comprobarFormatoMatricula(sc, matricula);
 		
 		System.out.println("El vehículo que desea eliminar, es el: ");
 		RepositorioVehiculo.consultarMatricula(matricula);
@@ -274,4 +274,22 @@ public class MenuAdministrador {
 		
 		RepositorioVehiculo.cambiarKilometros(km, matricula);
 	}
+	//Método para comprobar formato matricula
+		public static String comprobarFormatoMatricula(Scanner sc, String matricula) {
+			do {
+				matricula = sc.nextLine().toUpperCase();
+			
+				if (matricula.matches("[0-9]{4}[A-Z]{3}")) {
+					if(!RepositorioVehiculo.existeMatricula(matricula)) {
+						System.out.println("Esa matrícula no está en nuestra base de datos");
+						System.out.println("Introduzca de nuevo la matrícula del vehículo que desea eliminar");
+					}else break;
+				}else {
+					System.out.println("La matrícula debe contener este formato 1234ABC");
+					System.out.println("Vuelva a introducirla, por favor");
+				}
+
+			}while (true);
+			return matricula;
+		}
 }
