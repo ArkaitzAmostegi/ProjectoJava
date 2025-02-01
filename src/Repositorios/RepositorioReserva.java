@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
+import Modelo.Vehiculo;
 
 
 public class RepositorioReserva {
@@ -31,7 +32,31 @@ public class RepositorioReserva {
 			System.out.println("Error al hacer la consulta "+ consulta);
 		}
 	}
-	
+	//Método para comprobar si el vehículo de esa oficina está libre esa fecha
+		public static boolean comprobarFecha(String matricula, String fecha_recogida, String fecha_entrega) {
+			boolean existe= false;
+			
+			String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ? AND alquilado = 0";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, matricula);
+				s.setString(2, fecha_entrega);
+				s.setString(3, fecha_recogida);
+				
+				ResultSet rs= s.executeQuery();
+				
+				if(rs.next()) {
+					existe = true;	
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+ consulta);
+			}
+			return existe;
+		}
+		
 	//Método para comprobar la oficina
 	public static boolean comprobarOficina(String nombre) {
 		boolean existe = false;
@@ -112,30 +137,6 @@ public class RepositorioReserva {
 		return existe;
 	}
 	
-	//Método para comprobar si el vehículo de esa oficina está libre esa fecha
-	public static boolean comprobarFecha(String matricula, String fecha_recogida, String fecha_entrega) {
-		boolean existe= false;
-		
-		String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ?";
-		
-		try {
-			PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
-			s.setString(1, matricula);
-			s.setString(2, fecha_entrega);
-			s.setString(3, fecha_recogida);
-			
-			ResultSet rs= s.executeQuery();
-			
-			if(rs.next()) {
-				existe = true;	
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error "+ consulta);
-		}
-		return existe;
-	}
 	//Métod para sacar el id del vehículo
 	public static int obtenerId(String matricula) {
 		int id_coche=0;
@@ -225,6 +226,7 @@ public class RepositorioReserva {
 		}
 		
 	}
+	
 	//Método para eliminar la reserva
 	public static void eliminarRerserva(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
 		
@@ -241,5 +243,5 @@ public class RepositorioReserva {
 			System.out.println("Error "+ consulta);
 		}
 	}
-
+	//"SELECT v.id_coche, v.matricula, v.marca, v.modelo, v.km FROM vehiculo v WHERE v.id_oficina = (SELECT id_oficina FROM oficina WHERE nombre = ?)AND NOT EXISTS (SELECT * FROM usuario_vehiculo uv WHERE uv.id_coche = v.id_coche AND (uv.fecha_recogida <= ? AND uv.fecha_entrega >= '?";
 }

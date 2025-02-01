@@ -17,11 +17,12 @@ public class MenuInicial {
 	public static void menuInicial(Scanner sc) {
 	
 	Modelo.Usuario usuario= new Modelo.Usuario();
-	Usuario_Vehiculo usuariovehiculo = new Usuario_Vehiculo();
+	Modelo.Usuario_Vehiculo usuariovehiculo = new Modelo.Usuario_Vehiculo();
 	
 	int opcion=0;
 	
 	do {
+		
 		System.out.println();
 		System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 		System.out.println("---------MENÚ INICIAL---------");
@@ -30,8 +31,20 @@ public class MenuInicial {
 		System.out.println("1.-Login");
 		System.out.println("2.-Crear usuario");
 		
-		opcion=sc.nextInt();
-		sc.nextLine();
+		//Bucle que nos va a corregir si el usuario mete primero texto 
+		while (true) {		
+		
+			try {
+				opcion=sc.nextInt();
+				sc.nextLine();
+				break;
+				
+			}catch(java.util.InputMismatchException e){
+				System.out.println("Error: Debes ingresar un número válido");
+				System.out.println("Introduzca un número del 0 al 2 ambos inclusive");
+				sc.next();
+			}
+		}
 		
 		switch (opcion) {
 		case 0: break;
@@ -71,7 +84,6 @@ public class MenuInicial {
 		comprobarTelefono(sc, usuario);
 		
 		System.out.println("Introduce tu email");
-		usuario.setEmail(sc.nextLine());
 		comprobarEmail(sc, usuario);
 		
 		//Administrador va como falso, ya que un usuario normal no puede crearse como administrador
@@ -97,11 +109,14 @@ public class MenuInicial {
 		usuario.setContrasena(contraseña);
 		
 		//Comprobar si usuario EXISTE en la BDD
-		if(RepositorioLogin.comprobarUsuario(nombre, contraseña)) {
+		if(RepositorioLogin.comprobarUsuario(usuario)) {
+			
 			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
-			if(RepositorioLogin.comprobarAdmin(nombre, contraseña))
+			if(RepositorioLogin.comprobarAdmin(usuario)) {
+				
 				MenuAdministrador.menuAdministrador(sc, usuario, usuariovehiculo);
-			else MenuUsuario.menuUsuario(sc, usuario);
+				
+			}else MenuUsuario.menuUsuario(sc, usuario, usuariovehiculo);
 		
 		}
 		else {
@@ -119,11 +134,18 @@ public class MenuInicial {
 			String dni = sc.next();
 			
 			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) { //El String DNI tiene que tener obligatoriamente 8 números entre el rango del 0 al 9 y una letra de la A a la Z
-				usuario.setDni(dni.toUpperCase());
-				dniValido = true;
+				
+				if (!RepositorioLogin.comprobarDni(dni)){
+					usuario.setDni(dni.toUpperCase());
+					dniValido = true;
+				}else {
+					System.out.println("Este dni ya está registrado");
+					System.out.println("Introduce otro dni");
+				}
 			}
 			else {
 				System.out.println("El DNI que has introducido no es válido, vuelve a intentarlo");
+				System.out.println("El DNI tiene que tener 8 caracteres y letra");
 			}
 		}
 	}
@@ -180,18 +202,21 @@ public class MenuInicial {
 	
 	//Método para comprobar que el número de teléfono tiene 9 números
 	public static void comprobarTelefono(Scanner sc, Usuario usuario) {
+
 		boolean telefonoValido = false;
 		
 		while (telefonoValido == false) {
-			int telefono = sc.nextInt();
-			
-			if (String.valueOf(telefono).length() == 9) {
+
+			String telefono = sc.next();
+			sc.nextLine();
+		
+			if (telefono.length() == 9 && telefono.charAt(0)=='6') {
 				usuario.setTelefono(telefono);
 				telefonoValido = true;
 			}
 			else {
 				System.out.println("El teléfono que has introducido no es válido");
-				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres");
+				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6");
 			}
 		}
 	}
@@ -201,14 +226,22 @@ public class MenuInicial {
 		boolean emailValido = false;
 		
 		while (emailValido == false) {
-			String email = sc.next();
+			String email = sc.nextLine();
 			
-			if (email.contains("@")) {
-				usuario.setEmail(email);
-				emailValido = true;
-			}
-			else {
-				System.out.println("El email que has introducido no es válido");
+			if(!RepositorioLogin.comprobaremail(email)){
+				
+				if (email.contains("@")) {
+					//Introducir el email al usuario
+					usuario.setEmail(email);
+					emailValido = true;
+				}
+				else {
+					System.out.println("El email que has introducido no es válido");
+					System.out.println("El email debe contener la '@'");
+				}
+			}else {
+				System.out.println("Este email ya exite en nuestra BDD");
+				System.out.println("Por favor, vuelva a introducirlo");
 			}
 		}
 	}

@@ -59,12 +59,11 @@ public class RepositorioVehiculo {
 		 }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }
-		 System.out.println("Furgoneta añadido a la flota de vehículos");
 	 }
 	 //Añadir Monovolumen
 	public static void insertarMonovolumen(Monovolumen mono) {
 		
-		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, num_puertas, precio_monovolumen id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, num_puertas, precio_monovolumen, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		 
 		 try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
 			 s.setInt(1, mono.getId_coche());
@@ -82,7 +81,6 @@ public class RepositorioVehiculo {
 		 }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }
-		 System.out.println("Monovolumen añadida a la flota de vehículos");
 	}
 	//Añadir turismo
 	public static void insertarTurismo(Turismo turis) {
@@ -104,7 +102,6 @@ public class RepositorioVehiculo {
 		 }catch(Exception e) {
 		    	System.out.println("Error "+e.getMessage());
 		    }
-		 System.out.println("Turismo añadido a la flota de vehículos");
 	}
 	
 	//Consultar vehículo
@@ -124,6 +121,26 @@ public class RepositorioVehiculo {
 	    	System.out.println("Error "+e.getMessage());
 	    }
 	}
+	//Consultar vehículo para seber si esa matrícula existe devuelve true or false
+		public static boolean existeMatricula(String matricula) {
+			
+			boolean existe = false;
+			String consulta = "SELECT COUNT(*) FROM vehiculo WHERE matricula = ?";
+			
+			try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+				s.setString(1, matricula);
+				ResultSet rs= s.executeQuery();
+				
+				if (rs.next()) {
+					int cantidad = rs.getInt(1); //Obtiene el valor de count
+					return cantidad > 0; // Devuelve true si hay al menos 1 alquiler
+				}
+				
+			}catch(Exception e) {
+		    	System.out.println("Error "+e.getMessage());
+		    }
+			return false;
+		}
 	
 	//Eliminar vehiculo
 	public static void eliminarVehiculo(String matricula) {

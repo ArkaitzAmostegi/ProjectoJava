@@ -20,7 +20,7 @@ public class RepositorioLogin {
 				preparedStatement.setString(1, usuario.getDni());
 				preparedStatement.setString(2, usuario.getNombre());
 				preparedStatement.setString(3,usuario.getSexo());
-				preparedStatement.setInt(4, usuario.getTelefono());
+				preparedStatement.setString(4, usuario.getTelefono());
 				preparedStatement.setString(5, usuario.getEmail());
 				preparedStatement.setString(6, usuario.getContrasena());
 				preparedStatement.setBoolean(7, usuario.isAdministrador());
@@ -32,7 +32,7 @@ public class RepositorioLogin {
 		    }
 		}
 	 //Método para Comprobar si está registrado
-	 public static boolean comprobarUsuario(String nombre, String contraseña) {
+	 public static boolean comprobarUsuario(Usuario usuario) {
 		 boolean existe = false;
 		 
 		 //La consulta busca que nos de 1 (es decir que sea igual al nombre y la contraseña). Lo que significa que ese nombre y contraseña están en la BDD
@@ -40,8 +40,8 @@ public class RepositorioLogin {
 		 String consulta = "SELECT count(*) FROM usuario WHERE nombre=? AND contraseña=?";
 		 Connection con = ConectorBD.getconexion();
 		 try {PreparedStatement s=con.prepareStatement(consulta);
-				s.setString(1, nombre);
-				s.setString(2, contraseña);
+				s.setString(1, usuario.getNombre());
+				s.setString(2, usuario.getContrasena());
 				ResultSet rs=s.executeQuery();
 				
 				if(rs.next()) {
@@ -57,16 +57,15 @@ public class RepositorioLogin {
 	 }
 	 
 	 //Método para comprobar que el DNI se encuentra en la BBDD
-	 public static boolean comprobarDni(String dni, String nombre) {
+	 public static boolean comprobarDni(String dni) {
 		 boolean existe = false;
 		 
-		 String consulta = "SELECT COUNT(*) FROM usuario WHERE dni=? AND nombre=?";
+		 String consulta = "SELECT COUNT(*) FROM usuario WHERE dni=?";
 		 
 		 PreparedStatement s;
 		try {
 			s = ConectorBD.getconexion().prepareStatement(consulta);
 			s.setString(1, dni);
-			s.setString(2, nombre);
 			
 			ResultSet rs = s.executeQuery();
 			
@@ -83,13 +82,13 @@ public class RepositorioLogin {
 	 }
 	 
 	 //Método para comprobar si el usuario es admin o no
-	 public static boolean comprobarAdmin(String nombre, String contraseña) {
+	 public static boolean comprobarAdmin(Usuario usuario) {
 		 boolean admin=false;
 		 //El administrador es 1 ya que así, en el Método login(Scanner sc, Usuario usuario) si es admin lo llevamos a menú admin, sino va a menú usuario
 		String consulta="SELECT count(*) FROM usuario WHERE nombre=? and contraseña=? and administrador = 1";
 		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
-			s.setString(1, nombre);
-			s.setString(2, contraseña);
+			s.setString(1, usuario.getNombre());
+			s.setString(2, usuario.getContrasena());
 			ResultSet rs= s.executeQuery();
 			
 			if(rs.next()) {
@@ -103,5 +102,50 @@ public class RepositorioLogin {
 		}
 		 return admin;
 	 }
+	 //Obtener DnI del usuario
+	public static String obtenerDni(Usuario usuario) {
+		String dni=" ";
+		
+		String consulta = "SELECT * FROM usuario WHERE nombre = ? AND contraseña = ?";
+		
+		try { PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, usuario.getNombre());
+			s.setString(2, usuario.getContrasena());
+			
+			ResultSet rs= s.executeQuery();
+			if(rs.next()) {
+				dni= rs.getString("dni");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+ consulta);
+		}
+		return dni;
+	}
+	//Comprobar el email saber si ya está en la BDD o no
+	public static boolean comprobaremail(String email) {
+		
+		boolean existe = false;
+		
+		String consulta = "SELECT * FROM usuario WHERE email = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1, email);
+		
+		ResultSet rs= s.executeQuery();
+		
+		if(rs.next()) {
+			existe = true;
+		}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		
+		
+		return existe;
+	}
 	
 }

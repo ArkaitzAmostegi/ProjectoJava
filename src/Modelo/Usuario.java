@@ -6,7 +6,7 @@ public class Usuario {
     private String dni;
     private String nombre;
     private String sexo;
-    private int telefono;
+    private String telefono;
     private String email;
     private String contrasena;
     private boolean administrador;
@@ -30,10 +30,10 @@ public class Usuario {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
     public String getEmail() {
@@ -55,7 +55,7 @@ public class Usuario {
         this.sexo = sexo;
     }
     //Constructor
-	public Usuario(String dni, String nombre, String sexo, int telefono, String email, String contrasena,
+	public Usuario(String dni, String nombre, String sexo, String telefono, String email, String contrasena,
 			boolean administrador) {
 		super();
 		this.dni = dni;

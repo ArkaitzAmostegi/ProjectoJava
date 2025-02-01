@@ -12,20 +12,24 @@ import Modelo.Usuario_Vehiculo;
 public class MenuUsuario {
 
 	//Menú usuario 
-	public static void menuUsuario(Scanner sc, Usuario usuario) {
+	public static void menuUsuario(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
-		Usuario_Vehiculo usuariovehiculo = new Usuario_Vehiculo();
+		String nombre = usuario.getNombre();
+		
+		//Obtenemos el dni del usuario y lo sobreescribimos al objeto usuario
+		usuario.setDni(RepositorioLogin.obtenerDni(usuario));
 		
 		int opcion=0;
 		do {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
-			System.out.println("--------------"+ "---------------");
+			System.out.println("------------ "+nombre+" ----------");
 			System.out.println("-----------MENÚ USUARIO----------");
 			System.out.println("0.-Cerrar sesión");
 			System.out.println("1.-Nuestra flota de vehículos");
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
-			System.out.println("4.-Modificar sus datos de usuario");
+			System.out.println("4.-Entregar vehículo");
+			System.out.println("5.-Modificar sus datos de usuario");
 			
 			opcion=sc.nextInt();
 			sc.nextLine();
@@ -42,17 +46,40 @@ public class MenuUsuario {
 				hacerReserva(sc, usuario, usuariovehiculo);
 				break;				
 			case 4: 
+				entregarVehiculo(sc, usuario, usuariovehiculo);
+				break;
+			case 5:
 				modificarDatos(sc, usuario);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 4 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
 			}
 		}
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
-	
+	private static void entregarVehiculo(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
+		
+		if (RepositorioUsuario.tieneVehiculosReservados(usuario)) { //Método para saber si tiene vehículos entregados o no
+			
+			System.out.println("\nEstos son los vehículos que Uds. tiene reservados: ");
+			
+			RepositorioUsuario.mostrarListadoVehiculosreservados(usuario);//Lista todos los alquileres que tiene el usuario
+			
+			System.out.println("\nQué vehículo es el que va a entregar?");
+			System.out.println("Introduzca la matrícula, por favor.");
+			String matricula = sc.nextLine();
+			int id_coche = RepositorioReserva.obtenerId(matricula); //Obtenemos el id
+			
+			RepositorioUsuario.finalizarEstadoAlquilado(usuario, id_coche);//Finaliza el estado alquilado del vehículo
+			
+			System.out.println("Vehículo entregado\n");
+			
+		}else System.out.println("\nUds. no tiene ningún vehículo para entregar\n");
+		
+	}
+	//Método para hacer la reserva 
 	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
 		
@@ -69,7 +96,7 @@ public class MenuUsuario {
 		MenuReserva.elegirOficina(sc, usuariovehiculo); //elegir oficina
 		System.out.println();
 		
-		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo, Obtenemos MATRÍCULA
+		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo, y obtenemos MATRÍCULA
 		
 		//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
 		usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
@@ -80,10 +107,6 @@ public class MenuUsuario {
 		//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
 		MenuReserva.activarReserva(sc, usuario, usuariovehiculo);
 		
-		
-			
-		//MUY IMPORTANTE!!!!!
-		//La fecha de recogida también tiene que ser primary key, si sólo tenemos el dni y el id_coche como primary keys, un usuario determinado no podrá volver a coger ese vehículo nuevamente
 	}
 	
 	//Modificar datos del usuario

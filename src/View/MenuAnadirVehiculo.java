@@ -32,7 +32,7 @@ public class MenuAnadirVehiculo {
 			switch (opcion) {
 			case 0: break;
 			case 1: 
-				anadirFrugoneta(sc);
+				anadirFurgoneta(sc);
 				break;
 			case 2: 
 				anadirMonovolumen(sc);
@@ -57,7 +57,8 @@ public class MenuAnadirVehiculo {
 		System.out.println("Vamos a introducir los datos");
 		
 		System.out.println("Introduce la matricula");
-		turis.setMatricula(sc.nextLine());
+		String matricula = " ";
+		turis.setMatricula(comprobarMatricula(sc, matricula));
 		
 		System.out.println("Introduce el modelo");
 		turis.setModelo(sc.nextLine());
@@ -66,8 +67,17 @@ public class MenuAnadirVehiculo {
 		turis.setMarca(sc.nextLine());
 		
 		System.out.println("Introduce los Km");
-		turis.setKm(sc.nextInt());
-		sc.nextLine();
+		while (true) {
+			try {
+				turis.setKm(sc.nextInt());
+				sc.nextLine();
+				break;
+			}catch(java.util.InputMismatchException e) {
+				System.out.println("Error al introducir los km");
+				System.out.println("Introduce un número entero, por favor.");
+				sc.nextLine();
+			}
+		}
 		
 		turis.settipo("Turismo");//Va fijo como Turismo
 		
@@ -75,15 +85,16 @@ public class MenuAnadirVehiculo {
 		turis.setPotencia(sc.nextInt());
 		sc.nextLine();
 		
-		System.out.println("Introduce el precio/km del vehículo");
+		System.out.println("Introduce el precio/día del vehículo");
 		turis.setPrecio_turismo(sc.nextDouble());
 		
 		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo(de la 1 a la 23): ");
-		RepositorioUsuario.mostrarOficina();
 		turis.setId_oficina(sc.nextInt());
 		sc.nextLine();
 		
 		RepositorioVehiculo.insertarTurismo(turis);
+
+		System.out.println("Turismo añadido a la flota de vehículos\n");
 	}
 
 	//Método para añadir Monovolumen
@@ -94,8 +105,9 @@ public class MenuAnadirVehiculo {
 		System.out.println("Vehículo seleccionado: MONOVOLUMEN");
 		System.out.println("Vamos a introducir los datos");
 		
-		System.out.println("Introduce la matricula");
-		mono.setMatricula(sc.nextLine());
+		System.out.println("Introduce la matrícula");
+		String matricula = " ";
+		mono.setMatricula(comprobarMatricula(sc, matricula));
 		
 		System.out.println("Introduce el modelo");
 		mono.setModelo(sc.nextLine());
@@ -104,35 +116,44 @@ public class MenuAnadirVehiculo {
 		mono.setMarca(sc.nextLine());
 		
 		System.out.println("Introduce los Km");
-		mono.setKm(sc.nextInt());
-		sc.nextLine();
+		while (true) {
+			try {
+				mono.setKm(sc.nextInt());
+				sc.nextLine();
+				break;
+			}catch(java.util.InputMismatchException e) {
+				System.out.println("Error al introducir los km");
+				System.out.println("Introduce un número entero, por favor.");
+				sc.nextLine();
+			}
+		}
 		
 		mono.settipo("Monovolumen");//Va fijo como Monovolumen
 		
 		System.out.println("Introduce el nº de puertas");
 		mono.setNumPuertas(sc.nextInt());
 		
-		System.out.println("Introduce el precio/km del vehículo");
+		System.out.println("Introduce el precio/día del vehículo");
 		mono.setPrecio_monovolumen(sc.nextDouble());
 		
-		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
-		RepositorioUsuario.mostrarOficina();
+		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo(de la 1 a la 23): ");
 		mono.setId_oficina(sc.nextInt());
 		sc.nextLine();
-		
-		
+				
 		RepositorioVehiculo.insertarMonovolumen(mono);
+		System.out.println("Monovolumen añadida a la flota de vehículos\n");
 	}
 
 	//Método para añadir furgonetas
-	private static void anadirFrugoneta(Scanner sc) {
+	private static void anadirFurgoneta(Scanner sc) {
 
 		Furgoneta furgo = new Furgoneta();
 		System.out.println("Vehículo seleccionado: FURGONETA");
 		System.out.println("Vamos a introducir los datos");
 		
-		System.out.println("Introduce la matricula");
-		furgo.setMatricula(sc.nextLine());
+		System.out.println("Introduce la matrícula");
+		String matricula = " ";
+		furgo.setMatricula(comprobarMatricula(sc, matricula));
 		
 		System.out.println("Introduce el modelo");
 		furgo.setModelo(sc.nextLine());
@@ -141,24 +162,33 @@ public class MenuAnadirVehiculo {
 		furgo.setMarca(sc.nextLine());
 		
 		System.out.println("Introduce los Km");
-		furgo.setKm(sc.nextInt());
-		sc.nextLine();
+		while (true) {
+			try {
+				furgo.setKm(sc.nextInt());
+				sc.nextLine();
+				break;
+			}catch(java.util.InputMismatchException e) {
+				System.out.println("Error al introducir los km");
+				System.out.println("Introduce un número entero, por favor.");
+				sc.nextLine();
+			}
+		}
+		
 		
 		furgo.settipo("Furgoneta");//Va fijo como furgoneta
 		
 		System.out.println("Introduce el tamaño de la furgoneta");
 		tamanoFurgo(sc, furgo);
 		
-		System.out.println("Introduce el precio/km del vehículo");
+		System.out.println("Introduce el precio/día del vehículo");
 		furgo.setPrecio_furgoneta(sc.nextDouble());
 		
-		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo: ");
-		RepositorioUsuario.mostrarOficina();
+		System.out.println("Introduce el número de identificación de la oficina en la que se va ha registrar el vehículo(de la 1 a la 23): ");
 		furgo.setId_oficina(sc.nextInt());
 		sc.nextLine();
 		
-		
 		RepositorioVehiculo.insertarFurgoneta(furgo);
+		System.out.println("Furgoneta añadido a la flota de vehículos\n");
 	}
 
 	//Método tamaño furgo
@@ -177,5 +207,26 @@ public class MenuAnadirVehiculo {
 		furgo.setTamano(lista[opcion]);
 	}
 
+	//Método para comprobar matricula
+	public static String comprobarMatricula(Scanner sc, String matricula) {
+		do {
+			matricula = sc.nextLine().toUpperCase();
+		
+			if (matricula.matches("[0-9]{4}[A-Z]{3}")) {
+				
+				if(!RepositorioVehiculo.existeMatricula(matricula)) {
+					
+					break;
+				}else {
+						System.out.println("Esta matrícula pertenece a otro vehículo");
+						System.out.println("Introduzca otra matrícula por favor");
+				}
+			}else {
+				System.out.println("La matrícula debe contener este formato 1234ABC");
+				System.out.println("Vuelva a introducirla, por favor");
+			}
 
+		}while (true);
+		return matricula;
+	}
 }

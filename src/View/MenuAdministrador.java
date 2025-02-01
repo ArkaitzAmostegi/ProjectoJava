@@ -18,12 +18,17 @@ public class MenuAdministrador {
 	public static void menuAdministrador(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		int opcion=0;
 		String nombre=usuario.getNombre();
+		
+		//Obtenemos el dni del dministrador y lo sobreescribimos al objeto
+		usuario.setDni(RepositorioLogin.obtenerDni(usuario));
+		
+		
 		do {
 			System.out.println();
 			System.out.println("-----BIENVENIDO AL MENÚ DE ADMINISTRADOR------");
 			System.out.println("--------------- "+nombre+" ---------------");
 			System.out.println("--------------ELIJA UNA OPCIÓN---------");
-			System.out.println("0.-Salir de la web");
+			System.out.println("0.-Volver al menú inicial");
 			System.out.println("1.-Ver la lista de vehículos registrados");
 			System.out.println("2.-Ver la lista de usuarios registrados");
 			System.out.println("3.-Añadir vehículo a la BDD");
@@ -76,11 +81,11 @@ public class MenuAdministrador {
 				eliminarUsuario(sc, usuario);
 				break;
 			case 12:
-				MenuUsuario.menuUsuario(sc, usuario);
+				MenuUsuario.menuUsuario(sc, usuario, usuariovehiculo);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 11, ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 12, ambos inclusive");
 			}
 		}
 		while (opcion != 0);
@@ -152,25 +157,23 @@ public class MenuAdministrador {
 	//Método crear adminnistrador
 	private static void crearAdministrador(Scanner sc, Usuario usuario) {
 		
-		System.out.println("Introduce tus datos");
-		System.out.println("Introduce tu DNI: ");
-		usuario.setDni(sc.nextLine());
-		//MenuInicial.comprobarDni(sc, usuario); De momento no funciona e comprobar usuario
+		System.out.println("Introduce los datos del administrador a crear");
+		System.out.println("Introduce el DNI: ");
+		MenuInicial.comprobarDni(sc, usuario); 
 		
-		System.out.println("Introduce tu nombre: ");
+		System.out.println("Introduce el nombre: ");
 		usuario.setNombre(sc.next());
 		
-		System.out.println("Introduce tu contraseña: ");
+		System.out.println("Introduce la contraseña: ");
 		MenuInicial.comprobarContrasena(sc, usuario);
 		
-		System.out.println("Introduce tu sexo (H = Hombre, M = Mujer)");
+		System.out.println("Introduce el sexo (H = Hombre, M = Mujer)");
 		MenuInicial.comprobarSexo(sc, usuario);
-		
-		System.out.println("Introduce tu teléfono");
+
+		System.out.println("Introduce el teléfono");
 		MenuInicial.comprobarTelefono(sc, usuario);
 		
-		System.out.println("Introduce tu email");
-		usuario.setEmail(sc.nextLine());
+		System.out.println("Introduce el email");
 		MenuInicial.comprobarEmail(sc, usuario); //tiene que contener @ y . y después del punto 2 o 3 letras máximo
 		
 		//Administrador va como true, así creamos como administrador 

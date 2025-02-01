@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import Modelo.Usuario;
+import Modelo.Usuario_Vehiculo;
 
 public class RepositorioUsuario {
 
@@ -131,6 +132,7 @@ public class RepositorioUsuario {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 				s.setString(1, dni);
 				s.setString(2, nombre);
+				
 				s.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -145,6 +147,7 @@ public class RepositorioUsuario {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 				s.setString(1, nombreNuevo);
 				s.setString(2, dni);
+				
 				s.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -159,6 +162,7 @@ public class RepositorioUsuario {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 				s.setString(1, sexo);
 				s.setString(2, dni);
+				
 				s.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -173,6 +177,7 @@ public class RepositorioUsuario {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 				s.setInt(1, numTelefono);
 				s.setString(2, dni);
+				
 				s.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -187,6 +192,7 @@ public class RepositorioUsuario {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 				s.setString(1, correo);
 				s.setString(2, dni);
+				
 				s.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -201,11 +207,74 @@ public class RepositorioUsuario {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 				s.setString(1, contraseña);
 				s.setString(2, dni);
+				
 				s.executeUpdate();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		//Método para que muestre todas los alquileres de vehículos que tiene el usuario
+		public static void mostrarListadoVehiculosreservados(Usuario usuario) {
+			
+			String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE dni = ? AND alquilado = 1";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, usuario.getDni());
+				
+				ResultSet rs= s.executeQuery();
+				
+				while(rs.next()) {
+					System.out.println(rs.getString("matricula")+" "+rs.getString("marca")+" "+ rs.getString("modelo")+" "+" "+ rs.getInt("km")+" "+ rs.getString("tipo"));
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+ consulta);
+			}
+		}
+		
+		//Método para finalizar el estado alquilado de un vehículo
+		public static void finalizarEstadoAlquilado(Usuario usuario, int id_coche) {
+			
+			String consulta = "DELETE FROM usuario_vehiculo WHERE dni = ? and id_coche = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, usuario.getDni());
+				s.setInt(2, id_coche);
+				
+				s.executeUpdate();
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+ consulta);
+			}
+		}
+		//Método que devuelve si hay vehículos reservados o no
+		public static boolean tieneVehiculosReservados(Usuario usuario) {
+			boolean existe = false;
+			String consulta = "SELECT count(*) FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE dni = ? AND alquilado = 1";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, usuario.getDni());
+				
+				ResultSet rs= s.executeQuery();
+				
+				if(rs.next()) {
+					int cantidad = rs.getInt(1); //Obtiene el valor de count
+					return cantidad > 0; // Devuelve true si hay al menos 1 alquiler
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+ consulta);
+			}
+			
+			return false;
 		}
 		
 }

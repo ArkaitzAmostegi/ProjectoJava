@@ -138,7 +138,6 @@ public class MenuReserva {
 					System.out.println("Indícanos una fecha de recogida (aaaa/mm/dd): ");
 					fecha_recogida= sc.nextLine();
 					
-					//comprobarFechaVehiculo();
 					if (!fecha_recogida.matches(regex)) {
 						System.out.println("Ha habido un error");
 						System.out.println("Vuelva a introducir la fecha, por favor.");
@@ -146,13 +145,13 @@ public class MenuReserva {
 					}else usuariovehiculo.setFecha_recogida(fecha_recogida);
 					
 				}while(!fecha_recogida.matches(regex));
-				//Comprobar formatoFecha();
-				Date fechaR=convertirFecha(fecha_recogida);
+						
+				Date fechaR=convertirFecha(fecha_recogida);				
 				
 				do {
 					System.out.println("Indicanos una fecha de entrega (aaaa/mm/dd): ");
 					fecha_entrega= sc.nextLine();
-					//comprobarFechaVehiculo();
+					
 					if(!fecha_entrega.matches(regex)) {
 						System.out.println("Ha habido un error");
 						System.out.println("Vuelva a introducir la fecha, por favor.");
@@ -161,10 +160,14 @@ public class MenuReserva {
 					
 				}while(!fecha_entrega.matches(regex));
 				
-				//Comprobar formatoFecha();
+				
 				Date fechaE=convertirFecha(fecha_entrega);
 				
-				
+				//Método para NO permitir reservar si el vehículo tiene una reserva hecha en esa fecha
+				//if(RepositorioReserva.comprobarFecha(matricula, fecha_entrega, fecha_recogida)) {
+					//System.out.println("Este vehículo no está disponible esta fecha");
+					//System.out.println("Elija otra fecha, u otro vehículo, por favor");
+				//}
 				
 				//Calcula la diferencia de días
 				long ms= fechaE.getTime() - fechaR.getTime();
@@ -184,10 +187,6 @@ public class MenuReserva {
 	       	}while(dias<0);
 	       
 	    }while(RepositorioReserva.comprobarFecha(matricula, fecha_entrega, fecha_recogida));
-		
-       
-		//MUY IMPORTANTE
-		//HAY QUE AÑADIR QUE SI MATRICULA RESERVADA, NO SE PUEDE VOLVER A RESERVAR HASTA DESPUÉS DE SU FECHA_RECOGIDA
 		
        return dias;
 	}
@@ -265,6 +264,7 @@ public class MenuReserva {
 		}
 		
 	}
+	
 	
 }
 
