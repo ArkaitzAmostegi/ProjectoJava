@@ -289,9 +289,14 @@ public class RepositorioReserva {
 		ResultSet rs= s.executeQuery();
 		
 		if(rs.next()) {
-			precioDia = rs.getInt("precio_monovolumen");
-			precioDia = rs.getInt("Precio_turismo");
-			precioDia = rs.getInt("precio_furgoneta");
+			   // Determinar qué precio usar según el tipo de vehículo
+            if (rs.getInt("precio_monovolumen") > 0) {
+                precioDia = rs.getInt("precio_monovolumen");
+            } else if (rs.getInt("precio_turismo") > 0) {
+                precioDia = rs.getInt("precio_turismo");
+            } else if (rs.getInt("precio_furgoneta") > 0) {
+                precioDia = rs.getInt("precio_furgoneta");
+            }
 		}
 			
 		}catch(Exception e) {

@@ -115,8 +115,7 @@ public class MenuUsuario {
 		
 		if (MenuReserva.validarReserva(sc, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
 			//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
-			MenuReserva.activarReserva(sc, usuario, usuariovehiculo);
-			RepositorioReserva.activarAlquilado(matricula);
+			MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
 			
 		}else System.out.println("Su reserva ha sido cancelada\n");
 		
@@ -226,8 +225,8 @@ public class MenuUsuario {
 		boolean telefonoValido = false;
 		
 		while (telefonoValido == false) {
-			int numTelefono = sc.nextInt();
-			if (String.valueOf(numTelefono).length() != 9) {
+			String numTelefono = sc.nextLine();
+			if (!numTelefono.matches("^6\\d{8}$")) {
 				System.out.println("El teléfono debe tener una longitud de 9 caracteres");
 			}
 			else {

@@ -170,12 +170,12 @@ public class RepositorioUsuario {
 			}
 		}
 		
-		public static void modificarTelefono(String dni, int numTelefono) {
+		public static void modificarTelefono(String dni, String numTelefono) {
 			String consulta = "UPDATE usuario SET telefono = ? WHERE dni = ?";
 			
 			try {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
-				s.setInt(1, numTelefono);
+				s.setString(1, numTelefono);
 				s.setString(2, dni);
 				
 				s.executeUpdate();

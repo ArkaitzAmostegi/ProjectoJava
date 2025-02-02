@@ -20,13 +20,13 @@ public class MenuReserva {
 	    while (true) {
 	        System.out.println("Introduzca el nombre de la oficina desde donde desea realizar la reserva:");
 	        System.out.println("Le mostraremos los coches disponibles en esa oficina.");
-	        nombreOficina = sc.nextLine().trim(); // Trim() Elimina espacios en blanco
+	        nombreOficina = sc.nextLine().trim().toLowerCase(); 
 
 	        //Comprobar si la oficina existe
 	        if (comprobarOficina(nombreOficina)) {
 	        	usuariovehiculo.setLugarRecogida(nombreOficina);
-		        	if (nombreOficina.contains("Madrid")|| nombreOficina.contains("Barcelona")|| nombreOficina.contains("Bilbao")
-		        			||nombreOficina.contains("Barakaldo")||nombreOficina.contains("Deusto")||nombreOficina.contains("Sevilla") || nombreOficina.contains("Alicante")) {
+		        	if (nombreOficina.contains("madrid")|| nombreOficina.contains("barcelona")|| nombreOficina.contains("bilbao")
+		        			||nombreOficina.contains("barakaldo")||nombreOficina.contains("deusto")||nombreOficina.contains("sevilla") || nombreOficina.contains("alicante")) {
 		        		System.out.println("A continuación le mostramos en que oficinas puede entregar el vehículo");
 		        		RepositorioReserva.mostrarOficinasEspana();
 		        		System.out.println("\nIntroduzca el nombre de la oficina, en la que va entregar el vehículo: ");
@@ -198,7 +198,8 @@ public class MenuReserva {
 	//Método precio final del alquiler por días
 	public static void precioDia(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
-		int precioVehiculo= RepositorioReserva.precioDiaVehiculo(matricula);
+		int precioVehiculo= RepositorioReserva.precioDiaVehiculo(matricula);//Me devuelve el precio por el tipo de vehículo
+		
 		double precioDia = 0;
 		
 		// Guarda la respuesta del usuario sobre conductor
@@ -250,7 +251,7 @@ public class MenuReserva {
 	    return fechaSql;
 	}
 	//Método para comprovar los datos de la reserva y activar el alquilado 
-	public static void activarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
+	public static void activarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo, String matricula) {
 	
 		System.out.println(usuario.getNombre()+" a elegido realizar la siguiente reserva: ");
 		System.out.println("Nombre: "+usuario.getNombre()+ "\nFecha de recogida: "+usuariovehiculo.getFecha_recogida()+ "\nFecha de entrega: "+usuariovehiculo.getFecha_entrega()
@@ -261,6 +262,7 @@ public class MenuReserva {
 		while (true) {
 			if (opcion.equalsIgnoreCase("si")) {
 				RepositorioReserva.anadirReserva(usuario, usuariovehiculo);
+				RepositorioReserva.activarAlquilado(matricula);
 				System.out.println("Su Reserva ha sido realizada");
 				System.out.println("Pase a recoger le vehículo, por nuestra oficina "+usuariovehiculo.getLugarRecogida()+" la fecha "+usuariovehiculo.getFecha_recogida()+ "\n");
 				break;
