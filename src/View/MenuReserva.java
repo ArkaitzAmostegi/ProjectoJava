@@ -44,12 +44,12 @@ public class MenuReserva {
 	    }
 
 	    // Mostrar los vehículos disponibles en la oficina seleccionada
-	    System.out.println("\nLa oficina "+ nombreOficina+" dispone de estos vehículos:");
+	    System.out.println("La oficina "+ nombreOficina+" dispone de estos vehículos:");
 	    System.out.println("-----------------------------------------");
 	    System.out.println("Matrícula--Marca--Modelo--Km---Tipo---Nº puertas--Potencia--Tamaño");
 
-	    // Consultar y mostrar los vehículos
-	    RepositorioReserva.mostrarVehiculoOficina(nombreOficina);
+	   // Consultar y mostrar los vehículos
+	   RepositorioReserva.vehiculoLibre(nombreOficina);
 	}
 
 	// Método para comprobar si la oficina existe
@@ -65,8 +65,9 @@ public class MenuReserva {
 	public static String elegirVehiculo (Scanner sc) {
 		
 		while (true) {
+			String matricula = "";
 			System.out.println("Introduzca la matrícula del vehículo elegido");
-			String matricula = sc.nextLine().trim();
+			matricula = MenuAdministrador.comprobarFormatoMatricula(sc, matricula);
 			//Comprobar si existe esa matricula
 			if(comprobarMatricula(matricula)) { 
 				return matricula;
@@ -81,7 +82,7 @@ public class MenuReserva {
 	public static boolean comprobarMatricula(String matricula) {
 		boolean existe = RepositorioReserva.comprobarMatricula(matricula);
 		if (existe) {
-			System.out.println("\nUds. ha elegido de nuestra oficina, y el vehículo siguientes: " );
+			System.out.println("\nUds. ha elegido nuestra oficina, y el vehículo siguientes: " );
 			//Hace la consulta del vehículo para que escriba el modelo con todas sus caráteristicas
 			RepositorioReserva.vehiculoSeleccionado(matricula);	
 		}
@@ -89,13 +90,23 @@ public class MenuReserva {
 	}
 	
 	//Método para validar reserva
-	public static void validarReserva(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
-		
+	public static boolean validarReserva(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
+		boolean reservar= false;
 		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está de acuerdo escriba 'NO'");
 		String opcion = sc.nextLine();
-		if (opcion.equalsIgnoreCase("si")) {
-			precioDia(sc, matricula, usuariovehiculo);
-		}else System.out.println("Operación cancelada\n");
+		while (true) {
+			if (opcion.equalsIgnoreCase("si")) {
+				precioDia(sc, matricula, usuariovehiculo);
+				return true;
+			}else if (opcion.equalsIgnoreCase("no")){
+				System.out.println("Operación cancelada\n");
+				return false;
+			} else {
+				System.out.println("Ha ocurrido un error por favor escriba (SI/NO).");
+				opcion = sc.nextLine();
+			}
+		}
+		
 	}
 	
 	//Método para elegir conductor si es true (con conductor) se multiplicará el precio del día por 1.25
@@ -160,14 +171,7 @@ public class MenuReserva {
 					
 				}while(!fecha_entrega.matches(regex));
 				
-				
 				Date fechaE=convertirFecha(fecha_entrega);
-				
-				//Método para NO permitir reservar si el vehículo tiene una reserva hecha en esa fecha
-				//if(RepositorioReserva.comprobarFecha(matricula, fecha_entrega, fecha_recogida)) {
-					//System.out.println("Este vehículo no está disponible esta fecha");
-					//System.out.println("Elija otra fecha, u otro vehículo, por favor");
-				//}
 				
 				//Calcula la diferencia de días
 				long ms= fechaE.getTime() - fechaR.getTime();
@@ -194,9 +198,10 @@ public class MenuReserva {
 	//Método precio final del alquiler por días
 	public static void precioDia(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
+		int precioVehiculo= RepositorioReserva.precioDiaVehiculo(matricula);
 		double precioDia = 0;
 		
-		  // Guarda la respuesta del usuario sobre conductor
+		// Guarda la respuesta del usuario sobre conductor
 		boolean conConductor =conConductor(sc, usuariovehiculo);
 	    
 	    // Obtiene la cantidad de días sin llamar a conSinConductor() nuevamente
@@ -204,7 +209,7 @@ public class MenuReserva {
 
 	    if (conConductor) { 
 	    	// El 2 corresponde uno al pago del conductor y otro el pago del vehículo
-	        precioDia = 2 * (dias * 50); //Hay que cambiar al precio furgoneta, turismo o monovolumen
+	        precioDia = 2 * (dias * precioVehiculo); //Hay que cambiar al precio furgoneta, turismo o monovolumen
 
 		    System.out.println("El precio de la reserva del vehículo es de: " + precioDia + " €");
 		    System.out.println();
@@ -219,12 +224,13 @@ public class MenuReserva {
 		    System.out.println("El precio total de la reserva es: " + precioTotal + " €");
 		    usuariovehiculo.setPrecio_total(precioTotal);
 	    } else {
-	        usuariovehiculo.setPrecio_total( precioDia = dias * 50);
+	        usuariovehiculo.setPrecio_total( precioDia = dias * precioVehiculo);
 		    System.out.println("El precio total de la reserva es: " + precioDia + " €");
 	    }
 
 	
 	}
+	
 	//Método para pasar de String a date datetime (Hecho por Arritxu)
 	private static Date convertirFecha(String fechaString) {
 	    
@@ -252,17 +258,22 @@ public class MenuReserva {
 		
 		System.out.println("Confirmar reserva (SI/NO)");
 		String opcion = sc.nextLine();
-		
-		if (opcion.equalsIgnoreCase(opcion)) {
-			usuariovehiculo.setAlquilado(true);
-			RepositorioReserva.anadirReserva(usuario, usuariovehiculo);
-			System.out.println("Su Reserva ha sido realizada");
-			System.out.println("Pase a recoger le vehículo, por nuestra oficina "+usuariovehiculo.getLugarRecogida()+" la fecha "+usuariovehiculo.getFecha_recogida());
-		}else {
-			System.out.println("Reserva cancelada");
-			RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario);
-		}
-		
+		while (true) {
+			if (opcion.equalsIgnoreCase("si")) {
+				RepositorioReserva.anadirReserva(usuario, usuariovehiculo);
+				System.out.println("Su Reserva ha sido realizada");
+				System.out.println("Pase a recoger le vehículo, por nuestra oficina "+usuariovehiculo.getLugarRecogida()+" la fecha "+usuariovehiculo.getFecha_recogida()+ "\n");
+				break;
+			}else if(opcion.equalsIgnoreCase("NO")){
+				System.out.println("Reserva cancelada");
+				RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario);
+				break;
+			}else {
+				System.out.println("Ha ocurrido un error");
+				System.out.println("Escriba (SI/NO):");
+				opcion = sc.nextLine();
+			}
+		}		
 	}
 	
 	

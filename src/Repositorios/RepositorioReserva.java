@@ -56,6 +56,24 @@ public class RepositorioReserva {
 			}
 			return existe;
 		}
+	//Método para mostrar que vehículos tiene libre esa oficina
+	public static void vehiculoLibre(String nombreOficina) {
+		
+		String consulta ="SELECT * FROM vehiculo NATURAL JOIN oficina WHERE nombre = ? AND alquilado = 0";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1, nombreOficina);
+		
+		ResultSet rs = s.executeQuery();
+		
+		while(rs.next()) {
+			System.out.println(rs.getString("matricula")+" "+rs.getString("marca")+" "+rs.getString("modelo")+" "+rs.getInt("km"));
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+	}
 		
 	//Método para comprobar la oficina
 	public static boolean comprobarOficina(String nombre) {
@@ -161,7 +179,7 @@ public class RepositorioReserva {
 	//Método insertar el alquiler del vehículo en la tabla usuario_vehiculo
 	public static void anadirReserva(Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
-		String consulta = "INSERT INTO usuario_vehiculo (dni, id_coche, precio_total, fecha_recogida, fecha_entrega, conconductor, Lugar_recogida, Lugar_entrega, alquilado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String consulta = "INSERT INTO usuario_vehiculo (dni, id_coche, precio_total, fecha_recogida, fecha_entrega, conconductor, Lugar_recogida, Lugar_entrega) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {PreparedStatement s = ConectorBD.getconexion().prepareCall(consulta);
 			s.setString(1, usuariovehiculo.getDni());
@@ -172,7 +190,6 @@ public class RepositorioReserva {
 			s.setBoolean(6, usuariovehiculo.isConConductor());
 			s.setString(7, usuariovehiculo.getLugarRecogida());
 			s.setString(8, usuariovehiculo.getLugarEntrega());
-			s.setBoolean(9, usuariovehiculo.isAlquilado());
 			
 			s.executeUpdate();
 		
@@ -243,5 +260,45 @@ public class RepositorioReserva {
 			System.out.println("Error "+ consulta);
 		}
 	}
-	//"SELECT v.id_coche, v.matricula, v.marca, v.modelo, v.km FROM vehiculo v WHERE v.id_oficina = (SELECT id_oficina FROM oficina WHERE nombre = ?)AND NOT EXISTS (SELECT * FROM usuario_vehiculo uv WHERE uv.id_coche = v.id_coche AND (uv.fecha_recogida <= ? AND uv.fecha_entrega >= '?";
+	//Método para activar estado alquilado al vehículo
+	public static void activarAlquilado(String matricula) {
+		
+		String consulta ="UPDATE vehiculo SET alquilado = ? WHERE matricula = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setBoolean(1, true);
+		s.setString(2, matricula);
+		
+		s.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+	}
+	
+	//Método que devuelva el precio dia del vehículo 
+	public static int precioDiaVehiculo(String matricula) {
+		int precioDia =0;
+		
+		String consulta = "SELECT * FROM vehiculo WHERE matricula = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		s.setString(1, matricula);
+		
+		ResultSet rs= s.executeQuery();
+		
+		if(rs.next()) {
+			precioDia = rs.getInt("precio_monovolumen");
+			precioDia = rs.getInt("Precio_turismo");
+			precioDia = rs.getInt("precio_furgoneta");
+		}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		return precioDia;
+		
+	}
 }

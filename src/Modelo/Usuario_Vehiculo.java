@@ -11,7 +11,6 @@ public class Usuario_Vehiculo {
     private String lugarEntrega;
     private String lugarRecogida;
     private boolean conConductor;
-    private boolean alquilado;
 
     
     //Getters & Setters
@@ -63,18 +62,12 @@ public class Usuario_Vehiculo {
 	public void setLugarRecogida(String lugarRecogida) {
 		this.lugarRecogida = lugarRecogida;
 	}
-	public boolean isAlquilado() {
-		return alquilado;
-	}
-	public void setAlquilado(boolean alquilado) {
-		this.alquilado = alquilado;
-	}
     
     //Constructores
 	public Usuario_Vehiculo() {
     }
 	public Usuario_Vehiculo(String dni, int id_coche, double precio_total, String fecha_entrega, String fecha_recogida,
-			String lugarEntrega, String lugarRecogida, boolean conConductor, boolean alquilado) {
+			String lugarEntrega, String lugarRecogida, boolean conConductor) {
 		super();
 		this.dni = dni;
 		this.id_coche = id_coche;
@@ -84,7 +77,6 @@ public class Usuario_Vehiculo {
 		this.lugarEntrega = lugarEntrega;
 		this.lugarRecogida = lugarRecogida;
 		this.conConductor = conConductor;
-		this.alquilado = alquilado;
 	}
 	
 	

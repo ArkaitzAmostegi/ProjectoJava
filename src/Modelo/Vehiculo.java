@@ -10,6 +10,7 @@ public class Vehiculo {
     private String modelo;
     private int km;
     private String tipo;
+    private boolean alquilado;
 
     
     //Getters & Setters
@@ -54,18 +55,35 @@ public class Vehiculo {
     }
     public void settipo(String tipo) {
         this.tipo = tipo;
-    }
-    
-    //Constructores
-    public Vehiculo(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km) {
-        this.id_coche = id_coche;
-        this.id_oficina = id_oficina;
-        this.matricula = matricula;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.km = km;
-    }
+    }    
+    public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public boolean isAlquilado() {
+		return alquilado;
+	}
+	public void setAlquilado(boolean alquilado) {
+		this.alquilado = alquilado;
+	}
+	//Constructores
+   
     public Vehiculo() {
     }
+    
+	public Vehiculo(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, String tipo,
+			boolean alquilado) {
+		super();
+		this.id_coche = id_coche;
+		this.id_oficina = id_oficina;
+		this.matricula = matricula;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.km = km;
+		this.tipo = tipo;
+		this.alquilado = alquilado;
+	}
 }
 

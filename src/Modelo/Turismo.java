@@ -19,18 +19,22 @@ public class Turismo extends Vehiculo{
 	public void setPrecio_turismo(double precio_turismo) {
 		this.precio_turismo = precio_turismo;
 	}
-	//Constructores
 	
-	public Turismo(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km) {
-		super(id_coche, id_oficina, matricula, marca, modelo, km);
+	//Constructores
+	public Turismo(int potencia, double precio_turismo) {
+		super();
+		this.potencia = potencia;
+		this.precio_turismo = precio_turismo;
 	}
-	public Turismo(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, int potencia,
-			double precio_turismo) {
-		super(id_coche, id_oficina, matricula, marca, modelo, km);
+	public Turismo(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, String tipo,
+			boolean alquilado, int potencia, double precio_turismo) {
+		super(id_coche, id_oficina, matricula, marca, modelo, km, tipo, alquilado);
 		this.potencia = potencia;
 		this.precio_turismo = precio_turismo;
 	}
 	public Turismo() {
 	}
+	
+	
 	
 }

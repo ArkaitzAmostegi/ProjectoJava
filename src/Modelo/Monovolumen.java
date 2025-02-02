@@ -23,14 +23,19 @@ public class Monovolumen extends Vehiculo{
 	}
 	
 	//Constructores
-	
-	public Monovolumen() {
-	}
-	public Monovolumen(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km,
-			int numPuertas, double precio_monovolumen) {
-		super(id_coche, id_oficina, matricula, marca, modelo, km);
+	public Monovolumen(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, String tipo,
+			boolean alquilado, int numPuertas, double precio_monovolumen) {
+		super(id_coche, id_oficina, matricula, marca, modelo, km, tipo, alquilado);
 		this.numPuertas = numPuertas;
 		this.precio_monovolumen = precio_monovolumen;
 	}
+	public Monovolumen(int numPuertas, double precio_monovolumen) {
+		super();
+		this.numPuertas = numPuertas;
+		this.precio_monovolumen = precio_monovolumen;
+	}
+	public Monovolumen() {
+	}
+	
 }
 

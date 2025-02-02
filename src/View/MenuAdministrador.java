@@ -255,7 +255,7 @@ public class MenuAdministrador {
 		
 		RepositorioAdministrador.anadirOficina(oficina);
 	}
-	
+	//Devolver el email como String
 	private static String comprobarEmail(Scanner sc) {
 		String email="";
 		
@@ -336,7 +336,7 @@ public class MenuAdministrador {
 	//Método para comprobar formato matricula
 		public static String comprobarFormatoMatricula(Scanner sc, String matricula) {
 			do {
-				matricula = sc.nextLine().toUpperCase();
+				matricula = sc.nextLine().toUpperCase().trim();
 			
 				if (matricula.matches("[0-9]{4}[A-Z]{3}")) {
 					if(!RepositorioVehiculo.existeMatricula(matricula)) {

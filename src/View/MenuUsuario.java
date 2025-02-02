@@ -113,11 +113,12 @@ public class MenuUsuario {
 		//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
 		usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
 		
-		MenuReserva.validarReserva(sc, matricula, usuariovehiculo); //validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
-		System.out.println();
-		
-		//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
-		MenuReserva.activarReserva(sc, usuario, usuariovehiculo);
+		if (MenuReserva.validarReserva(sc, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
+			//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
+			MenuReserva.activarReserva(sc, usuario, usuariovehiculo);
+			RepositorioReserva.activarAlquilado(matricula);
+			
+		}else System.out.println("Su reserva ha sido cancelada\n");
 		
 	}
 	
