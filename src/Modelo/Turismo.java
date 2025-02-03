@@ -28,7 +28,7 @@ public class Turismo extends Vehiculo{
 	}
 	public Turismo(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, String tipo,
 			boolean alquilado, int potencia, double precio_turismo) {
-		super(id_coche, id_oficina, matricula, marca, modelo, km, tipo, alquilado);
+		super(id_coche, id_oficina, matricula, marca, modelo, km, tipo);
 		this.potencia = potencia;
 		this.precio_turismo = precio_turismo;
 	}

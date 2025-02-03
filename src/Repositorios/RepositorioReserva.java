@@ -36,7 +36,7 @@ public class RepositorioReserva {
 		public static boolean comprobarFecha(String matricula, String fecha_recogida, String fecha_entrega) {
 			boolean existe= false;
 			
-			String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ? AND alquilado = 0";
+			String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE matricula = ? AND fecha_entrega = ? AND fecha_recogida = ?";
 			
 			try {
 				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
@@ -62,15 +62,15 @@ public class RepositorioReserva {
 		String consulta ="SELECT * \r\n"
 				+ "FROM VEHICULO V \r\n"
 				+ "NATURAL JOIN OFICINA O\r\n"
-				+ "WHERE O.ID_OFICINA = 2\r\n"
+				+ "WHERE O.ID_OFICINA = ?\r\n"
 				+ "AND NOT EXISTS (\r\n"
 				+ "    SELECT 1 \r\n"
 				+ "    FROM USUARIO_VEHICULO UV\r\n"
 				+ "    WHERE V.id_coche = UV.id_coche\r\n"
-				+ "    AND ('2025-10-18' BETWEEN UV.fecha_recogida AND UV.fecha_entrega \r\n"
-				+ "        OR '2025-10-20' BETWEEN UV.fecha_recogida AND UV.fecha_entrega\r\n"
-				+ "        OR (UV.fecha_recogida BETWEEN '2025-10-18' AND '2025-10-20')\r\n"
-				+ "        OR (UV.fecha_entrega BETWEEN '2025-10-18' AND '2025-10-20')\r\n"
+				+ "    AND (? BETWEEN UV.fecha_recogida AND UV.fecha_entrega \r\n"
+				+ "        OR ? BETWEEN UV.fecha_recogida AND UV.fecha_entrega\r\n"
+				+ "        OR (UV.fecha_recogida BETWEEN ? AND ?)\r\n"
+				+ "        OR (UV.fecha_entrega BETWEEN ? AND ?)\r\n"
 				+ "    )\r\n"
 				+ ");";
 
@@ -78,7 +78,11 @@ public class RepositorioReserva {
 		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 		s.setInt(1, id_oficina);
 		s.setString(2, usuariovehiculo.getFecha_recogida());
-		s.setString(3, usuariovehiculo.getFecha_recogida());
+		s.setString(3, usuariovehiculo.getFecha_entrega());
+		s.setString(4, usuariovehiculo.getFecha_recogida());
+		s.setString(5, usuariovehiculo.getFecha_entrega());
+		s.setString(6, usuariovehiculo.getFecha_recogida());
+		s.setString(7, usuariovehiculo.getFecha_entrega());
 		
 		ResultSet rs = s.executeQuery();
 		
@@ -275,22 +279,6 @@ public class RepositorioReserva {
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error "+ consulta);
-		}
-	}
-	//Método para activar estado alquilado al vehículo
-	public static void activarAlquilado(String matricula) {
-		
-		String consulta ="UPDATE vehiculo SET alquilado = ? WHERE matricula = ?";
-		
-		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
-		s.setBoolean(1, true);
-		s.setString(2, matricula);
-		
-		s.executeUpdate();
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println("Error "+consulta);
 		}
 	}
 	

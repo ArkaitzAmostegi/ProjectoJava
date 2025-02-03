@@ -89,13 +89,13 @@ public class MenuReserva {
 	}
 	
 	//Método para validar reserva
-	public static boolean validarReserva(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
+	public static boolean validarReserva(Scanner sc, Long cantidadDeDias,  String matricula, Usuario_Vehiculo usuariovehiculo) {
 		boolean reservar= false;
 		System.out.println("Sí está de acuerdo, escriba 'SI'. Sí no está de acuerdo escriba 'NO'");
 		String opcion = sc.nextLine();
 		while (true) {
 			if (opcion.equalsIgnoreCase("si")) {
-				precioDia(sc, matricula, usuariovehiculo);
+				precioDia(sc, cantidadDeDias, matricula, usuariovehiculo);
 				return true;
 			}else if (opcion.equalsIgnoreCase("no")){
 				System.out.println("Operación cancelada\n");
@@ -197,7 +197,7 @@ public class MenuReserva {
 	}
 
 	//Método precio final del alquiler por días
-	public static void precioDia(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
+	public static void precioDia(Scanner sc, long cantidadDeDias, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
 		int precioVehiculo= RepositorioReserva.precioDiaVehiculo(matricula);//Me devuelve el precio por el tipo de vehículo
 		
@@ -207,7 +207,7 @@ public class MenuReserva {
 		boolean conConductor =conConductor(sc, usuariovehiculo);
 	    
 	    // Obtiene la cantidad de días sin llamar a conSinConductor() nuevamente
-	    long dias = cantidadDias(sc, matricula, usuariovehiculo);
+	    long dias = cantidadDeDias;
 
 	    if (conConductor) { 
 	    	// El 2 corresponde uno al pago del conductor y otro el pago del vehículo
@@ -263,7 +263,6 @@ public class MenuReserva {
 		while (true) {
 			if (opcion.equalsIgnoreCase("si")) {
 				RepositorioReserva.anadirReserva(usuario, usuariovehiculo);
-				RepositorioReserva.activarAlquilado(matricula);
 				System.out.println("Su Reserva ha sido realizada");
 				System.out.println("Pase a recoger le vehículo, por nuestra oficina "+usuariovehiculo.getLugarRecogida()+" la fecha "+usuariovehiculo.getFecha_recogida()+ "\n");
 				break;

@@ -28,8 +28,7 @@ public class MenuUsuario {
 			System.out.println("1.-Nuestra flota de vehículos");
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
-			System.out.println("4.-Entregar vehículo");
-			System.out.println("5.-Modificar sus datos de usuario");
+			System.out.println("4.-Modificar sus datos de usuario");
 			
 			//Bucle que nos va a corregir si el usuario mete texto en vez de un número
 			while (true) {		
@@ -41,7 +40,7 @@ public class MenuUsuario {
 					
 				}catch(java.util.InputMismatchException e){
 					System.out.println("Error: Debes ingresar un número válido");
-					System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
+					System.out.println("Introduzca un número del 0 al 4 ambos inclusive");
 					sc.next();
 				}
 			}
@@ -58,43 +57,17 @@ public class MenuUsuario {
 				hacerReserva(sc, usuario, usuariovehiculo);
 				break;				
 			case 4: 
-				entregarVehiculo(sc, usuario, usuariovehiculo);
-				break;
-			case 5:
 				modificarDatos(sc, usuario);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 4 ambos inclusive");
 			}
 		}
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
-	private static void entregarVehiculo(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
-		
-		if (RepositorioUsuario.tieneVehiculosReservados(usuario)) { //Método para saber si tiene vehículos entregados o no
-			
-			System.out.println("\nEstos son los vehículos que Uds. tiene reservados: ");
-			
-			RepositorioUsuario.mostrarListadoVehiculosreservados(usuario);//Lista todos los alquileres que tiene el usuario
-			
-			System.out.println("\nQué vehículo es el que va a entregar?");
-			System.out.println("Introduzca la matrícula, por favor.");
-			String matricula = "";
-			MenuAnadirVehiculo.comprobarMatricula(sc, matricula); //Comprobamos si la matrícula está bien introducida
-			int id_coche = RepositorioReserva.obtenerId(matricula); //Obtenemos el id
-			boolean matriculaValida = false;
-			if (RepositorioUsuario.vehiculosReservados(usuario, matricula)){//Matricula para devolver
-				System.out.println(matricula);
-				RepositorioUsuario.finalizarEstadoAlquilado(usuario, id_coche);//Finaliza el estado alquilado del vehículo
-				System.out.println("Vehículo entregado\n");
-			}else {
-				System.out.println("Ese vehículo no lo puede devolver");
-				System.out.println("No se encuentra entre los que tiene Uds. alquilados");
-			}
-		}	
-	}
+	
 	//Método para hacer la reserva 
 	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
@@ -105,7 +78,7 @@ public class MenuUsuario {
 		//Obtener dni de usuario e Introducir el dni del usuariovehiculo
 		usuariovehiculo.setDni(RepositorioReserva.usuario(nombre,contraseña));
 		
-		MenuReserva.cantidadDias(sc, nombre, usuariovehiculo);//Reserva de días
+		Long cantidadDeDias = MenuReserva.cantidadDias(sc, nombre, usuariovehiculo);//Reserva de días
 		
 		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere realizar la reserva");
 		RepositorioUsuario.mostrarOficina(); //mostrar listado de oficinas
@@ -119,12 +92,13 @@ public class MenuUsuario {
 		// Consultar y mostrar los vehículos libres en esa oficina
 		RepositorioReserva.vehiculoLibre(id_oficina, usuariovehiculo);
 		
-		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo, y obtenemos MATRÍCULA
+		//elegir vehiculo, y obtenemos MATRÍCULA
+		String matricula = MenuReserva.elegirVehiculo(sc); 
 		
 		//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
 		usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
 		
-		if (MenuReserva.validarReserva(sc, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
+		if (MenuReserva.validarReserva(sc, cantidadDeDias, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
 			//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
 			MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
 			

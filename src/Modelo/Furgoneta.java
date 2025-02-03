@@ -24,7 +24,7 @@ public class Furgoneta extends Vehiculo{
 	//Constructores
 	public Furgoneta(int id_coche, int id_oficina, String matricula, String marca, String modelo, int km, String tipo,
 			boolean alquilado, Tamano tamano, double precio_furgoneta) {
-		super(id_coche, id_oficina, matricula, marca, modelo, km, tipo, alquilado);
+		super(id_coche, id_oficina, matricula, marca, modelo, km, tipo);
 		this.tamano = tamano;
 		this.precio_furgoneta = precio_furgoneta;
 	}
