@@ -235,9 +235,31 @@ public class RepositorioUsuario {
 				System.out.println("Error "+ consulta);
 			}
 		}
+		//Método que devuelve true si ese usuario puede devolver esa matrícula 
+		public static boolean vehiculosReservados(Usuario usuario, String matricula) {
+			boolean existe= false;
+			String consulta = "SELECT * FROM usuario_vehiculo NATURAL JOIN vehiculo WHERE dni = ? AND alquilado = 1";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, usuario.getDni());
+				
+				ResultSet rs= s.executeQuery();
+				
+				if(rs.next()) {
+					existe = true;
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+ consulta);
+			}
+			return existe;
+		}
 		
-		//Método para finalizar el estado alquilado de un vehículo
-		public static void finalizarEstadoAlquilado(Usuario usuario, int id_coche) {
+		
+		//Método para eliminar la reserva
+		public static void eliminarReserva(Usuario usuario, int id_coche) {
 			
 			String consulta = "DELETE FROM usuario_vehiculo WHERE dni = ? and id_coche = ?";
 			
@@ -253,6 +275,23 @@ public class RepositorioUsuario {
 				System.out.println("Error "+ consulta);
 			}
 		}
+		//Método para finalizar el estado alquilado de un vehículo
+		public static void finalizarEstadoAlquilado(Usuario usuario, int id_coche) {
+			
+			String consulta = "UPDATE vehiculo SET administrador = 1 WHERE id_coche = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setInt(1, id_coche);
+				
+				s.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error "+consulta);
+			}
+		}
+		
 		//Método que devuelve si hay vehículos reservados o no
 		public static boolean tieneVehiculosReservados(Usuario usuario) {
 			boolean existe = false;

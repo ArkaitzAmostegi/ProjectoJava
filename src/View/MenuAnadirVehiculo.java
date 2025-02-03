@@ -203,7 +203,7 @@ public class MenuAnadirVehiculo {
 		System.out.println("Furgoneta añadido a la flota de vehículos\n");
 	}
 
-	//Método tamaño furgo
+	//Método tamaño furgo Hecho por Arritxu
 	private static void tamanoFurgo(Scanner sc, Furgoneta furgo) {
 		Tamano[] lista=Tamano.values();
 		

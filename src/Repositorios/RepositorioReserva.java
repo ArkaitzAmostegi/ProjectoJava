@@ -124,7 +124,8 @@ public class RepositorioReserva {
 			ResultSet rs=s.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println("Oficina: "+rs.getString("o.nombre")+"\nVehiculo: "+rs.getString("v.matricula")+" "+rs.getString("v.marca")+" "+ rs.getString("v.modelo")+" "+" "+ rs.getInt("v.km")+" "+ rs.getString("v.tipo"));
+				System.out.println("Oficina: "+rs.getString("o.nombre")+"\nVehiculo: "+rs.getString("v.matricula")+" "+rs.getString("v.marca")+" "+ rs.getString("v.modelo")+" "+" "+ rs.getInt("v.km")
+				+" "+ rs.getString("v.tipo")+" "+rs.getInt("precio_monovolumen")+" "+rs.getString("precio_turismo")+" "+rs.getString("precio_furgoneta"));
 			}
 			
 		}catch(SQLException e) {

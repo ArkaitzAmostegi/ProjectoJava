@@ -173,7 +173,7 @@ public class MenuReserva {
 				
 				Date fechaE=convertirFecha(fecha_entrega);
 				
-				//Calcula la diferencia de días
+				//Calcula la diferencia de días Hecho por ARRITXU
 				long ms= fechaE.getTime() - fechaR.getTime();
 				dias= ms/(1000*60*60*24);
 				
