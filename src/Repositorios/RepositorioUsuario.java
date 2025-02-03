@@ -252,6 +252,8 @@ public class RepositorioUsuario {
 				e.printStackTrace();
 				System.out.println("Error "+ consulta);
 			}
+			
+			//String consulta = "UPDATE "
 		}
 		//Método que devuelve si hay vehículos reservados o no
 		public static boolean tieneVehiculosReservados(Usuario usuario) {

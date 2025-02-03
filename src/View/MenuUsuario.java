@@ -81,13 +81,20 @@ public class MenuUsuario {
 			
 			System.out.println("\nQué vehículo es el que va a entregar?");
 			System.out.println("Introduzca la matrícula, por favor.");
-			String matricula = sc.nextLine();
-			int id_coche = RepositorioReserva.obtenerId(matricula); //Obtenemos el id
+			boolean matriculaValida = false;
 			
-			RepositorioUsuario.finalizarEstadoAlquilado(usuario, id_coche);//Finaliza el estado alquilado del vehículo
-			
-			System.out.println("Vehículo entregado\n");
-			
+			while (matriculaValida == false) {
+				String matricula = sc.nextLine();
+				int id_coche = RepositorioReserva.obtenerId(matricula); //Obtenemos el id
+				
+				if (RepositorioVehiculo.existeMatricula(matricula)) {
+					RepositorioUsuario.finalizarEstadoAlquilado(usuario, id_coche);//Finaliza el estado alquilado del vehículo
+					System.out.println("Vehículo entregado\n");
+				}
+				else {
+					System.out.println("La matricula que ha introducido no existe. Vuelva a intentarlo");
+				}
+			}
 		}else System.out.println("\nUds. no tiene ningún vehículo para entregar\n");
 		
 	}
