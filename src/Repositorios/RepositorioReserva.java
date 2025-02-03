@@ -56,13 +56,29 @@ public class RepositorioReserva {
 			}
 			return existe;
 		}
-	//Método para mostrar que vehículos tiene libre esa oficina
-	public static void vehiculoLibre(String nombreOficina) {
+	//Método para mostrar que vehículos tiene libre esa oficina en esa fecha
+	public static void vehiculoLibre(int id_oficina, Usuario_Vehiculo usuariovehiculo) {
 		
-		String consulta ="SELECT * FROM vehiculo NATURAL JOIN oficina WHERE nombre = ? AND alquilado = 0";
+		String consulta ="SELECT * \r\n"
+				+ "FROM VEHICULO V \r\n"
+				+ "NATURAL JOIN OFICINA O\r\n"
+				+ "WHERE O.ID_OFICINA = 2\r\n"
+				+ "AND NOT EXISTS (\r\n"
+				+ "    SELECT 1 \r\n"
+				+ "    FROM USUARIO_VEHICULO UV\r\n"
+				+ "    WHERE V.id_coche = UV.id_coche\r\n"
+				+ "    AND ('2025-10-18' BETWEEN UV.fecha_recogida AND UV.fecha_entrega \r\n"
+				+ "        OR '2025-10-20' BETWEEN UV.fecha_recogida AND UV.fecha_entrega\r\n"
+				+ "        OR (UV.fecha_recogida BETWEEN '2025-10-18' AND '2025-10-20')\r\n"
+				+ "        OR (UV.fecha_entrega BETWEEN '2025-10-18' AND '2025-10-20')\r\n"
+				+ "    )\r\n"
+				+ ");";
+
 		
 		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
-		s.setString(1, nombreOficina);
+		s.setInt(1, id_oficina);
+		s.setString(2, usuariovehiculo.getFecha_recogida());
+		s.setString(3, usuariovehiculo.getFecha_recogida());
 		
 		ResultSet rs = s.executeQuery();
 		
@@ -175,8 +191,8 @@ public class RepositorioReserva {
 			System.out.println("Error " +consulta);
 		}
 		return id_coche;
-		
 	}
+	
 	//Método insertar el alquiler del vehículo en la tabla usuario_vehiculo
 	public static void anadirReserva(Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
@@ -305,6 +321,26 @@ public class RepositorioReserva {
 			System.out.println("Error "+consulta);
 		}
 		return precioDia;
-		
 	}
+	//Métod para sacar el id de la oficina
+		public static int obtenerIdOficina(String nombreOficina) {
+			int id_oficina=0;
+			
+			String consulta = "SELECT * FROM oficina WHERE nombre = ?";
+			
+			try {
+				PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+				s.setString(1, nombreOficina);
+				
+				ResultSet rs = s.executeQuery();
+				while(rs.next()) {
+					id_oficina= rs.getInt("id_oficina");
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error " +consulta);
+			}
+			return id_oficina;
+			
+		}
 }

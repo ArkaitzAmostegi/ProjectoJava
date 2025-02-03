@@ -257,7 +257,6 @@ public class RepositorioUsuario {
 			return existe;
 		}
 		
-		
 		//Método para eliminar la reserva
 		public static void eliminarReserva(Usuario usuario, int id_coche) {
 			
@@ -317,5 +316,5 @@ public class RepositorioUsuario {
 			
 			return false;
 		}
-		
+	
 }

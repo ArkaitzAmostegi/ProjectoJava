@@ -13,7 +13,7 @@ import Repositorios.RepositorioUsuario;
 public class MenuReserva {
 
 	// Método para elegir la oficina en el menú de usuario
-	public static void elegirOficina(Scanner sc, Usuario_Vehiculo usuariovehiculo) {
+	public static String elegirOficina(Scanner sc, Usuario_Vehiculo usuariovehiculo) {
 	    String nombreOficina;
 
 	    //Bucle mientras el nombre de la oficina no sea correcto
@@ -48,8 +48,7 @@ public class MenuReserva {
 	    System.out.println("-----------------------------------------");
 	    System.out.println("Matrícula--Marca--Modelo--Km---Tipo---Nº puertas--Potencia--Tamaño");
 
-	   // Consultar y mostrar los vehículos
-	   RepositorioReserva.vehiculoLibre(nombreOficina);
+        return nombreOficina;
 	}
 
 	// Método para comprobar si la oficina existe
@@ -157,7 +156,8 @@ public class MenuReserva {
 					
 				}while(!fecha_recogida.matches(regex));
 						
-				Date fechaR=convertirFecha(fecha_recogida);				
+				Date fechaR=convertirFecha(fecha_recogida);	
+				usuariovehiculo.setFecha_recogida(fecha_recogida);
 				
 				do {
 					System.out.println("Indicanos una fecha de entrega (aaaa/mm/dd): ");
@@ -172,6 +172,7 @@ public class MenuReserva {
 				}while(!fecha_entrega.matches(regex));
 				
 				Date fechaE=convertirFecha(fecha_entrega);
+				usuariovehiculo.setFecha_entrega(fecha_entrega);
 				
 				//Calcula la diferencia de días Hecho por ARRITXU
 				long ms= fechaE.getTime() - fechaR.getTime();

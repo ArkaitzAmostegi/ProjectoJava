@@ -105,12 +105,19 @@ public class MenuUsuario {
 		//Obtener dni de usuario e Introducir el dni del usuariovehiculo
 		usuariovehiculo.setDni(RepositorioReserva.usuario(nombre,contraseña));
 		
+		MenuReserva.cantidadDias(sc, nombre, usuariovehiculo);//Reserva de días
+		
 		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere realizar la reserva");
 		RepositorioUsuario.mostrarOficina(); //mostrar listado de oficinas
+		
+		String nombreOficina= MenuReserva.elegirOficina(sc, usuariovehiculo); //elegir oficina
 		System.out.println();
 		
-		MenuReserva.elegirOficina(sc, usuariovehiculo); //elegir oficina
-		System.out.println();
+		//Método para conseguir el id_oficina
+		int id_oficina = RepositorioReserva.obtenerIdOficina(nombreOficina);
+		
+		// Consultar y mostrar los vehículos libres en esa oficina
+		RepositorioReserva.vehiculoLibre(id_oficina, usuariovehiculo);
 		
 		String matricula = MenuReserva.elegirVehiculo(sc); //elegir vehiculo, y obtenemos MATRÍCULA
 		
@@ -266,7 +273,5 @@ public class MenuUsuario {
 				contraseñaValida = true;
 			}
 		}
-		
-		
 	}
 }
