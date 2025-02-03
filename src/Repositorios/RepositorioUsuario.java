@@ -274,6 +274,8 @@ public class RepositorioUsuario {
 				e.printStackTrace();
 				System.out.println("Error "+ consulta);
 			}
+			
+			//String consulta = "UPDATE "
 		}
 		//Método para finalizar el estado alquilado de un vehículo
 		public static void finalizarEstadoAlquilado(Usuario usuario, int id_coche) {

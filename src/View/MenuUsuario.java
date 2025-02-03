@@ -84,7 +84,7 @@ public class MenuUsuario {
 			String matricula = "";
 			MenuAnadirVehiculo.comprobarMatricula(sc, matricula); //Comprobamos si la matrícula está bien introducida
 			int id_coche = RepositorioReserva.obtenerId(matricula); //Obtenemos el id
-			
+			boolean matriculaValida = false;
 			if (RepositorioUsuario.vehiculosReservados(usuario, matricula)){//Matricula para devolver
 				System.out.println(matricula);
 				RepositorioUsuario.finalizarEstadoAlquilado(usuario, id_coche);//Finaliza el estado alquilado del vehículo
@@ -93,12 +93,7 @@ public class MenuUsuario {
 				System.out.println("Ese vehículo no lo puede devolver");
 				System.out.println("No se encuentra entre los que tiene Uds. alquilados");
 			}
-				
-			
-			
-			
-		}else System.out.println("\nUds. no tiene ningún vehículo para entregar\n");
-		
+		}	
 	}
 	//Método para hacer la reserva 
 	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
