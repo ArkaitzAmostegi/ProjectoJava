@@ -1,9 +1,12 @@
 package Repositorios;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import Modelo.Oficina;
+import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
 
@@ -109,18 +112,18 @@ public class RepositorioAdministrador {
 	}
 	
 	//Método para eliminar usuario
-	public static void eliminarUsuario(String nombre) {
-		String consulta = "DELETE FROM usuario WHERE nombre = ?";
+	public static void eliminarUsuario(String dni) {
+		String consulta = "DELETE FROM usuario WHERE dni = ?";
 		
 		try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
-			 s.setString(1, nombre); // Asigna el valor del nombre al parámetro de la consulta
+			 s.setString(1, dni); // Asigna el valor del nombre al parámetro de la consulta
 		
 			 int filasAfectadas = s.executeUpdate(); // Ejecuta la consulta y obtiene el número de filas afectadas
 
 		     if (filasAfectadas > 0) {
-		           System.out.println("El usuario " + nombre + " ha sido eliminado.");
+		           System.out.println("El usuario " + dni + " ha sido eliminado.");
 		      } else {
-		           System.out.println("No se encontró ningúna otro usuario con nombre: " + nombre + ".");
+		           System.out.println("No se encontró ningúna otro usuario con nombre: " + dni + ".");
 		      }
 			
 		}catch(Exception e) {
@@ -196,4 +199,21 @@ public class RepositorioAdministrador {
 		}
 		return false;
 	}
+	//Método para consultar usuario por el dni
+		public static void mostrarUsuario(String dni) {
+			String consulta = "SELECT * FROM usuario WHERE dni = ?";
+			
+			try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+				
+				s.setString(1, dni);
+				ResultSet rs= s.executeQuery();
+				
+				while (rs.next()) {
+					System.out.println(rs.getString("nombre")+" "+ rs.getString("dni")+" "+ rs.getString("telefono"));
+				}
+				
+			}catch (Exception e) {
+				System.out.println("Error "+e.getMessage());
+			}
+		}
 }
