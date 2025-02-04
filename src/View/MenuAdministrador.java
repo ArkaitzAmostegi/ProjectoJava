@@ -316,10 +316,22 @@ public class MenuAdministrador {
 		System.out.println("Si es así, introduce 'SI'. Si no introduce 'NO'");
 		String opcion = sc.nextLine().trim();
 		
-		if (opcion.equalsIgnoreCase("si")) {
-			RepositorioVehiculo.eliminarVehiculo(matricula);
-			System.out.println("Vehículo eliminado de nuestra base de datos");
+		while (true) {
+			if (opcion.equalsIgnoreCase("si")) {
+				RepositorioVehiculo.eliminarVehiculo(matricula);
+				System.out.println("Vehículo eliminado de nuestra base de datos");
+				break;
+			}else if (opcion.equalsIgnoreCase("no")) {
+				System.out.println("Operación cancelada");
+				break;
+				
+			}else {
+				System.out.println("Ha habido un error");
+				System.out.println("introduzca SI/NO");
+				opcion = sc.nextLine().trim();
+			}
 		}
+		
 	}
 	
 	//Método para cambiar los KMs
