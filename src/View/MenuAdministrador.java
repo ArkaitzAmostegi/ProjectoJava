@@ -102,33 +102,77 @@ public class MenuAdministrador {
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
-	//Método para eliminar una reserva determinada de la BDD
+	
+	// Método para eliminar una reserva determinada de la BDD
 	private static void eliminarReserva(Scanner sc) {
-		
-		Usuario_Vehiculo usuariovehiculo= new Usuario_Vehiculo();
-		Usuario usuario = new Usuario();
-		
-		System.out.println("\nA continuación, te mostramos las reservas que están realizadas");
-		RepositorioAdministrador.mostrarReservas(usuariovehiculo);
-		
-		System.out.println("\nIntroduzca el DNI del usuario de la reserva que desee eliminar: ");
-		String dni = sc.nextLine();
-		usuario.setDni(dni);
-		
-		System.out.println("Introduzca el id_coche de la reserva que desea eliminar: ");
-		int id_coche = sc.nextInt();
-		sc.nextLine();
-		usuariovehiculo.setId_coche(id_coche);
-		
-		System.out.println("Es esta la reserva que desea Uds. eliminar?");
-		RepositorioReserva.consultarReserva(usuariovehiculo, usuario);
-		System.out.println("(SI/NO)");
-		String opcion= sc.nextLine().trim();
-		if(opcion.equalsIgnoreCase("SI")) {
-			RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario);
-			System.out.println("La reserva ha sido eliminada");
-		}
-		
+	    Usuario_Vehiculo usuariovehiculo = new Usuario_Vehiculo();
+	    Usuario usuario = new Usuario();
+
+	    System.out.println("\nA continuación, te mostramos las reservas que están realizadas");
+	    RepositorioAdministrador.mostrarReservas(usuariovehiculo);
+
+	    // Pedir y validar el DNI del usuario
+	    System.out.println("\nIntroduzca el DNI del usuario de la reserva que desea eliminar:");
+	    String dni = sc.nextLine().trim();
+	    
+	    while (!RepositorioLogin.comprobarDni(dni)) {
+	        System.out.println("Ese DNI no tiene ninguna reserva.");
+	        System.out.println("Introduzca de nuevo un DNI válido:");
+	        dni = sc.nextLine().trim();
+	    }
+	    usuario.setDni(dni);  // Solo se asigna si es válido
+
+	    // Pedir y validar el id_coche
+	    System.out.println("Introduzca el ID del coche de la reserva que desea eliminar:");
+	    int id_coche = 0;
+
+	    while (true) {
+	        try {
+	            id_coche = sc.nextInt();
+	            sc.nextLine(); // Consumir la línea en blanco
+	            break;
+	        } catch (java.util.InputMismatchException e) {
+	            System.out.println("Error: Debes ingresar un número válido.");
+	            sc.next(); // Limpiar el input incorrecto
+	        }
+	    }
+	    
+	    usuariovehiculo.setId_coche(id_coche);
+
+	    // Verificar si el coche tiene reserva
+	    while (!RepositorioReserva.consultarId_coche(usuariovehiculo, usuario)) {
+	        System.out.println("Ese ID de coche no tiene ninguna reserva.");
+	        System.out.println("Introduzca de nuevo un ID de coche válido:");
+	        try {
+	            id_coche = sc.nextInt();
+	            sc.nextLine(); // Consumir la línea en blanco
+	        } catch (java.util.InputMismatchException e) {
+	            System.out.println("Error: Debes ingresar un número válido.");
+	            System.out.println("Introduce nuevamente el número de id_coche: ");
+	            sc.next(); // Limpiar la entrada errónea
+	        }
+	        usuariovehiculo.setId_coche(id_coche);
+	    }
+
+	    // Confirmar eliminación de la reserva
+	    System.out.println("¿Es esta la reserva que desea eliminar?");
+	    RepositorioReserva.consultarReserva(usuariovehiculo, usuario);
+	    System.out.println("(SI/NO)");
+
+	    String opcion;
+	    while (true) {
+	        opcion = sc.nextLine().trim();
+	        if (opcion.equalsIgnoreCase("SI")) {
+	            RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario); 
+	            System.out.println("La reserva ha sido eliminada.");
+	            break;
+	        } else if (opcion.equalsIgnoreCase("NO")) {
+	            System.out.println("Operación cancelada.");
+	            break;
+	        } else {
+	            System.out.println("Entrada no válida. Introduzca 'SI' o 'NO':");
+	        }
+	    }
 	}
 
 	//Método para cambiar los Km al vehiculo
@@ -200,6 +244,7 @@ public class MenuAdministrador {
 	//Método para eliminar la oficina
 	private static void eliminarOficina(Scanner sc) {
 		
+		RepositorioUsuario.mostrarOficina();
 		
 		while (true) {
 			System.out.println("Introduce el nombre de la oficina que desee eliminar: ");

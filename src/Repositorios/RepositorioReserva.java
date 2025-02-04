@@ -271,16 +271,34 @@ public class RepositorioReserva {
 		while(rs.next()) {
 			System.out.println(rs.getString("dni")+" "+ rs.getInt("id_coche")+" "+rs.getDouble("precio_total")+" "+rs.getString("fecha_recogida")+" "+
 					rs.getString("fecha_entrega")+" "+rs.getBoolean("conconductor")+" "+rs.getString("lugar_recogida")+" "+
-					rs.getString("lugar_entrega")+" "+rs.getBoolean("alquilado"));
+					rs.getString("lugar_entrega"));
 		}
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error "+consulta);
 		}
-		
 	}
-	
+	//Método que devuelve si la reserva existe o no
+	public static boolean consultarId_coche(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
+		boolean existe = false;
+		String consulta = "SELECT * FROM usuario_vehiculo WHERE id_coche = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setInt(1, usuariovehiculo.getId_coche());
+			
+			ResultSet rs = s.executeQuery();
+			
+			if(rs.next()) {
+				existe = true;
+			}
+				
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		return existe;
+	}
 	//Método para eliminar la reserva
 	public static void eliminarRerserva(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
 		
