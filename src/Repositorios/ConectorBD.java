@@ -3,6 +3,7 @@ package Repositorios;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConectorBD {
 
@@ -22,7 +23,7 @@ public class ConectorBD {
             //La conexion se hace a traves del puerto 3306
             //La BDD se llama escuela
             conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/AJA","root","1DAW3_BBDD");
-          
+
             System.out.println("Conexion establecida");
           
         }catch(Exception e){
@@ -38,4 +39,12 @@ public class ConectorBD {
     	return conexion;
     }
     //Método desconectar();
+    public static void desconectar() {
+    	try {
+			conexion.close();
+			System.out.println("Se ha desconectado satisfactoramente de la base de datos");
+		} catch (SQLException e) {
+			System.out.println("Error al cerrar la conexión");
+		}
+    }
 }
