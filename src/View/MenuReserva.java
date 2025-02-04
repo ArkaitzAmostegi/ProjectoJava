@@ -44,9 +44,9 @@ public class MenuReserva {
 	    }
 
 	    // Mostrar los vehículos disponibles en la oficina seleccionada
-	    System.out.println("La oficina "+ nombreOficina+" dispone de estos vehículos:");
+	    System.out.println("\nLa oficina "+ nombreOficina+" dispone de estos vehículos:");
 	    System.out.println("-----------------------------------------");
-	    System.out.println("Matrícula--Marca--Modelo--Km---Tipo---Nº puertas--Potencia--Tamaño");
+	    System.out.println("Matrícula--Marca---Modelo--------Km");
 
         return nombreOficina;
 	}

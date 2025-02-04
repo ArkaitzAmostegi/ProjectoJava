@@ -324,14 +324,40 @@ public class MenuAdministrador {
 	
 	//Método para cambiar los KMs
 	private static void cambiarKm(Scanner sc, Usuario usuario) {
-		System.out.println("Introduce la matricula del vehículo al que desea modificar la cantidad de kilometros");
+		int km = 0;
+		System.out.println("\nTe mostramos los vehículos de la Base de Datos: \n");
+		//Método que muestra todos los vehículos
 		RepositorioUsuario.mostrarMatriculaVehiculo();
-		String matricula = sc.next();
 		
+		System.out.println("\nIntroduce la matricula del vehículo al que desea modificar la cantidad de kilometros");
+		String matricula ="";
+		//Método para comprobar la matrícula
+		System.out.println("El vehículo al que se le va a ambiar los km, es el siguiente: ");
+		matricula = comprobarFormatoMatricula(sc, matricula);
+		
+		//Mostrar vehículo
+		RepositorioVehiculo.consultarMatricula(matricula);
 		System.out.println("Introduce la cantidad nueva de kilometros");
-		int km = sc.nextInt();
 		
+		//Bucle que nos va a corregir si el usuario mete primero texto en lugar de número
+		while (true) {		
+		
+			try {
+				km = sc.nextInt();
+				sc.nextLine();
+				break;
+				
+			}catch(java.util.InputMismatchException e){
+				System.out.println("Error: Debes ingresar un número válido");
+				System.out.println("Introduzca un número entero por favor");
+				sc.next();
+			}
+		}
+		//Método para cambiar los km
 		RepositorioVehiculo.cambiarKilometros(km, matricula);
+		//Método para mostrar el vehículo
+		RepositorioVehiculo.consultarMatricula(matricula);
+		System.out.println("Km cambiados correctamente");
 	}
 	//Método para comprobar formato matricula
 		public static String comprobarFormatoMatricula(Scanner sc, String matricula) {

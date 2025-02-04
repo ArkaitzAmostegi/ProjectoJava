@@ -157,14 +157,14 @@ public class RepositorioAdministrador {
 		
 		System.out.println();
 		System.out.println("--------------------------------------------LISTADO DE RESERVAS--------------------------------------------------");
-		System.out.println("--DNI--ID_COCHE--PRECIO_TOTAL--FECHA_RECOGIDA--FECHA_ENTREGA--CONDUCTOR--LUGAR_RECOGIDA--LUGAR_ENTREGA--ALQUILADO");
+		System.out.println("--DNI--ID_COCHE--PRECIO_TOTAL--FECHA_RECOGIDA--FECHA_ENTREGA--CONDUCTOR--LUGAR_RECOGIDA--LUGAR_ENTREGA");
 		System.out.println("-----------------------------------------------------------------------------------------------------------------");
 		
 		ResultSet rs = s.executeQuery();
 		while(rs.next()) {
 			System.out.println(rs.getString("dni")+" "+ rs.getInt("id_coche")+" "+rs.getDouble("precio_total")+" "+rs.getString("fecha_recogida")+" "+
 					rs.getString("fecha_entrega")+" "+rs.getBoolean("conconductor")+" "+rs.getString("lugar_recogida")+" "+
-					rs.getString("lugar_entrega")+" "+rs.getBoolean("alquilado"));
+					rs.getString("lugar_entrega"));
 			
 		}
 			

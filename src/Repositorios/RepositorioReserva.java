@@ -143,10 +143,26 @@ public class RepositorioReserva {
 			s.setString(1, matricula);
 			ResultSet rs=s.executeQuery();
 			
-			while(rs.next()) {
-				System.out.println("Oficina: "+rs.getString("o.nombre")+"\nVehiculo: "+rs.getString("v.matricula")+" "+rs.getString("v.marca")+" "+ rs.getString("v.modelo")+" "+" "+ rs.getInt("v.km")
-				+" "+ rs.getString("v.tipo")+" "+rs.getInt("precio_monovolumen")+" "+rs.getString("precio_turismo")+" "+rs.getString("precio_furgoneta"));
-			}
+			 while (rs.next()) {
+			        String tipoVehiculo = rs.getString("v.tipo");
+			        int precio = 0;
+
+			        // Determinar el precio según el tipo de vehículo
+			        if (tipoVehiculo.equalsIgnoreCase("monovolumen")) {
+			            precio = rs.getInt("precio_monovolumen");
+			        } else if (tipoVehiculo.equalsIgnoreCase("turismo")) {
+			            precio = rs.getInt("precio_turismo");
+			        } else if (tipoVehiculo.equalsIgnoreCase("furgoneta")) {
+			            precio = rs.getInt("precio_furgoneta");
+			        } else {
+			            System.out.println("Tipo de vehículo desconocido.");
+			        }
+
+			        System.out.println("Oficina: " + rs.getString("o.nombre") +
+			                "\nVehículo: " + rs.getString("v.matricula") + " " + rs.getString("v.marca") + " " + 
+			                rs.getString("v.modelo") + " " + rs.getInt("v.km") + " " + rs.getString("v.tipo") + 
+			                "\nPrecio por día: " + precio);
+			 }
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
