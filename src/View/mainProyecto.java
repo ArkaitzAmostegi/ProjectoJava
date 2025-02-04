@@ -16,6 +16,7 @@ public class mainProyecto {
 		MenuInicial.menuInicial(sc);
 		
 		sc.close();
+		ConectorBD.desconectar();
 	}
 
 }
