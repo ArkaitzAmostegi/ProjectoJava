@@ -99,11 +99,16 @@ public class MenuInicial {
 	//Método  login Usuario
 	private static void login(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		
-		System.out.println("Introduce tus datos de usuario");
-		System.out.println("Introduce tu nombre: ");
-		String nombre=sc.nextLine();
-		usuario.setNombre(nombre);
+		System.out.println("Introduce tus datos para iniciar sesión");
+		System.out.println("Introduce tu dni: ");
+		String dni="";
 		
+		//Método para comprobar el dni
+		dni= comprobarDniExiste(sc, usuario); 
+		
+		//Método para conseguir el nombre de usuario
+		String nombre = RepositorioLogin.devolverNombre(dni);
+		usuario.setNombre(nombre);
 		System.out.println("Introduce tu contraseña: ");
 		String contraseña= sc.nextLine();
 		usuario.setContrasena(contraseña);
@@ -125,23 +130,72 @@ public class MenuInicial {
 			System.out.println();
 		}
 	}
-	
+	//Método para comprobar que el DNI sea válido
+	public static String comprobarDniExiste(Scanner sc, Usuario usuario) {
+	    String dni = "";
+	    while (true) {
+	        dni = sc.nextLine().toUpperCase();
+
+	        if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) { // Validación de formato
+	            if (verificarDNI(dni)) { // Validar la letra del DNI
+	                if (RepositorioLogin.comprobarDni(dni)) {
+	                    usuario.setDni(dni);
+	                    return dni;
+	                } else {
+	                    System.out.println("El DNI introducido no está registrado. Inténtalo de nuevo.");
+	                }
+	            }
+	        } else {
+	            System.out.println("El DNI introducido no es válido. Debe contener 8 números y una letra.");
+	        }
+	        System.out.println("Introduce otro DNI:");
+	    }
+	}
+
+		
+	//Método para comprobar la letra del dni si es correcta o no
+		public static boolean verificarDNI(String dni) {
+		    // Extraer número y letra
+		    String numeroStr = dni.substring(0, 8);
+		    char letraDada = Character.toUpperCase(dni.charAt(8)); // Convertimos a mayúscula por seguridad
+
+		    // Convertir el número a entero
+		    int numero = Integer.parseInt(numeroStr);
+
+		    // Tabla de letras según el resto de la división por 23
+		    char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 
+		                     'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
+
+		    // Calcular la letra correcta
+		    char letraCorrecta = letras[numero % 23];
+
+		    // Comparar la letra dada con la calculada
+		    if (letraDada == letraCorrecta) {
+		        return true;
+		    } else {
+		        System.out.println("La letra del DNI es incorrecta. Debería ser: " + letraCorrecta);
+		        return false;
+		    }
+		}
+		
 	//Método para comprobar que el DNI sea válido
 	public static void comprobarDni(Scanner sc, Usuario usuario) {
 		boolean dniValido = false;
 		
 		while (dniValido == false) {
-			String dni = sc.next();
+			String dni = sc.nextLine();
 			
 			if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) { //El String DNI tiene que tener obligatoriamente 8 números entre el rango del 0 al 9 y una letra de la A a la Z
-				
-				if (!RepositorioLogin.comprobarDni(dni)){
-					usuario.setDni(dni.toUpperCase());
-					dniValido = true;
-				}else {
-					System.out.println("Este dni ya está registrado");
-					System.out.println("Introduce otro dni");
+				if(verificarDNI(dni)) {
+					if (!RepositorioLogin.comprobarDni(dni)){
+						usuario.setDni(dni.toUpperCase());
+						dniValido = true;
+					}else {
+						System.out.println("Este dni ya está registrado");
+						System.out.println("Introduce otro dni");
+					}
 				}
+				
 			}
 			else {
 				System.out.println("El DNI que has introducido no es válido, vuelve a intentarlo");

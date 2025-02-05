@@ -142,10 +142,30 @@ public class RepositorioLogin {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Error "+consulta);
-		}
-		
-		
+		}		
 		return existe;
+	}
+	//Método que devuelve el nombre por medio del DNI
+	public static String devolverNombre(String dni) {
+		
+		String nombre = "";
+		
+		String consulta = "SELECT nombre FROM USUARIO WHERE dni = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1, dni);
+			
+			ResultSet rs = s.executeQuery();
+			
+			while (rs.next()) {
+				nombre = rs.getString("nombre");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		return nombre;
 	}
 	
 }

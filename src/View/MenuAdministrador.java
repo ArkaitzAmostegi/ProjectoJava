@@ -241,7 +241,10 @@ public class MenuAdministrador {
 				while (true) {
 					String dni = sc.nextLine().trim();
 					if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) { //El String DNI tiene que tener obligatoriamente 8 números entre el rango del 0 al 9 y una letra de la A a la Z
-						return dni;
+						if(MenuInicial.verificarDNI(dni)) {
+							return dni;
+						}
+						
 					}else {
 						System.out.println("El DNI que has introducido no es válido, vuelve a intentarlo");
 						System.out.println("El DNI tiene que tener 8 caracteres y letra");
