@@ -207,25 +207,7 @@ public class MenuAdministrador {
 			dni = comprobarDni(sc, usuario);
 			//Comprobar si el dni está en la base de datos
 			if(RepositorioLogin.comprobarDni(dni)) {
-				sc.nextLine();
-				System.out.println("Esta seguro que desea eliminar este usuario: ");
-				RepositorioAdministrador.mostrarUsuario(dni);
-				System.out.println("(SI/NO)?");
-				String opcion = sc.nextLine().trim();
-				while(true) {
-					if (opcion.equalsIgnoreCase("SI")) {
-						RepositorioAdministrador.eliminarUsuario(dni);//Método para eliminar el usuario
-						System.out.println("Usuario eliminado");
-						break;
-					}else if(opcion.equalsIgnoreCase("NO")) {
-						System.out.println("operación cancelada");
-						break;
-					}else {
-						System.out.println("Ha ocurrido un error");
-						System.out.println("Introduzca 'SI' o 'NO'");
-						sc.nextLine();
-					}
-				}
+				break;
 				
 			}else {
 				System.out.println("Ese DNI no se encuentra en la base de datos");
@@ -233,14 +215,33 @@ public class MenuAdministrador {
 				sc.nextLine();
 			}
 		}
+		System.out.println("Esta seguro que desea eliminar este usuario: ");
+		RepositorioAdministrador.mostrarUsuario(dni);
+		System.out.println("(SI/NO)?");
+		
+		while(true) {
+			String opcion = sc.nextLine().trim();
+			if (opcion.equalsIgnoreCase("SI")) {
+				RepositorioAdministrador.eliminarUsuario(dni);//Método para eliminar el usuario
+				System.out.println("Usuario eliminado");
+				break;
+			}else if(opcion.equalsIgnoreCase("NO")) {
+				System.out.println("operación cancelada");
+				break;
+			}else {
+				System.out.println("Ha ocurrido un error");
+				System.out.println("Introduzca 'SI' o 'NO'");
+			}
+		}		
 	}
+	
 	//Método para comprobar que el DNI sea válido
 			public static String comprobarDni(Scanner sc, Usuario usuario) {
 				
 				while (true) {
-					String dni = sc.next();
+					String dni = sc.nextLine().trim();
 					if (dni.length() == 9 && dni.matches("^[0-9]{8}[A-Za-z]$")) { //El String DNI tiene que tener obligatoriamente 8 números entre el rango del 0 al 9 y una letra de la A a la Z
-					return dni;
+						return dni;
 					}else {
 						System.out.println("El DNI que has introducido no es válido, vuelve a intentarlo");
 						System.out.println("El DNI tiene que tener 8 caracteres y letra");

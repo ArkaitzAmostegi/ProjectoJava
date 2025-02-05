@@ -30,12 +30,20 @@ public class MenuReserva {
 		        		System.out.println("A continuación le mostramos en que oficinas puede entregar el vehículo");
 		        		RepositorioReserva.mostrarOficinasEspana();
 		        		System.out.println("\nIntroduzca el nombre de la oficina, en la que va entregar el vehículo: ");
-		        		String lugarEntrega = sc.nextLine();
-		        		usuariovehiculo.setLugarEntrega(lugarEntrega);
-		        		System.out.println();
-		        		System.out.println("Oficina de recogida del vehículo: "+nombreOficina);
-		        		System.out.println("Oficina de entrega del vehículo: "+lugarEntrega);
-		        		
+		        		while(true) {
+		        			String lugarEntrega = sc.nextLine();
+			        		usuariovehiculo.setLugarEntrega(lugarEntrega);
+		        			if(comprobarOficina(lugarEntrega)) {
+		        				System.out.println();
+		        				System.out.println("Oficina de recogida del vehículo: "+nombreOficina);
+		        				System.out.println("Oficina de entrega del vehículo: "+lugarEntrega);
+		        				break;
+		        			}
+		        			else {
+		        				System.out.println("ERROR. Nombre de la oficina mal introducido. Inténtelo nuevamente. Gracias.\n");
+		        			}
+		        		}
+	
 		        	}else usuariovehiculo.setLugarEntrega(nombreOficina);
 	            break; // Sale del bucle si la oficina es válida
 	        } else {
