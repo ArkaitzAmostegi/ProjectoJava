@@ -233,15 +233,20 @@ public class MenuInicial {
 			String email = sc.nextLine();
 			
 			if(!RepositorioLogin.comprobaremail(email)){
-				
-				if (email.contains("@")) {
+				int arroba = 0;
+				for (int i = 0; i < email.length(); i++) {
+					if (email.charAt(i) == '@') { //Comprueba que el correo tiene un @
+						arroba++;
+					}
+				}
+				if (arroba == 1) {
 					//Introducir el email al usuario
 					usuario.setEmail(email);
 					emailValido = true;
 				}
 				else {
-					System.out.println("El email que has introducido no es válido");
-					System.out.println("El email debe contener la '@'");
+					System.out.println("El email que has introducido no es válido. Vuelve a intentarlo");
+					System.out.println("El email debe contener un '@'");
 				}
 			}else {
 				System.out.println("Este email ya exite en nuestra BDD");
