@@ -74,7 +74,7 @@ public class MenuInicial {
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.next());
 		
-		System.out.println("Introduce tu contraseña: ");
+		System.out.println("Introduce tu contraseña (debe contener 8 dígitos): ");
 		comprobarContrasena(sc, usuario);
 		
 		System.out.println("Introduce tu sexo (H = Hombre, M = Mujer)");
@@ -211,16 +211,20 @@ public class MenuInicial {
 		while (contraseñaValida == false) {
 			String contraseña = sc.next();
 			
-			if (contraseña.length() != 8) {
-				System.out.println("La contraseña debe tener una longitud de 8 caracteres");
-			}
-			else {
+			if (contraseña.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+-=;':\"|,.<>?/]).{8}$")) { //Comprueba que la contraseña además de tener 8 caracteres, contenga al menos alguno de los caracteres que aparecen
 				usuario.setContrasena(contraseña);
 				verificarContraseña(sc, usuario);
 				contraseñaValida = true;
 			}
+			else {
+				System.out.println("La contraseña no cumple con los requisitos mínimos:");
+				System.out.println("- Debe tener una longitud de 8 caracteres. La contraseña actual mide " + contraseña.length() + " caracteres");
+				System.out.println("- Debe contener al menos una letra mayúscula");
+				System.out.println("- Debe contener al menos un número");
+			}
 		}
 	}
+	
 	public static void verificarContraseña(Scanner sc, Usuario usuario) {
 		System.out.println("Repita la contraseña");
 		boolean contraseñaIgual = false;
@@ -264,13 +268,13 @@ public class MenuInicial {
 			String telefono = sc.next();
 			sc.nextLine();
 		
-			if (telefono.matches("^6\\d{8}$")) { // Verifica que empiece con 6 y tenga 9 dígitos en total) {
+			if (telefono.matches("^6\\d{8}$") || telefono.matches("^7\\d{8}$") || telefono.matches("^9\\d{8}$")) { // Verifica que empiece con 6, 7 o 9 y tenga 9 dígitos en total) {
 				usuario.setTelefono(telefono);
 				telefonoValido = true;
 			}
 			else {
 				System.out.println("El teléfono que has introducido no es válido");
-				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6");
+				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6, 7 o 9. El número que has introducido tiene " + telefono.length() + " números");
 			}
 		}
 	}
@@ -283,15 +287,20 @@ public class MenuInicial {
 			String email = sc.nextLine();
 			
 			if(!RepositorioLogin.comprobaremail(email)){
-				
-				if (email.contains("@")) {
+				int arroba = 0;
+				for (int i = 0; i < email.length(); i++) {
+					if (email.charAt(i) == '@') { //Comprueba que el correo tiene un @
+						arroba++;
+					}
+				}
+				if (arroba == 1) {
 					//Introducir el email al usuario
 					usuario.setEmail(email);
 					emailValido = true;
 				}
 				else {
-					System.out.println("El email que has introducido no es válido");
-					System.out.println("El email debe contener la '@'");
+					System.out.println("El email que has introducido no es válido. Vuelve a intentarlo");
+					System.out.println("El email debe contener un '@'");
 				}
 			}else {
 				System.out.println("Este email ya exite en nuestra BDD");
