@@ -157,7 +157,7 @@ public class MenuInicial {
 		while (contraseñaValida == false) {
 			String contraseña = sc.next();
 			
-			if (contraseña.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+-=;':\"|,.<>?/]).{8,}$")) { //Comprueba que la contraseña además de tener 8 caracteres, contenga al menos alguno de los caracteres que aparecen
+			if (contraseña.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+-=;':\"|,.<>?/]).{8}$")) { //Comprueba que la contraseña además de tener 8 caracteres, contenga al menos alguno de los caracteres que aparecen
 				usuario.setContrasena(contraseña);
 				verificarContraseña(sc, usuario);
 				contraseñaValida = true;
@@ -214,13 +214,13 @@ public class MenuInicial {
 			String telefono = sc.next();
 			sc.nextLine();
 		
-			if (telefono.matches("^6\\d{8}$")) { // Verifica que empiece con 6 y tenga 9 dígitos en total) {
+			if (telefono.matches("^6\\d{8}$") || telefono.matches("^7\\d{8}$") || telefono.matches("^9\\d{8}$")) { // Verifica que empiece con 6, 7 o 9 y tenga 9 dígitos en total) {
 				usuario.setTelefono(telefono);
 				telefonoValido = true;
 			}
 			else {
 				System.out.println("El teléfono que has introducido no es válido");
-				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6");
+				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6, 7 o 9. El número que has introducido tiene " + telefono.length() + " números");
 			}
 		}
 	}
