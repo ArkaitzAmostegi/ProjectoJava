@@ -74,7 +74,7 @@ public class MenuInicial {
 		System.out.println("Introduce tu nombre: ");
 		usuario.setNombre(sc.next());
 		
-		System.out.println("Introduce tu contraseña: ");
+		System.out.println("Introduce tu contraseña (debe contener 8 dígitos): ");
 		comprobarContrasena(sc, usuario);
 		
 		System.out.println("Introduce tu sexo (H = Hombre, M = Mujer)");
@@ -157,16 +157,20 @@ public class MenuInicial {
 		while (contraseñaValida == false) {
 			String contraseña = sc.next();
 			
-			if (contraseña.length() != 8) {
-				System.out.println("La contraseña debe tener una longitud de 8 caracteres");
-			}
-			else {
+			if (contraseña.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+-=;':\"|,.<>?/]).{8,}$")) { //Comprueba que la contraseña además de tener 8 caracteres, contenga al menos alguno de los caracteres que aparecen
 				usuario.setContrasena(contraseña);
 				verificarContraseña(sc, usuario);
 				contraseñaValida = true;
 			}
+			else {
+				System.out.println("La contraseña no cumple con los requisitos mínimos:");
+				System.out.println("- Debe tener una longitud de 8 caracteres. La contraseña actual mide " + contraseña.length() + " caracteres");
+				System.out.println("- Debe contener al menos una letra mayúscula");
+				System.out.println("- Debe contener al menos un número");
+			}
 		}
 	}
+	
 	public static void verificarContraseña(Scanner sc, Usuario usuario) {
 		System.out.println("Repita la contraseña");
 		boolean contraseñaIgual = false;
