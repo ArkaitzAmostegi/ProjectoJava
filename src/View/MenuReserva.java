@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.time.LocalDate;
 
 import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
@@ -142,7 +143,9 @@ public class MenuReserva {
 	//Método cantidad de días que va ha hacer la reserva
 	public static long cantidadDias(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
-		String regex = "\\d{4}/\\d{2}/\\d{2}"; // Para formato aaaa/mm/dd
+		LocalDate fechaActual = LocalDate.now();
+		
+		String regex = "\\d{4}-\\d{2}-\\d{2}"; // Para formato aaaa/mm/dd
 		
         String fecha_recogida = " ";
 		String fecha_entrega = " ";
@@ -151,24 +154,35 @@ public class MenuReserva {
 		do {
 		
 	        do {
-	    	   
+				LocalDate fechaR1;
+
 				do {
-					System.out.println("Indícanos una fecha de recogida (aaaa/mm/dd): ");
-					fecha_recogida= sc.nextLine();
 					
+					System.out.println("Indícanos una fecha de recogida (aaaa-mm-dd): ");
+					fecha_recogida= sc.nextLine();
 					if (!fecha_recogida.matches(regex)) {
 						System.out.println("Ha habido un error");
 						System.out.println("Vuelva a introducir la fecha, por favor.");
 						
 					}else usuariovehiculo.setFecha_recogida(fecha_recogida);
-					
+					while(true) {
+						fechaR1 = LocalDate.parse(fecha_recogida);
+						if (fechaActual.isBefore(fechaR1)) {
+							break;
+						}else {
+							System.out.println("No puede ingresar una fecha anterior a la actual");
+							System.out.println("Ingrese nuevamente la fecha por favor");
+							fecha_recogida= sc.nextLine();
+						}
+					}
 				}while(!fecha_recogida.matches(regex));
-						
-				Date fechaR=convertirFecha(fecha_recogida);	
-				usuariovehiculo.setFecha_recogida(fecha_recogida);
+				
+					
+				Date fechaR=convertirFecha(fechaR1.toString());	
+				usuariovehiculo.setFecha_recogida(fechaR1.toString());
 				
 				do {
-					System.out.println("Indicanos una fecha de entrega (aaaa/mm/dd): ");
+					System.out.println("Indicanos una fecha de entrega (aaaa-mm-dd): ");
 					fecha_entrega= sc.nextLine();
 					
 					if(!fecha_entrega.matches(regex)) {
@@ -244,7 +258,7 @@ public class MenuReserva {
 	//Método para pasar de String a date datetime (Hecho por Arritxu)
 	private static Date convertirFecha(String fechaString) {
 	    
-	    SimpleDateFormat formatoEntrada = new SimpleDateFormat("yyyy/MM/dd");
+	    SimpleDateFormat formatoEntrada = new SimpleDateFormat("yyyy-MM-dd");
 	    java.sql.Date fechaSql = null;
 	    try {
 	        // Convertir el String a java.util.Date
