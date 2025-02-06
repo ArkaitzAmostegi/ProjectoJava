@@ -110,24 +110,27 @@ public class MenuInicial {
 		String nombre = RepositorioLogin.devolverNombre(dni);
 		usuario.setNombre(nombre);
 		System.out.println("Introduce tu contraseña: ");
-		String contraseña= sc.nextLine();
-		usuario.setContrasena(contraseña);
+		boolean contraseñaCorrecta = false;
 		
-		//Comprobar si usuario EXISTE en la BDD
-		if(RepositorioLogin.comprobarUsuario(usuario)) {
+		while (contraseñaCorrecta == false) {
+			String contraseña= sc.nextLine();
+			usuario.setContrasena(contraseña);
 			
-			//si es admin, le llevará al menú admin, si no le llevará al menú usuario
-			if(RepositorioLogin.comprobarAdmin(usuario)) {
+			//Comprobar si usuario EXISTE en la BDD
+			if(RepositorioLogin.comprobarUsuario(usuario)) {
 				
-				MenuAdministrador.menuAdministrador(sc, usuario, usuariovehiculo);
+				//si es admin, le llevará al menú admin, si no le llevará al menú usuario
+				if(RepositorioLogin.comprobarAdmin(usuario)) {
+					
+					MenuAdministrador.menuAdministrador(sc, usuario, usuariovehiculo);
+					
+				}else MenuUsuario.menuUsuario(sc, usuario, usuariovehiculo);
 				
-			}else MenuUsuario.menuUsuario(sc, usuario, usuariovehiculo);
-		
-		}
-		else {
-			System.out.println("Usuario no encontrado en nuestra base de datos");
-			System.out.println("Si quiere entrar en nuestra web, por favor registrese");
-			System.out.println();
+				contraseñaCorrecta = true;
+			}
+			else if (!RepositorioLogin.comprobarContraseña(contraseña)) {
+				System.out.println("Contraseña incorrecta. Vuelve a intentarlo");
+			}
 		}
 	}
 	//Método para comprobar que el DNI sea válido
@@ -273,7 +276,7 @@ public class MenuInicial {
 				telefonoValido = true;
 			}
 			else {
-				System.out.println("El teléfono que has introducido no es válido");
+				System.out.println("El teléfono que has introducido no es válido o ya existe");
 				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6, 7 o 9. El número que has introducido tiene " + telefono.length() + " números");
 			}
 		}

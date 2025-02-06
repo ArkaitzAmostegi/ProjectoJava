@@ -56,6 +56,30 @@ public class RepositorioLogin {
 		 return existe;
 	 }
 	 
+	 //Método para comprobar que la contraseña introducida sea correcta
+	 public static boolean comprobarContraseña(String contraseña) {
+		 boolean existe = false;
+		 
+		 String consulta = "SELECT COUNT(*) FROM usuario WHERE contraseña=?";
+		 
+		 Connection con = ConectorBD.getconexion();
+		 
+		 try {
+			PreparedStatement s = con.prepareStatement(consulta);
+			s.setString(1, contraseña);
+			ResultSet rs = s.executeQuery();
+			
+			if (rs.next()) {
+				int count = rs.getInt(1);
+				existe = count > 0;
+			}
+			
+		 } catch (SQLException e) {
+			System.out.println("Error al hacer la consulta " + consulta);
+		 }
+		 return existe;
+	 }
+	 
 	 //Método para comprobar que el DNI se encuentra en la BBDD
 	 public static boolean comprobarDni(String dni) {
 		 boolean existe = false;
