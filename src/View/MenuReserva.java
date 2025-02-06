@@ -152,10 +152,8 @@ public class MenuReserva {
 		long dias = 0;
 		
 		do {
-		
 	        do {
 				LocalDate fechaR1;
-
 				do {
 					
 					System.out.println("Indícanos una fecha de recogida (aaaa-mm-dd): ");
@@ -165,6 +163,8 @@ public class MenuReserva {
 						System.out.println("Vuelva a introducir la fecha, por favor.");
 						
 					}else usuariovehiculo.setFecha_recogida(fecha_recogida);
+					
+					//Hecho por Arritxu
 					while(true) {
 						fechaR1 = LocalDate.parse(fecha_recogida);
 						if (fechaActual.isBefore(fechaR1)) {
@@ -175,6 +175,7 @@ public class MenuReserva {
 							fecha_recogida= sc.nextLine();
 						}
 					}
+					
 				}while(!fecha_recogida.matches(regex));
 				
 					
@@ -266,13 +267,13 @@ public class MenuReserva {
 	        
 	        // Convertir el java.util.Date a java.sql.Date
 	        fechaSql = new java.sql.Date(fechaUtil.getTime());
-	        
-	        
+	         
 	    } catch (ParseException e) {
 	        e.printStackTrace();
 	    }
 	    return fechaSql;
 	}
+	
 	//Método para comprovar los datos de la reserva y activar el alquilado 
 	public static void activarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo, String matricula) {
 	
@@ -299,7 +300,5 @@ public class MenuReserva {
 			}
 		}		
 	}
-	
-	
 }
 

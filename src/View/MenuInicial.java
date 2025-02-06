@@ -286,7 +286,8 @@ public class MenuInicial {
 			}
 			else {
 				System.out.println("El teléfono que has introducido no es válido o ya existe");
-				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6, 7 o 9. El número que has introducido tiene " + telefono.length() + " números");
+				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6, 7 ó 9."); 
+				System.out.println("El número que has introducido tiene " + telefono.length() + " números");
 			}
 		}
 	}

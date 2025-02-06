@@ -24,7 +24,7 @@ public class MenuUsuario {
 			System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 			System.out.println("------------ "+nombre+" ----------");
 			System.out.println("-----------MENÚ USUARIO----------");
-			System.out.println("0.-Cerrar sesión");
+			System.out.println("0.-Volver al menú inicial");
 			System.out.println("1.-Nuestra flota de vehículos");
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
