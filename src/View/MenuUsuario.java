@@ -115,7 +115,10 @@ public class MenuUsuario {
 				//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
 				MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
 				
-			}else System.out.println("Su reserva ha sido cancelada\n");
+			}else {
+				System.out.println("Su reserva ha sido cancelada\n");
+				break;
+			}
 			
 			
 			System.out.println("UDs. Tiene "+cantidadReservas+", reserva/s hecha/s");
