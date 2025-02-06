@@ -194,11 +194,20 @@ public class MenuInicial {
 						usuario.setDni(dni.toUpperCase());
 						dniValido = true;
 					}else {
-						System.out.println("Este dni ya está registrado");
+						System.out.println("Este dni ya está registrado. ¿Desea volver al menú inicial (SI/NO)?");
+						String opcion = sc.next();
+						
+						if (opcion.equalsIgnoreCase("no")){
 						System.out.println("Introduce otro dni");
+						sc.nextLine();
+						}
+						else if (opcion.equalsIgnoreCase("si")) {
+							System.out.println("Operación cancelada");
+							dniValido = true;
+							menuInicial(sc);
+						}
 					}
 				}
-				
 			}
 			else {
 				System.out.println("El DNI que has introducido no es válido, vuelve a intentarlo");
