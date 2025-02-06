@@ -70,39 +70,55 @@ public class MenuUsuario {
 	
 	//Método para hacer la reserva 
 	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
-		
-		
-		String contraseña = usuario.getContrasena();
-		String nombre= usuario.getNombre();
-		
-		//Obtener dni de usuario e Introducir el dni del usuariovehiculo
-		usuariovehiculo.setDni(RepositorioReserva.usuario(nombre,contraseña));
-		
-		Long cantidadDeDias = MenuReserva.cantidadDias(sc, nombre, usuariovehiculo);//Reserva de días
-		
-		System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere realizar la reserva");
-		RepositorioUsuario.mostrarOficina(); //mostrar listado de oficinas
-		
-		String nombreOficina= MenuReserva.elegirOficina(sc, usuariovehiculo); //elegir oficina
-		System.out.println();
-		
-		//Método para conseguir el id_oficina
-		int id_oficina = RepositorioReserva.obtenerIdOficina(nombreOficina);
-		
-		// Consultar y mostrar los vehículos libres en esa oficina
-		RepositorioReserva.vehiculoLibre(id_oficina, usuariovehiculo);
-		
-		//elegir vehiculo, y obtenemos MATRÍCULA
-		String matricula = MenuReserva.elegirVehiculo(sc); 
-		
-		//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
-		usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
-		
-		if (MenuReserva.validarReserva(sc, cantidadDeDias, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
-			//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
-			MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
+		int cantidadReservas = 1;
+		while (true) {
+			String contraseña = usuario.getContrasena();
+			String nombre= usuario.getNombre();
 			
-		}else System.out.println("Su reserva ha sido cancelada\n");
+			//Obtener dni de usuario e Introducir el dni del usuariovehiculo
+			usuariovehiculo.setDni(RepositorioReserva.usuario(nombre,contraseña));
+			
+			Long cantidadDeDias = MenuReserva.cantidadDias(sc, nombre, usuariovehiculo);//Reserva de días
+			
+			System.out.println("A continuación le mostramos nuestras oficinas, para que elija desde cual quiere realizar la reserva");
+			RepositorioUsuario.mostrarOficina(); //mostrar listado de oficinas
+			
+			String nombreOficina= MenuReserva.elegirOficina(sc, usuariovehiculo); //elegir oficina
+			System.out.println();
+			
+			//Método para conseguir el id_oficina
+			int id_oficina = RepositorioReserva.obtenerIdOficina(nombreOficina);
+			
+			// Consultar y mostrar los vehículos libres en esa oficina
+			RepositorioReserva.vehiculoLibre(id_oficina, usuariovehiculo);
+			
+			//elegir vehiculo, y obtenemos MATRÍCULA
+			String matricula = MenuReserva.elegirVehiculo(sc); 
+			
+			//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
+			usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
+			
+			if (MenuReserva.validarReserva(sc, cantidadDeDias, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
+				//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
+				MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
+				
+			}else System.out.println("Su reserva ha sido cancelada\n");
+			
+			
+			System.out.println("UDs. Tiene "+cantidadReservas+", reserva/s hecha/s");
+			System.out.println("Quiere hacer otra reserva?");
+			System.out.println("SI/NO");
+			String opcion = sc.nextLine();
+			if (opcion.equalsIgnoreCase("SI")) {
+				cantidadReservas ++;
+			}else if (opcion.equalsIgnoreCase("NO")) {
+				break;
+			}else {
+				System.out.println("Ha ocurrido un error");
+				System.out.println("Escriba (SI/NO)");
+				opcion = sc.nextLine();
+			}
+		}
 		
 	}
 	
