@@ -28,7 +28,8 @@ public class MenuUsuario {
 			System.out.println("1.-Nuestra flota de vehículos");
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
-			System.out.println("4.-Modificar sus datos de usuario");
+			System.out.println("4.-Consultar tus resesrvas");
+			System.out.println("5.-Modificar sus datos de usuario");
 			
 			//Bucle que nos va a corregir si el usuario mete texto en vez de un número
 			while (true) {		
@@ -40,7 +41,7 @@ public class MenuUsuario {
 					
 				}catch(java.util.InputMismatchException e){
 					System.out.println("Error: Debes ingresar un número válido");
-					System.out.println("Introduzca un número del 0 al 4 ambos inclusive");
+					System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
 					sc.next();
 				}
 			}
@@ -57,17 +58,29 @@ public class MenuUsuario {
 				hacerReserva(sc, usuario, usuariovehiculo);
 				break;				
 			case 4: 
+				consultarReservas(sc, usuario);
+				break;
+			case 5: 
 				modificarDatos(sc, usuario);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 4 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
 			}
 		}
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
 	
+	//Método para que el usuario pueda consultar sus reservas
+	private static void consultarReservas(Scanner sc, Usuario usuario) {
+		
+		System.out.println("\nEstas son las reservas hechas por Uds.: ");
+		RepositorioUsuario.consultarReservas(usuario);
+		System.out.println();
+		
+	}
+
 	//Método para hacer la reserva 
 	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
 		int cantidadReservas = 1;
