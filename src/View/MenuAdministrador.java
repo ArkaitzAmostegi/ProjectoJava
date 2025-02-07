@@ -335,8 +335,8 @@ public class MenuAdministrador {
 		oficina.setNombre(sc.nextLine());//Tiene que tener el nombre aja y el guión
 		
 		System.out.println("Intoduce el teléfono: ");
-		String telefono = " ";
-		oficina.setTelefono(comprobarTelefono(sc)); 
+		String telefono = " "; 
+		oficina.setTelefono(comprobarTelefono(sc, telefono));
 		
 		System.out.println("Intoduce el email: ");
 		oficina.setEmail(comprobarEmail(sc)); // que contenga @ y que no lo tenga ninguna otra oficina
@@ -370,24 +370,39 @@ public class MenuAdministrador {
 	}
 	
 	//Método para comprobar el teléfono
-	private static String comprobarTelefono(Scanner sc) {
-	boolean telefonoValido = false;
-	String telefono = "";
-		while (telefonoValido == false) {
+	private static String comprobarTelefono(Scanner sc, String telefono) {
+	    boolean telefonoValido = false;
 
-			telefono = sc.nextLine().trim();
-		
-			if (telefono.matches("^6\\d{8}$")) { // Verifica que empiece con 6 y tenga 9 dígitos en total)) {
-				telefonoValido = true;
-			}
-			else {
-				System.out.println("El teléfono que has introducido no es válido");
-				System.out.println("El número de teléfono tiene que tener una longitud de 9 dígitos y empezar por 6");
-			}
-		}
-		return telefono;
+	    while (!telefonoValido) {
+	        telefono = sc.nextLine();
+
+	        // Verifica que el teléfono tenga 9 dígitos y empiece por 6, 7 o 9
+	        if (telefono.matches("^[679]\\d{8}$")) {
+	            telefonoValido = true;
+	        } else {
+	            System.out.println("El teléfono que has introducido no es válido.");
+	            System.out.println("Debe tener una longitud de 9 caracteres y empezar por 6, 7 o 9.");
+	            System.out.println("El número que has introducido tiene " + telefono.length() + " números.");
+	            continue; // Volver a solicitar el teléfono sin pasar a la verificación en la base de datos
+	        }
+
+	        // Verifica si el teléfono ya existe en la base de datos
+	        while (RepositorioLogin.comprobarTelefonoOficina(telefono) || RepositorioLogin.comprobarTelefonoUsuario(telefono)) {
+	            System.out.println("Ese teléfono ya existe en nuestra base de datos.");
+	            System.out.println("Por favor, introduzca otro teléfono:");
+	            telefono = sc.nextLine();
+
+	            // Verificar nuevamente el formato del nuevo número antes de continuar
+	            if (!telefono.matches("^[679]\\d{8}$")) {
+	                System.out.println("El nuevo número introducido tampoco es válido.");
+	                telefonoValido = false; // Reiniciar validación
+	                break;
+	            }
+	        }
+	    }
+	    return telefono;
 	}
-	
+
 	//Método para eliminar vehículos
 	private static void eliminarVehiculo(Scanner sc) {
 		

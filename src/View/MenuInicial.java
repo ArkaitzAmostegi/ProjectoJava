@@ -272,25 +272,40 @@ public class MenuInicial {
 	
 	//Método para comprobar que el número de teléfono tiene 9 números y un 6 al inicio
 	public static void comprobarTelefono(Scanner sc, Usuario usuario) {
+	    boolean telefonoValido = false;
+	    String telefono;
 
-		boolean telefonoValido = false;
-		
-		while (telefonoValido == false) {
+	    while (!telefonoValido) {
+	        System.out.println("Introduce tu número de teléfono:");
+	        telefono = sc.nextLine();
 
-			String telefono = sc.next();
-			sc.nextLine();
-		
-			if (telefono.matches("^6\\d{8}$") || telefono.matches("^7\\d{8}$") || telefono.matches("^9\\d{8}$")) { // Verifica que empiece con 6, 7 o 9 y tenga 9 dígitos en total) {
-				usuario.setTelefono(telefono);
-				telefonoValido = true;
-			}
-			else {
-				System.out.println("El teléfono que has introducido no es válido o ya existe");
-				System.out.println("El número de teléfono tiene que tener una longitud de 9 caracteres y empezar por 6, 7 ó 9."); 
-				System.out.println("El número que has introducido tiene " + telefono.length() + " números");
-			}
-		}
+	        // Verificar formato del teléfono (9 dígitos y empieza por 6, 7 o 9)
+	        if (!telefono.matches("^[679]\\d{8}$")) {
+	            System.out.println("El teléfono introducido no es válido.");
+	            System.out.println("Debe tener 9 dígitos y empezar por 6, 7 o 9.");
+	            System.out.println("El número ingresado tiene " + telefono.length() + " caracteres.");
+	            continue; // Pedir otro número sin continuar la validación
+	        }
+
+	        // Comprobar si el teléfono ya está en la base de datos
+	        while (RepositorioLogin.comprobarTelefonoOficina(telefono) || RepositorioLogin.comprobarTelefonoUsuario(telefono)) {
+	            System.out.println("Ese teléfono ya existe en nuestra base de datos.");
+	            System.out.println("Por favor, introduzca otro teléfono:");
+	            telefono = sc.nextLine();
+
+	            // Validar el formato nuevamente para el nuevo número ingresado
+	            if (!telefono.matches("^[679]\\d{8}$")) {
+	                System.out.println("El nuevo número introducido tampoco es válido.");
+	                break; // Volver al bucle principal
+	            }
+	        }
+
+	        // Si pasó todas las validaciones, asignar el teléfono al usuario
+	        usuario.setTelefono(telefono);
+	        telefonoValido = true;
+	    }
 	}
+
 	
 	//Método para comprobar que el email contenga @ y que no lo tenga ningún usuario
 	public static void comprobarEmail(Scanner sc, Usuario usuario) {

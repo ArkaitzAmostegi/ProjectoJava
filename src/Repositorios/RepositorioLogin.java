@@ -192,4 +192,49 @@ public class RepositorioLogin {
 		return nombre;
 	}
 	
+	//Método para comprobar si el telefono está ya en la BDD
+	public static boolean comprobarTelefonoOficina(String telefono) {
+		
+		boolean existe= false;
+		String consulta = "SELECT telefono FROM oficina WHERE telefono = ?";
+		
+		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+		
+			s.setString(1, telefono);
+		
+			ResultSet rs= s.executeQuery();
+		
+			if(rs.next()) {
+				existe = true;
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Error "+consulta);
+		}
+		return existe;
+	}
+	
+	//Método para comprobar si el telefono está ya en la BDD
+		public static boolean comprobarTelefonoUsuario(String telefono) {
+			
+			boolean existe= false;
+			String consulta = "SELECT telefono FROM usuario WHERE telefono = ?";
+			
+			try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			
+				s.setString(1, telefono);
+			
+				ResultSet rs= s.executeQuery();
+			
+				if(rs.next()) {
+					existe = true;
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+consulta);
+			}
+			return existe;
+		}
 }
