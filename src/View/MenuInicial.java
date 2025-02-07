@@ -296,7 +296,7 @@ public class MenuInicial {
 	            // Validar el formato nuevamente para el nuevo número ingresado
 	            if (!telefono.matches("^[679]\\d{8}$")) {
 	                System.out.println("El nuevo número introducido tampoco es válido.");
-	                break; // Volver al bucle principal
+	                break; 
 	            }
 	        }
 
