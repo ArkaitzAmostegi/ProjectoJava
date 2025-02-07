@@ -52,7 +52,7 @@ public class RepositorioUsuario {
 		
 	}
 	
-	 //Método para comprobar que la matricula de un vehiculo se encuentra en la BBDD
+	 //Método que devuelve un booleano, para comprobar que la matricula de un vehiculo se encuentra en la BBDD
 	 public static boolean comprobarMatricula(String matricula) {
 		 boolean existe = false;
 		 
@@ -140,6 +140,7 @@ public class RepositorioUsuario {
 			}
 		}
 		
+	//Método  Update para modificar el nombre	
 		public static void modificarNombre(String dni, String nombreNuevo) {
 			String consulta = "UPDATE usuario SET nombre = ? WHERE dni = ?";
 			
@@ -154,7 +155,7 @@ public class RepositorioUsuario {
 				e.printStackTrace();
 			}
 		}
-		
+		//Método update para modificar sexo
 		public static void modificarSexo(String dni, String sexo) {
 			String consulta = "UPDATE usuario SET sexo = ? WHERE dni = ?";
 			
@@ -170,6 +171,7 @@ public class RepositorioUsuario {
 			}
 		}
 		
+	//Método update para modificar telefono	
 		public static void modificarTelefono(String dni, String numTelefono) {
 			String consulta = "UPDATE usuario SET telefono = ? WHERE dni = ?";
 			
@@ -185,6 +187,7 @@ public class RepositorioUsuario {
 			}
 		}
 		
+	//Método update para modificar correo	
 		public static void modificarCorreo(String dni, String correo) {
 			String consulta = "UPDATE usuario SET email = ? WHERE dni = ?";
 			
@@ -200,6 +203,7 @@ public class RepositorioUsuario {
 			}
 		}
 		
+	//Método update para modificar contraseña	
 		public static void modificarContraseña(String dni, String contraseña) {
 			String consulta = "UPDATE usuario SET contraseña = ? WHERE dni = ?";
 			

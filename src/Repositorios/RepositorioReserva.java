@@ -32,7 +32,7 @@ public class RepositorioReserva {
 			System.out.println("Error al hacer la consulta "+ consulta);
 		}
 	}
-	//Método para comprobar si el vehículo de esa oficina está libre esa fecha
+	//Método que devuelve booleano, para comprobar si el vehículo de esa oficina está libre esa fecha
 		public static boolean comprobarFecha(String matricula, String fecha_recogida, String fecha_entrega) {
 			boolean existe= false;
 			
@@ -109,7 +109,7 @@ public class RepositorioReserva {
 		}
 	}
 		
-	//Método para comprobar la oficina
+	//Método que devuelve booleano, para comprobar la oficina
 	public static boolean comprobarOficina(String nombre) {
 		boolean existe = false;
 		String consulta = "SELECT * FROM vehiculo v NATURAL JOIN oficina o WHERE o.nombre=?";
@@ -185,7 +185,7 @@ public class RepositorioReserva {
 		}
 	}
 	
-	//Método para comprobar la matrícula
+	//Método que devuelve booleano, para comprobar la matrícula
 	public static boolean comprobarMatricula(String matricula) {
 		
 		boolean existe=false;
@@ -207,7 +207,7 @@ public class RepositorioReserva {
 		return existe;
 	}
 	
-	//Métod para sacar el id del vehículo
+	//Métod que devuelve un número entero, que es el id del vehículo
 	public static int obtenerId(String matricula) {
 		int id_coche=0;
 		
@@ -250,7 +250,7 @@ public class RepositorioReserva {
 			System.out.println("Error "+ consulta);
 		}
 	}
-	//Método para obtener los datos del usuario
+	//Método que devuelve un String, obtiene el dni del usuario
 	public static String usuario (String nombre, String contraseña) {
 		
 		String dni=" ";
@@ -359,7 +359,7 @@ public class RepositorioReserva {
 		}
 		return precioDia;
 	}
-	//Métod para sacar el id de la oficina
+	//Métod que devuelve un int, el id de la oficina
 		public static int obtenerIdOficina(String nombreOficina) {
 			int id_oficina=0;
 			

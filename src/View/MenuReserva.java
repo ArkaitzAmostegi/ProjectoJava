@@ -145,7 +145,7 @@ public class MenuReserva {
 		
 		LocalDate fechaActual = LocalDate.now();
 		
-		String regex = "\\d{4}-\\d{2}-\\d{2}"; // Para formato aaaa/mm/dd
+		String regex = "\\d{4}-\\d{2}-\\d{2}"; // Para formato aaaa-mm-dd
 		
         String fecha_recogida = " ";
 		String fecha_entrega = " ";
@@ -157,6 +157,7 @@ public class MenuReserva {
 				do {
 					
 					System.out.println("Indícanos una fecha de recogida (aaaa-mm-dd): ");
+					
 					fecha_recogida= sc.nextLine();
 					if (!fecha_recogida.matches(regex)) {
 						System.out.println("Ha habido un error");

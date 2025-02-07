@@ -177,7 +177,7 @@ public class RepositorioAdministrador {
 		}
 	}
 	
-	//Método para comprobar si ese email está en la base de datos
+	//Método que devuelve booleano si ese email está en la base de datos
 	public static boolean comprobarEmail(String email) {
 		
 		boolean existe = false;

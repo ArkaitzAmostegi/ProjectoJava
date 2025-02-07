@@ -31,7 +31,7 @@ public class RepositorioLogin {
 		    	System.out.println("Error "+e.getMessage());
 		    }
 		}
-	 //Método para Comprobar si está registrado
+	 //Método que devuelve booleano si ese usuario si está registrado
 	 public static boolean comprobarUsuario(Usuario usuario) {
 		 boolean existe = false;
 		 
@@ -56,7 +56,7 @@ public class RepositorioLogin {
 		 return existe;
 	 }
 	 
-	 //Método para comprobar que la contraseña introducida sea correcta
+	 //Método que devuelve booleano si la contraseña introducida existe
 	 public static boolean comprobarContraseña(String contraseña) {
 		 boolean existe = false;
 		 
@@ -80,7 +80,7 @@ public class RepositorioLogin {
 		 return existe;
 	 }
 	 
-	 //Método para comprobar que el DNI se encuentra en la BBDD
+	 //Método que devuelve booleano si el DNI se encuentra en la BBDD
 	 public static boolean comprobarDni(String dni) {
 		 boolean existe = false;
 		 
@@ -105,7 +105,7 @@ public class RepositorioLogin {
 		return existe;
 	 }
 	 
-	 //Método para comprobar si el usuario es admin o no
+	 //Método que devuelve booleano si el usuario es admin o no
 	 public static boolean comprobarAdmin(Usuario usuario) {
 		 boolean admin=false;
 		 //El administrador es 1 ya que así, en el Método login(Scanner sc, Usuario usuario) si es admin lo llevamos a menú admin, sino va a menú usuario
@@ -126,7 +126,7 @@ public class RepositorioLogin {
 		}
 		 return admin;
 	 }
-	 //Obtener DnI del usuario
+	 //Obtener DnI del usuario, Método que devuelve un string - el dni
 	public static String obtenerDni(Usuario usuario) {
 		String dni=" ";
 		
@@ -147,7 +147,7 @@ public class RepositorioLogin {
 		}
 		return dni;
 	}
-	//Comprobar el email saber si ya está en la BDD o no
+	//Comprobar devuelve booleano si el email ya está en la BDD o no
 	public static boolean comprobaremail(String email) {
 		
 		boolean existe = false;
@@ -169,7 +169,7 @@ public class RepositorioLogin {
 		}		
 		return existe;
 	}
-	//Método que devuelve el nombre por medio del DNI
+	//Método que devuelve Strign que es el nombre de usaurio cin DNI X
 	public static String devolverNombre(String dni) {
 		
 		String nombre = "";
@@ -192,7 +192,7 @@ public class RepositorioLogin {
 		return nombre;
 	}
 	
-	//Método para comprobar si el telefono está ya en la BDD
+	//Método que devuelve booleano si el telefono está ya en la BDD
 	public static boolean comprobarTelefonoOficina(String telefono) {
 		
 		boolean existe= false;
@@ -215,7 +215,7 @@ public class RepositorioLogin {
 		return existe;
 	}
 	
-	//Método para comprobar si el telefono está ya en la BDD
+	//Método que devuelve booleano si el telefono del usuario está ya en la BDD
 		public static boolean comprobarTelefonoUsuario(String telefono) {
 			
 			boolean existe= false;

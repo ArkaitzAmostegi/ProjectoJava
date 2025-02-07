@@ -38,7 +38,7 @@ public class RepositorioVehiculo {
 	    }
 	}
 	 
-	 //Añadir furgoneta
+	 //Método para Añadir furgoneta
 	 public static void insertarFurgoneta(Furgoneta furgo) {
 		 
 		 String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, tamaño, precio_furgoneta, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -60,7 +60,7 @@ public class RepositorioVehiculo {
 		    	System.out.println("Error "+e.getMessage());
 		    }
 	 }
-	 //Añadir Monovolumen
+	 //Método para Añadir Monovolumen
 	public static void insertarMonovolumen(Monovolumen mono) {
 		
 		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, num_puertas, precio_monovolumen, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -82,7 +82,7 @@ public class RepositorioVehiculo {
 		    	System.out.println("Error "+e.getMessage());
 		    }
 	}
-	//Añadir turismo
+	//Método para Añadir turismo
 	public static void insertarTurismo(Turismo turis) {
 		String consulta = "INSERT INTO vehiculo (id_coche, matricula, marca, modelo, km, tipo, potencia, precio_turismo, id_oficina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		 
@@ -104,7 +104,7 @@ public class RepositorioVehiculo {
 		    }
 	}
 	
-	//Consultar vehículo
+	//Método para Consultar vehículo
 	public static void consultarMatricula(String matricula) {
 		
 		String consulta = "SELECT * FROM vehiculo WHERE matricula = ?";
@@ -121,7 +121,7 @@ public class RepositorioVehiculo {
 	    	System.out.println("Error "+e.getMessage());
 	    }
 	}
-	//Consultar vehículo para seber si esa matrícula existe devuelve true or false
+	//Método para Devuelve booleano, Consultar vehículo para seber si esa matrícula existe 
 		public static boolean existeMatricula(String matricula) {
 			
 			boolean existe = false;
@@ -142,7 +142,7 @@ public class RepositorioVehiculo {
 			return false;
 		}
 	
-	//Eliminar vehiculo
+	//Método para Eliminar vehiculo
 	public static void eliminarVehiculo(String matricula) {
 		
 	    String consulta = "DELETE FROM vehiculo WHERE matricula = ?";
@@ -163,7 +163,7 @@ public class RepositorioVehiculo {
 	}
 	
 	
-	//Modificar KMs de un vehículo
+	//Método para modificar KMs de un vehículo
 	public static void cambiarKilometros(int km, String matricula) {
 		String consulta = "UPDATE vehiculo SET km = ? WHERE matricula = ?";
 		

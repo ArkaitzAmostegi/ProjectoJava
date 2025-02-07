@@ -38,7 +38,8 @@ public class ConectorBD {
     public static Connection getconexion(){
     	return conexion;
     }
-    //Método desconectar();
+    
+    //Método desconectar para desconectarnos de la BDD;
     public static void desconectar() {
     	try {
 			conexion.close();
