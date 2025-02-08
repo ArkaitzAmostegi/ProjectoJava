@@ -144,7 +144,8 @@ public class MenuReserva {
 	public static long cantidadDias(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
 		LocalDate fechaActual = LocalDate.now();  //Fecha actual
-		LocalDate fechaLimite = LocalDate.of(2025, 12, 31); //Fecha máxima permitida
+		LocalDate fechaLimite = fechaActual.plusYears(1); // Un año después de la fecha actual
+		//LocalDate fechaLimite = LocalDate.of(2025, 12, 31); // Si queremos que la Fecha máxima permitida, sea una fecha concreta
 		
 		String regex = "\\d{4}-\\d{2}-\\d{2}"; // Para formato aaaa-mm-dd
 		
@@ -155,6 +156,7 @@ public class MenuReserva {
 		do {
 	        do {
 				LocalDate fechaR1;
+				LocalDate fechaE1;
 				System.out.println("Indícanos una fecha de recogida (aaaa-mm-dd): ");
 				
 				do {
@@ -167,17 +169,19 @@ public class MenuReserva {
 					
 				}while(!fecha_recogida.matches(regex));
 					
-				//Hecho por Arritxu
-				
+				//Para que la fecha de recogida no sea anterior a la fecha actual -> Hecho por Arritxu
+				//Para que la fecha de recogida no sea posterior a un año de la dfecha actual
 					while(true) {
 						
 						fechaR1 = LocalDate.parse(fecha_recogida);
 						
 						 if (fechaR1.isBefore(fechaActual)) {
-			                System.out.println("No puede ingresar una fecha anterior a la actual. Inténtelo de nuevo.");
+			                System.out.println("No puede ingresar una fecha anterior a la actual.");
+			                System.out.println("Vuelva a introducir la fecha, por favor.");
 			                fecha_recogida= sc.nextLine();
 			            } else if (fechaR1.isAfter(fechaLimite)) {
-			                System.out.println("No puede ingresar una fecha posterior al 31 de diciembre de 2025. Inténtelo de nuevo.");
+			                System.out.println("No puede se puede hacer una reserva un año posterior a la fecha actual");
+			                System.out.println("Vuelva a introducir la fecha, por favor.");
 			                fecha_recogida= sc.nextLine();
 			            } else {
 			                break; // La fecha es válida
@@ -198,6 +202,25 @@ public class MenuReserva {
 					}else usuariovehiculo.setFecha_entrega(fecha_entrega);
 					
 				}while(!fecha_entrega.matches(regex));
+				
+				//Para que la fecha de entrega no sea anterior a la fecha actual 
+				//Para que la fecha de entrega no sea posterior a un año de la dfecha actual
+				while(true) {
+					
+					fechaE1 = LocalDate.parse(fecha_entrega);
+					
+					 if (fechaE1.isBefore(fechaActual)) {
+		                System.out.println("No puede ingresar una fecha anterior a la actual.");
+		                System.out.println("Vuelva a introducir la fecha, por favor.");
+		                fecha_entrega= sc.nextLine();
+		            } else if (fechaE1.isAfter(fechaLimite)) {
+		                System.out.println("No puede se puede hacer una reserva un año posterior a la fecha actual");
+		                System.out.println("Vuelva a introducir la fecha, por favor.");
+		                fecha_entrega= sc.nextLine();
+		            } else {
+		                break; // La fecha es válida
+		            }
+				}
 				
 				Date fechaE=convertirFecha(fecha_entrega);
 				usuariovehiculo.setFecha_entrega(fecha_entrega);
