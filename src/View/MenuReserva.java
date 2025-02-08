@@ -154,16 +154,17 @@ public class MenuReserva {
 		do {
 	        do {
 				LocalDate fechaR1;
+				System.out.println("Indícanos una fecha de recogida (aaaa-mm-dd): ");
+				
 				do {
-					
-					System.out.println("Indícanos una fecha de recogida (aaaa-mm-dd): ");
-					
 					fecha_recogida= sc.nextLine();
 					if (!fecha_recogida.matches(regex)) {
 						System.out.println("Ha habido un error");
-						System.out.println("Vuelva a introducir la fecha, por favor.");
+						System.out.println("Vuelva a introducir la fecha, con este formato (aaaa-mm-dd), por favor.");
 						
 					}else usuariovehiculo.setFecha_recogida(fecha_recogida);
+					
+				}while(!fecha_recogida.matches(regex));
 					
 					//Hecho por Arritxu
 					while(true) {
@@ -176,9 +177,6 @@ public class MenuReserva {
 							fecha_recogida= sc.nextLine();
 						}
 					}
-					
-				}while(!fecha_recogida.matches(regex));
-				
 					
 				Date fechaR=convertirFecha(fechaR1.toString());	
 				usuariovehiculo.setFecha_recogida(fechaR1.toString());
@@ -253,8 +251,6 @@ public class MenuReserva {
 	        usuariovehiculo.setPrecio_total( precioDia = dias * precioVehiculo);
 		    System.out.println("El precio total de la reserva es: " + precioDia + " €");
 	    }
-
-	
 	}
 	
 	//Método para pasar de String a date datetime (Hecho por Arritxu)

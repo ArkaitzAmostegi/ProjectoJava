@@ -272,7 +272,7 @@ public class MenuAdministrador {
 		MenuInicial.comprobarTelefono(sc, usuario);
 		
 		System.out.println("Introduce el email");
-		MenuInicial.comprobarEmail(sc, usuario); //tiene que contener @ y . y después del punto 2 o 3 letras máximo
+		MenuInicial.comprobarEmail(sc, usuario); //tiene que contener @ únicamente
 		
 		//Administrador va como true, así creamos como administrador 
 		usuario.setAdministrador(true);
