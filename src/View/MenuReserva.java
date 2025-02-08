@@ -143,7 +143,8 @@ public class MenuReserva {
 	//Método cantidad de días que va ha hacer la reserva
 	public static long cantidadDias(Scanner sc, String matricula, Usuario_Vehiculo usuariovehiculo) {
 		
-		LocalDate fechaActual = LocalDate.now();
+		LocalDate fechaActual = LocalDate.now();  //Fecha actual
+		LocalDate fechaLimite = LocalDate.of(2025, 12, 31); //Fecha máxima permitida
 		
 		String regex = "\\d{4}-\\d{2}-\\d{2}"; // Para formato aaaa-mm-dd
 		
@@ -166,16 +167,21 @@ public class MenuReserva {
 					
 				}while(!fecha_recogida.matches(regex));
 					
-					//Hecho por Arritxu
+				//Hecho por Arritxu
+				
 					while(true) {
+						
 						fechaR1 = LocalDate.parse(fecha_recogida);
-						if (fechaActual.isBefore(fechaR1)) {
-							break;
-						}else {
-							System.out.println("No puede ingresar una fecha anterior a la actual");
-							System.out.println("Ingrese nuevamente la fecha por favor");
-							fecha_recogida= sc.nextLine();
-						}
+						
+						 if (fechaR1.isBefore(fechaActual)) {
+			                System.out.println("No puede ingresar una fecha anterior a la actual. Inténtelo de nuevo.");
+			                fecha_recogida= sc.nextLine();
+			            } else if (fechaR1.isAfter(fechaLimite)) {
+			                System.out.println("No puede ingresar una fecha posterior al 31 de diciembre de 2025. Inténtelo de nuevo.");
+			                fecha_recogida= sc.nextLine();
+			            } else {
+			                break; // La fecha es válida
+			            }
 					}
 					
 				Date fechaR=convertirFecha(fechaR1.toString());	
@@ -272,8 +278,10 @@ public class MenuReserva {
 	}
 	
 	//Método para comprovar los datos de la reserva y activar el alquilado 
-	public static void activarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo, String matricula) {
+	public static boolean activarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo, String matricula) {
 	
+		boolean si = false;
+		
 		System.out.println(usuario.getNombre()+" a elegido realizar la siguiente reserva: ");
 		System.out.println("Nombre: "+usuario.getNombre()+ "\nFecha de recogida: "+usuariovehiculo.getFecha_recogida()+ "\nFecha de entrega: "+usuariovehiculo.getFecha_entrega()
 		+"\nLugar de recogida: "+usuariovehiculo.getLugarRecogida()+"\nLugar de entrega: "+usuariovehiculo.getLugarEntrega()+"\nConductor: "+usuariovehiculo.isConConductor()+"\nPrecio total de la reserva: "+usuariovehiculo.getPrecio_total());
@@ -285,11 +293,11 @@ public class MenuReserva {
 				RepositorioReserva.anadirReserva(usuario, usuariovehiculo);
 				System.out.println("Su Reserva ha sido realizada");
 				System.out.println("Pase a recoger le vehículo, por nuestra oficina "+usuariovehiculo.getLugarRecogida()+" la fecha "+usuariovehiculo.getFecha_recogida()+ "\n");
-				break;
+				return si=true;
 			}else if(opcion.equalsIgnoreCase("NO")){
 				System.out.println("Reserva cancelada");
 				RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario);
-				break;
+				return si= false;
 			}else {
 				System.out.println("Ha ocurrido un error");
 				System.out.println("Escriba (SI/NO):");

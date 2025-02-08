@@ -83,8 +83,11 @@ public class MenuUsuario {
 
 	//Método para hacer la reserva 
 	private static void hacerReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
-		int cantidadReservas = 1;
+		
+		int cantidadReservas = 0;
+		
 		while (true) {
+			
 			String contraseña = usuario.getContrasena();
 			String nombre= usuario.getNombre();
 			
@@ -113,29 +116,37 @@ public class MenuUsuario {
 			
 			if (MenuReserva.validarReserva(sc, cantidadDeDias, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
 				//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
-				MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
-				
+				 boolean siReserva =MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
+				 
+				 //Si reserva aumenta la cantidad de reservas hecha para el carrito final
+				 if (siReserva) {
+					 cantidadReservas++;
+					 System.out.println("Usted tiene " + cantidadReservas + " reserva(s) hecha(s).");
+				 }
+				 
 			}else {
 				System.out.println("Su reserva ha sido cancelada\n");
 				break;
 			}
 			
+			if (cantidadReservas == 0) {
+			       System.out.println("No tiene ninguna reserva realizada.");
+			   }
 			
-			System.out.println("UDs. Tiene "+cantidadReservas+", reserva/s hecha/s");
-			System.out.println("Quiere hacer otra reserva?");
-			System.out.println("SI/NO");
-			String opcion = sc.nextLine();
-			if (opcion.equalsIgnoreCase("SI")) {
-				cantidadReservas ++;
-			}else if (opcion.equalsIgnoreCase("NO")) {
-				break;
-			}else {
-				System.out.println("Ha ocurrido un error");
-				System.out.println("Escriba (SI/NO)");
-				opcion = sc.nextLine();
-			}
+			 // Preguntar si quiere hacer otra reserva para el carrito
+		    System.out.println("¿Quiere hacer otra reserva? (SI/NO)");
+		    String opcion = sc.nextLine().trim();
+
+		    while (!opcion.equalsIgnoreCase("SI") && !opcion.equalsIgnoreCase("NO")) {
+		        System.out.println("Opción no válida. Escriba 'SI' o 'NO':");
+		        opcion = sc.nextLine().trim();
+		    }
+		    
+		    if (opcion.equalsIgnoreCase("NO")) {
+		        break;
+		    }
 		}
-		
+		System.out.println("Proceso finalizado. Usted realizó " + cantidadReservas + " reserva(s).");
 	}
 	
 	//Modificar datos del usuario
