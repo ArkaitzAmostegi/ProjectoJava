@@ -75,6 +75,9 @@ public class MenuInicial {
 		usuario.setNombre(sc.next());
 		
 		System.out.println("Introduce tu contraseña (debe contener 8 dígitos): ");
+		System.out.println("- Debe tener una longitud de 8 caracteres.");
+		System.out.println("- Debe contener al menos una letra mayúscula");
+		System.out.println("- Debe contener al menos un número");
 		comprobarContrasena(sc, usuario);
 		
 		System.out.println("Introduce tu sexo (H = Hombre, M = Mujer)");

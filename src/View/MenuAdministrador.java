@@ -104,7 +104,7 @@ public class MenuAdministrador {
 	}
 	
 	// Método para eliminar una reserva determinada de la BDD
-	private static void eliminarReserva(Scanner sc) {
+	public static void eliminarReserva(Scanner sc) {
 	    Usuario_Vehiculo usuariovehiculo = new Usuario_Vehiculo();
 	    Usuario usuario = new Usuario();
 

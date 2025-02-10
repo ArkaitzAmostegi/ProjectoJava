@@ -1,6 +1,8 @@
 package View;
 
 import java.util.Scanner;
+
+import Repositorios.RepositorioAdministrador;
 import Repositorios.RepositorioLogin;
 import Repositorios.RepositorioReserva;
 import Modelo.Vehiculo;
@@ -29,7 +31,8 @@ public class MenuUsuario {
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
 			System.out.println("4.-Consultar tus reservas");
-			System.out.println("5.-Modificar sus datos de usuario");
+			System.out.println("5.-Eliminar reserva");
+			System.out.println("6.-Modificar sus datos de usuario");
 			
 			//Bucle que nos va a corregir si el usuario mete texto en vez de un número
 			while (true) {		
@@ -41,7 +44,7 @@ public class MenuUsuario {
 					
 				}catch(java.util.InputMismatchException e){
 					System.out.println("Error: Debes ingresar un número válido");
-					System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
+					System.out.println("Introduzca un número del 0 al 6 ambos inclusive");
 					sc.next();
 				}
 			}
@@ -61,17 +64,79 @@ public class MenuUsuario {
 				consultarReservas(sc, usuario);
 				break;
 			case 5: 
+				eliminarReserva(sc, usuario, usuariovehiculo);
+				break;
+			case 6:
 				modificarDatos(sc, usuario);
 				break;
 			default:
 				System.out.println("Número erroneo");
-				System.out.println("Introduzca un número del 0 al 5 ambos inclusive");
+				System.out.println("Introduzca un número del 0 al 6 ambos inclusive");
 			}
 		}
 		while (opcion != 0);
 		System.out.println("Ha salido de nuestra web");
 	}
 	
+	//Método para eliminar reservas
+	private static void eliminarReserva(Scanner sc, Usuario usuario, Usuario_Vehiculo usuariovehiculo) {
+		    
+		    String dni = usuario.getDni();
+		    System.out.println("\nA continuación, te mostramos sus reservas: ");
+		    RepositorioUsuario.mostrarReservasUsuario(usuario);
+
+		    // Pedir y validar el id_coche
+		    System.out.println("Introduzca el ID del coche de la reserva que desea eliminar:");
+		    int id_coche = 0;
+
+		    while (true) {
+		        try {
+		            id_coche = sc.nextInt();
+		            sc.nextLine(); // Consumir la línea en blanco
+		            break;
+		        } catch (java.util.InputMismatchException e) {
+		            System.out.println("Error: Debes ingresar un número válido.");
+		            sc.next(); // Limpiar el input incorrecto
+		        }
+		    }
+		    usuariovehiculo.setId_coche(id_coche);
+
+		    // Verificar si el coche tiene reserva
+		    while (!RepositorioReserva.consultarId_coche(usuariovehiculo, usuario)) {
+		        System.out.println("Ese ID de coche no tiene ninguna reserva.");
+		        System.out.println("Introduzca de nuevo un ID de coche válido:");
+		        try {
+		            id_coche = sc.nextInt();
+		            sc.nextLine(); // Consumir la línea en blanco
+		        } catch (java.util.InputMismatchException e) {
+		            System.out.println("Error: Debes ingresar un número válido.");
+		            System.out.println("Introduce nuevamente el número de id_coche: ");
+		            sc.next(); // Limpiar la entrada errónea
+		        }
+		        usuariovehiculo.setId_coche(id_coche);
+		    }
+
+		    // Confirmar eliminación de la reserva
+		    System.out.println("¿Es esta la reserva que desea eliminar?");
+		    RepositorioReserva.consultarReserva(usuariovehiculo, usuario);
+		    System.out.println("(SI/NO)");
+
+		    String opcion;
+		    while (true) {
+		        opcion = sc.nextLine().trim();
+		        if (opcion.equalsIgnoreCase("SI")) {
+		            RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario); 
+		            System.out.println("La reserva ha sido eliminada.");
+		            break;
+		        } else if (opcion.equalsIgnoreCase("NO")) {
+		            System.out.println("Operación cancelada.");
+		            break;
+		        } else {
+		            System.out.println("Entrada no válida. Introduzca 'SI' o 'NO':");
+		        }
+		    }
+	}
+
 	//Método para que el usuario pueda consultar sus reservas
 	private static void consultarReservas(Scanner sc, Usuario usuario) {
 		
