@@ -96,7 +96,7 @@ public class MenuUsuario {
 		            break;
 		        } catch (java.util.InputMismatchException e) {
 		            System.out.println("Error: Debes ingresar un número válido.");
-		            sc.next(); // Limpiar el input incorrecto
+		            sc.next(); 
 		        }
 		    }
 		    usuariovehiculo.setId_coche(id_coche);
@@ -111,7 +111,7 @@ public class MenuUsuario {
 		        } catch (java.util.InputMismatchException e) {
 		            System.out.println("Error: Debes ingresar un número válido.");
 		            System.out.println("Introduce nuevamente el número de id_coche: ");
-		            sc.next(); // Limpiar la entrada errónea
+		            sc.next(); 
 		        }
 		        usuariovehiculo.setId_coche(id_coche);
 		    }
@@ -179,11 +179,13 @@ public class MenuUsuario {
 			//Obtenemos ID_COCHE - introducirlo al usuariovehiculo
 			usuariovehiculo.setId_coche(RepositorioReserva.obtenerId(matricula));
 			
-			if (MenuReserva.validarReserva(sc, cantidadDeDias, matricula, usuariovehiculo)) {//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
-				//Método para comprovar los datos de la reserva y activar el alquilado. Reserva confirmada o eliminada
+			//validamos el vehículo y la oficina seleccionados. Y elige con o sin conductor
+			if (MenuReserva.validarReserva(sc, cantidadDeDias, matricula, usuariovehiculo)) {
+				
+				//Método para comprovar los datos de la reserva. Reserva confirmada o eliminada
 				 boolean siReserva =MenuReserva.activarReserva(sc, usuario, usuariovehiculo, matricula);
 				 
-				 //Si reserva aumenta la cantidad de reservas hecha para el carrito final
+				 //Si reserva aumenta, la cantidad de reservas hecha para el carrito final
 				 if (siReserva) {
 					 cantidadReservas++;
 					 System.out.println("Usted tiene " + cantidadReservas + " reserva(s) hecha(s).");
@@ -219,6 +221,8 @@ public class MenuUsuario {
 		
 		String nombre = usuario.getNombre();
 		
+		int opcion = 0;
+		
 		System.out.println("-----BIENVENIDO A NUESTRA WEB------");
 		System.out.println("--------- "+nombre+" ------------");
 		System.out.println("---------EDITAR DATOS---------");
@@ -231,8 +235,21 @@ public class MenuUsuario {
 		System.out.println("4. Modificar número de teléfono");
 		System.out.println("5. Modificar correo electrónico");
 		System.out.println("6. Modificar contraseña");
+
+		//Bucle que nos va a corregir si el usuario mete texto en vez de un número
+		while (true) {		
 		
-		int opcion = sc.nextInt();
+			try {
+				opcion=sc.nextInt();
+				sc.nextLine();
+				break;
+				
+			}catch(java.util.InputMismatchException e){
+				System.out.println("Error: Debes ingresar un número válido");
+				System.out.println("Introduzca un número del 0 al 6 ambos inclusive");
+				sc.next();
+			}
+		}
 		
 		switch (opcion) {
 		case 0: 
