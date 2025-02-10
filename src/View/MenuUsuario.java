@@ -30,8 +30,8 @@ public class MenuUsuario {
 			System.out.println("1.-Nuestra flota de vehículos");
 			System.out.println("2.-Donde disponemos de oficinas");
 			System.out.println("3.-Realizar una reserva");
-			System.out.println("4.-Consultar tus reservas");
-			System.out.println("5.-Eliminar reserva");
+			System.out.println("4.-Consultar sus reservas");
+			System.out.println("5.-Eliminar sus reservas");
 			System.out.println("6.-Modificar sus datos de usuario");
 			
 			//Bucle que nos va a corregir si el usuario mete texto en vez de un número
