@@ -275,11 +275,12 @@ public class RepositorioReserva {
 	//Método para consultar la reserva a eliminar
 	public static void consultarReserva(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
 		
-		String consulta = "SELECT * FROM usuario_vehiculo WHERE dni = ? AND id_coche = ?";
+		String consulta = "SELECT * FROM usuario_vehiculo WHERE dni = ? AND id_coche = ? and fecha_recogida = ?";
 		
 		try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
 		s.setString(1, usuario.getDni());
 		s.setInt(2, usuariovehiculo.getId_coche());
+		s.setString(3, usuariovehiculo.getFecha_recogida());
 		
 		ResultSet rs = s.executeQuery();
 		

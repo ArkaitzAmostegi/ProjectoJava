@@ -98,9 +98,7 @@ public class MenuUsuario {
 		            System.out.println("Error: Debes ingresar un número válido.");
 		            sc.next(); 
 		        }
-		    }
-		    usuariovehiculo.setId_coche(id_coche);
-
+		    }		    
 		    // Verificar si el coche tiene reserva
 		    while (!RepositorioReserva.consultarId_coche(usuariovehiculo, usuario)) {
 		        System.out.println("Ese ID de coche no tiene ninguna reserva.");
@@ -115,6 +113,20 @@ public class MenuUsuario {
 		        }
 		        usuariovehiculo.setId_coche(id_coche);
 		    }
+		    
+		    //Pedir y validar una fecha de recogida
+		    String regex = "\\d{4}-\\d{2}-\\d{2}"; // Para formato aaaa-mm-dd
+		    System.out.println("Ingrese la fecha de recogida de la reserva que quiere eliminar: ");
+		    String fecha_recogida = "";
+		    do {
+				fecha_recogida= sc.nextLine();
+				if (!fecha_recogida.matches(regex)) {
+					System.out.println("Ha habido un error");
+					System.out.println("Vuelva a introducir la fecha, con este formato (aaaa-mm-dd), por favor.");
+					
+				}else usuariovehiculo.setFecha_recogida(fecha_recogida);
+				
+			}while(!fecha_recogida.matches(regex));
 
 		    // Confirmar eliminación de la reserva
 		    System.out.println("¿Es esta la reserva que desea eliminar?");
@@ -125,7 +137,7 @@ public class MenuUsuario {
 		    while (true) {
 		        opcion = sc.nextLine().trim();
 		        if (opcion.equalsIgnoreCase("SI")) {
-		            RepositorioReserva.eliminarRerserva(usuariovehiculo, usuario); 
+		            RepositorioUsuario.eliminarRerservaUsuario(usuariovehiculo, usuario); 
 		            System.out.println("La reserva ha sido eliminada.");
 		            break;
 		        } else if (opcion.equalsIgnoreCase("NO")) {

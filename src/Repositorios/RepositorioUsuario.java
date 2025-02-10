@@ -282,5 +282,23 @@ public class RepositorioUsuario {
 				System.out.println("Error "+consulta);
 			}
 		}
+		//Método para eliminar la reserva desde el usuario
+		public static void eliminarRerservaUsuario(Usuario_Vehiculo usuariovehiculo, Usuario usuario) {
+			
+			String consulta = "DELETE FROM usuario_vehiculo WHERE dni = ? and id_coche = ? and fecha_recogida = ?";
+			
+			try {PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta);
+			s.setString(1,usuario.getDni());
+			s.setInt(2, usuariovehiculo.getId_coche());
+			s.setString(3, usuariovehiculo.getFecha_recogida());
+			
+			s.executeUpdate();
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error "+ consulta);
+			}
+		}
+		
 		
 }
