@@ -1,6 +1,6 @@
 package Modelo;
 
-public class Vehiculo {
+public abstract class Vehiculo {
     
     //Atributos
     private int id_coche;

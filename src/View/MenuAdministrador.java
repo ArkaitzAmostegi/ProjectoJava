@@ -2,7 +2,10 @@ package View;
 
 import java.util.Scanner;
 
+import Modelo.Furgoneta;
+import Modelo.Monovolumen;
 import Modelo.Oficina;
+import Modelo.Turismo;
 import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
@@ -178,7 +181,9 @@ public class MenuAdministrador {
 	//Método para cambiar los Km al vehiculo
 	private static void cambiarKm(Scanner sc) {
 		
-		Vehiculo vehiculo = new Vehiculo();
+		Vehiculo vehiculo = new Monovolumen();
+		Vehiculo turis = new Turismo();
+		Vehiculo furgo = new Furgoneta();
 		
 		System.out.println("Introduce la matrícula del vehículo al que deseas cambiar los km: ");
 		vehiculo.setMatricula(sc.nextLine());
@@ -406,7 +411,9 @@ public class MenuAdministrador {
 	//Método para eliminar vehículos
 	private static void eliminarVehiculo(Scanner sc) {
 		
-		Vehiculo v = new Vehiculo();
+		Vehiculo mono = new Monovolumen();
+		Vehiculo turis = new Turismo();
+		Vehiculo furgo = new Furgoneta();
 		
 		RepositorioUsuario.mostrarMatriculaVehiculo();
 		System.out.println("Introduce la  matrícula del vehiculo que desea eliminar: ");

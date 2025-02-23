@@ -21,14 +21,14 @@ public class ConectorBD {
             //La BDD se encuentra en el localhost(en mi ordenador)
             //El usuario es root y la contraseña es 1DAW3_BBDD
             //La conexion se hace a traves del puerto 3306
-            //La BDD se llama escuela
+            //La BDD se llama AJA
             conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/AJA","root","1DAW3_BBDD");
 
             System.out.println("Conexion establecida");
           
-        }catch(Exception e){
+            }catch(Exception e){
             System.out.println("Error en la conexion");
-        }
+            }
         }catch(Exception e){
             System.out.println("Error en el driver");
         }
