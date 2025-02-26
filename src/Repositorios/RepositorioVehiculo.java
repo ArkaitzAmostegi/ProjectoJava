@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 import Modelo.Vehiculo;
 
-public class RepositorioVehiculo {
+public class RepositorioVehiculo  implements RepositorioGeneral<Vehiculo>{
 
 	 private static Statement statement;
 
@@ -142,27 +142,6 @@ public class RepositorioVehiculo {
 			return false;
 		}
 	
-	//Método para Eliminar vehiculo
-	public static void eliminarVehiculo(String matricula) {
-		
-	    String consulta = "DELETE FROM vehiculo WHERE matricula = ?";
-
-	    try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)) {
-	        s.setString(1, matricula); // Asigna el valor de la matrícula al parámetro de la consulta
-
-	        int filasAfectadas = s.executeUpdate(); // Ejecuta la consulta y obtiene el número de filas afectadas
-
-	        if (filasAfectadas > 0) {
-	            System.out.println("El vehículo con matrícula " + matricula + " ha sido eliminado.");
-	        } else {
-	            System.out.println("No se encontró ningún vehículo con la matrícula " + matricula + ".");
-	        }
-	    } catch (Exception e) {
-	        System.out.println("Error: " + e.getMessage());
-	    }
-	}
-	
-	
 	//Método para modificar KMs de un vehículo
 	public static void cambiarKilometros(int km, String matricula) {
 		String consulta = "UPDATE vehiculo SET km = ? WHERE matricula = ?";
@@ -177,5 +156,25 @@ public class RepositorioVehiculo {
 			e.printStackTrace();
 		}
 		
+	}
+
+	//Método para Eliminar vehiculo
+	@Override
+	public void eliminar(String nombre) {
+		   String consulta = "DELETE FROM vehiculo WHERE matricula = ?";
+
+		    try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)) {
+		        s.setString(1, nombre); // Asigna el valor de la matrícula al parámetro de la consulta
+
+		        int filasAfectadas = s.executeUpdate(); // Ejecuta la consulta y obtiene el número de filas afectadas
+
+		        if (filasAfectadas > 0) {
+		            System.out.println("El vehículo con matrícula " + nombre + " ha sido eliminado.");
+		        } else {
+		            System.out.println("No se encontró ningún vehículo con la matrícula " + nombre + ".");
+		        }
+		    } catch (Exception e) {
+		        System.out.println("Error: " + e.getMessage());
+		    }
 	}
 }

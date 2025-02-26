@@ -10,7 +10,7 @@ import Modelo.Usuario;
 import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
 
-public class RepositorioAdministrador {
+public class RepositorioAdministrador implements RepositorioGeneral{
 
 	//Método para añadir oficina
 	public static void anadirOficina(Oficina oficina) {
@@ -111,26 +111,6 @@ public class RepositorioAdministrador {
 		return existe;
 	}
 	
-	//Método para eliminar usuario
-	public static void eliminarUsuario(String dni) {
-		String consulta = "DELETE FROM usuario WHERE dni = ?";
-		
-		try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
-			 s.setString(1, dni); // Asigna el valor del nombre al parámetro de la consulta
-		
-			 int filasAfectadas = s.executeUpdate(); // Ejecuta la consulta y obtiene el número de filas afectadas
-
-		     if (filasAfectadas > 0) {
-		           System.out.println("El usuario " + dni + " ha sido eliminado.");
-		      } else {
-		           System.out.println("No se encontró ningúna otro usuario con nombre: " + dni + ".");
-		      }
-			
-		}catch(Exception e) {
-			System.out.println("Error "+e.getMessage());
-		}
-	}
-	
 	//Método para introducir Km a un vehículo
 	public static void introducirKm(Vehiculo vehiculo) {
 		
@@ -216,5 +196,28 @@ public class RepositorioAdministrador {
 				System.out.println("Error "+e.getMessage());
 			}
 		}
+
+	//Método para eliminar usuario
+	@Override
+	public void eliminar(String nombre) {
+		
+	String consulta = "DELETE FROM usuario WHERE dni = ?";
+		
+		try (PreparedStatement s = ConectorBD.getconexion().prepareStatement(consulta)){
+			 s.setString(1, nombre); // Asigna el valor del nombre al parámetro de la consulta
+		
+			 int filasAfectadas = s.executeUpdate(); // Ejecuta la consulta y obtiene el número de filas afectadas
+
+		     if (filasAfectadas > 0) {
+		           System.out.println("El usuario " + nombre + " ha sido eliminado.");
+		      } else {
+		           System.out.println("No se encontró ningúna otro usuario con nombre: " + nombre + ".");
+		      }
+			
+		}catch(Exception e) {
+			System.out.println("Error "+e.getMessage());
+		}
+		
+	}
 	
 }
