@@ -206,12 +206,12 @@ public class MenuAdministrador {
 		RepositorioUsuario.mostrarUsuario();
 		System.out.println("Estos son los usuarios registrados en nuestra base de datos\n");
 		System.out.println("Introduce el DNI del usuario que desee eliminar: ");
-		String dni="";
+		String nombre="";
 		while (true) {
 			//Comprobar si el dni tiene el formato adecuado
-			dni = comprobarDni(sc, usuario);
+			nombre = comprobarDni(sc, usuario);
 			//Comprobar si el dni está en la base de datos
-			if(RepositorioLogin.comprobarDni(dni)) {
+			if(RepositorioLogin.comprobarDni(nombre)) {
 				break;
 				
 			}else {
@@ -221,13 +221,13 @@ public class MenuAdministrador {
 			}
 		}
 		System.out.println("Esta seguro que desea eliminar este usuario: ");
-		RepositorioAdministrador.mostrarUsuario(dni);
+		RepositorioAdministrador.mostrarUsuario(nombre);
 		System.out.println("(SI/NO)?");
 		
 		while(true) {
 			String opcion = sc.nextLine().trim();
 			if (opcion.equalsIgnoreCase("SI")) {
-				RepositorioAdministrador.eliminarUsuario(dni);//Método para eliminar el usuario
+				RepositorioAdministrador.eliminar(nombre);//Método para eliminar el usuario
 				System.out.println("Usuario eliminado");
 				break;
 			}else if(opcion.equalsIgnoreCase("NO")) {
@@ -418,18 +418,19 @@ public class MenuAdministrador {
 		
 		RepositorioUsuario.mostrarMatriculaVehiculo();
 		System.out.println("Introduce la  matrícula del vehiculo que desea eliminar: ");
-		String matricula =" ";
-		matricula = comprobarFormatoMatricula(sc, matricula);
+		String nombre =" ";
+		nombre = comprobarFormatoMatricula(sc, nombre);
 		
 		System.out.println("El vehículo que desea eliminar, es el: ");
-		RepositorioVehiculo.consultarMatricula(matricula);
+		RepositorioVehiculo.consultarMatricula(nombre);
 		
 		System.out.println("Si es así, introduce 'SI'. Si no introduce 'NO'");
 		String opcion = sc.nextLine().trim();
 		
 		while (true) {
 			if (opcion.equalsIgnoreCase("si")) {
-				RepositorioVehiculo.eliminarVehiculo(matricula);
+				RepositorioVehiculo repositorioVehiculo=new RepositorioVehiculo();
+				repositorioVehiculo.eliminar(nombre);
 				System.out.println("Vehículo eliminado de nuestra base de datos");
 				break;
 			}else if (opcion.equalsIgnoreCase("no")) {

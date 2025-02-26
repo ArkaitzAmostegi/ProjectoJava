@@ -10,7 +10,7 @@ import Modelo.Usuario_Vehiculo;
 import Modelo.Vehiculo;
 
 
-public class RepositorioReserva {
+public class RepositorioReserva{
 
 	
 	//Método para mostrar vehiculos según la oficina
@@ -381,4 +381,5 @@ public class RepositorioReserva {
 			return id_oficina;
 			
 		}
+		
 }
