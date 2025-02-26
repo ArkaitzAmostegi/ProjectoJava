@@ -411,6 +411,7 @@ public class MenuAdministrador {
 	//Método para eliminar vehículos
 	private static void eliminarVehiculo(Scanner sc) {
 		
+		
 		Vehiculo mono = new Monovolumen();
 		Vehiculo turis = new Turismo();
 		Vehiculo furgo = new Furgoneta();
